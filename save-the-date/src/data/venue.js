@@ -54,7 +54,7 @@ const VENUES = [
     category: "venue",
     label: "Whitehall",
     price: "75k",
-    description: "42&43 Satmosjid RD, Lift-6, Dhanmondi, 9/A, Dhaka-1209",
+    address: "42&43 Satmosjid RD, Lift-6, Dhanmondi, 9/A, Dhaka-1209",
     comments: [
       {
         id: 0,
@@ -101,7 +101,7 @@ const VENUES = [
     category: "venue",
     label: "Paragon",
     price: "120k",
-    description:
+    address:
       "Green Rowshanara Tower 755, Satmasjid Road, Dhanmandi. Dhaka, Dhaka Division, Bangladesh, 1209 Dhaka",
     comments: [
       {
@@ -149,7 +149,7 @@ const VENUES = [
     category: "venue",
     label: "Dhanmondi",
     price: "70k",
-    description: "2nd Floor, 44(new) 744(old, Satmasjid Road, Dhaka 1209",
+    address: "2nd Floor, 44(new) 744(old, Satmasjid Road, Dhaka 1209",
     comments: [
       {
         id: 0,

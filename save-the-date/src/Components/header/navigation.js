@@ -8,19 +8,21 @@ const Navigation = () => {
       <Navbar id="navbar">
         <div className="container">
           <NavbarBrand id="navbrand" href="/">
-            Home
+            <b>Home</b>
           </NavbarBrand>
           <NavbarBrand id="navbrand" href="/">
-            About
+            <b>About</b>
           </NavbarBrand>
           <NavbarBrand id="navbrand" href="/">
-            Our Services
+            <b>Our Services</b>
           </NavbarBrand>
           <NavbarBrand id="navbrand" href="/">
-            Blogs
+            <b>Blogs</b>
           </NavbarBrand>
           <NavbarBrand id="navbrand_search" href="/">
-            <SearchSharpIcon />
+            <b>
+              <SearchSharpIcon />
+            </b>
           </NavbarBrand>
         </div>
       </Navbar>
