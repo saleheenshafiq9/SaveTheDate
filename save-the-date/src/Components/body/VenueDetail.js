@@ -21,11 +21,9 @@ const VenueDetail = (props) => {
           <CardTitle>
             <b>{props.venue.name}</b>
           </CardTitle>
+          <CardText>{props.venue.address}</CardText>
           <CardText>
-            <p>{props.venue.address}</p>
-            <p>
-              <b>{props.venue.price}/-</b>
-            </p>
+            <b>{props.venue.price}/-</b>
           </CardText>
           <hr />
           <LoadComments comments={props.venue.comments} />
