@@ -1,14 +1,14 @@
 import React from "react";
-import header from "./header/header";
-import body from "./body/body";
-import footer from "./footer/footer";
+import Header from "./header/header";
+import Body from "./body/body";
+import Footer from "./footer/footer";
 
 const MainComponent = () => {
   return (
     <div>
-      <header />
-      <body />
-      <footer />
+      <Header />
+      <Body />
+      <Footer />
     </div>
   );
 };
