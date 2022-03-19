@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, NavbarBrand } from "reactstrap";
+import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 
 const Navigation = () => {
   return (
@@ -17,6 +18,9 @@ const Navigation = () => {
           </NavbarBrand>
           <NavbarBrand id="navbrand" href="/">
             Blogs
+          </NavbarBrand>
+          <NavbarBrand id="navbrand_search" href="/">
+            <SearchSharpIcon />
           </NavbarBrand>
         </div>
       </Navbar>
