@@ -1,7 +1,12 @@
 import React from "react";
+import VenueMenu from "./VenueMenu";
 
 const body = () => {
-  return <div></div>;
+  return (
+    <div>
+      <VenueMenu />
+    </div>
+  );
 };
 
 export default body;
