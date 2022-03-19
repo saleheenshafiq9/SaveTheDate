@@ -1,9 +1,11 @@
+import React from "react";
 import "./App.css";
+import MainComponent from "./Components/MainComponent";
 
 function App() {
   return (
     <div className="App">
-      <h1>SaveTheDate : A Party-planning Application</h1>
+      <MainComponent />
     </div>
   );
 }
