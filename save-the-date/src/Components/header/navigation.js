@@ -10,13 +10,13 @@ const Navigation = () => {
           <NavbarBrand id="navbrand" href="/">
             <b>Home</b>
           </NavbarBrand>
-          <NavbarBrand id="navbrand" href="/">
+          <NavbarBrand id="navbrand" href="/about">
             <b>About</b>
           </NavbarBrand>
-          <NavbarBrand id="navbrand" href="/">
+          <NavbarBrand id="navbrand" href="/services">
             <b>Our Services</b>
           </NavbarBrand>
-          <NavbarBrand id="navbrand" href="/">
+          <NavbarBrand id="navbrand" href="/blogs">
             <b>Blogs</b>
           </NavbarBrand>
           <NavbarBrand id="navbrand_search" href="/">

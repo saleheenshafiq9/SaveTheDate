@@ -36,8 +36,9 @@ class VenueMenu extends Component {
         <br />
         <br />
         <div className="row">
-          <div className="col-6">{venueMenu}</div>
-          <div className="col-6">{venueDetail}</div>
+          <div className="col-4">{venueMenu}</div>
+          <div className="col-2"></div>
+          <div className="col-5">{venueDetail}</div>
         </div>
       </div>
     );
