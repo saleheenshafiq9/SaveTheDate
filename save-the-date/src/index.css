@@ -14,25 +14,9 @@ code {
 
 #navbar {
   background-color: #fdca40;
-  height: 90px;
 }
 
-#navbrand {
+#linkname {
   color: #353535;
-  padding-left: 100px;
-  font-family: "Proza Libre", sans-serif;
-  font-size: 17px;
-}
-
-#navbrand:hover {
-  color: black;
-}
-
-#navbrand_search {
-  color: #353535;
-  padding-left: 300px;
-}
-
-#navbrand_search:hover {
-  color: black;
+  font-weight: 600;
 }
