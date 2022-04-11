@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 
-class Home extends Component {
+export default class SaveTheDate extends Component {
   render() {
     return (
       <div>
-        <h1>save</h1>
+        <p>Save The Date</p>
       </div>
     );
   }
 }
-
-export default Home;
