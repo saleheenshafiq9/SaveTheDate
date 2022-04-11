@@ -6,7 +6,9 @@ const Main = (props) => {
   return (
     <div>
       <Header />
-      <SaveTheDate />
+      <div className="container">
+        <SaveTheDate />
+      </div>
     </div>
   );
 };

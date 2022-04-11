@@ -1,20 +1,19 @@
-.Navigation {
-  margin-bottom: 20px;
-}
-
 .Brand {
   font-family: "Montez", cursive;
-  color: white;
+  color: black;
   font-size: xx-large;
 }
 
-.NavLink {
-  text-decoration: none;
-  color: white;
-  font-size: 25px;
-  margin-top: -25px;
+.Brand:hover {
+  color: #ce6c47;
 }
 
-.NavLink:hover {
-  color: #ffbf69;
+#NavLink {
+  color: black;
+  text-decoration: none;
+  padding-right: 50px;
+}
+
+#NavLink:hover {
+  color: #ce6c47;
 }
