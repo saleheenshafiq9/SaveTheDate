@@ -3,6 +3,7 @@ import Yellow from "../../../assets/Images/yellow-bg.jpg";
 import Hilton from "../../../assets/Images/Hilton.jpg";
 import Modern from "../../../assets/Images/Modern.jpg";
 import "./Landcover.css";
+import { Button } from "reactstrap";
 
 const Landcover = (props) => {
   return (
@@ -23,12 +24,23 @@ const Landcover = (props) => {
         </ol>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img
-              className="d-block w-100"
-              src={Yellow}
-              alt="First slide"
-              height="600px"
-            />
+            <div className="row">
+              <div className="col-9">
+                <img
+                  className="d-block"
+                  src={Yellow}
+                  alt="First slide"
+                  width="800px"
+                  height="550px"
+                  id="cover"
+                />
+              </div>
+              <div className="col-3 start">
+                <Button color="dark" size="lg">
+                  Start Exploring
+                </Button>
+              </div>
+            </div>
           </div>
           <div className="carousel-item">
             <div className="row">
