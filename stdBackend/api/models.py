@@ -1,12 +1,21 @@
+from pyexpat import model
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Customer(models.Model):
     birthDate=models.DateField(null=True, blank=True)
     gender=models.CharField(max_length=255)
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
 class ServiceProvider(models.Model):
     description=models.TextField(null=True, blank=True)
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+
 
 class Venue(ServiceProvider):
     pass
