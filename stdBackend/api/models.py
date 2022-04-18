@@ -22,9 +22,10 @@ class ServiceProvider(models.Model):
 
 class Venue(ServiceProvider):
     location=models.CharField(max_length=255)
-    capacity=models.IntegerField(validators=[MinValueValidator(0)])
+    capacity=models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
 class Catering(ServiceProvider):
+    capacity=models.IntegerField()
     pass
 
 class Decorator(ServiceProvider):
