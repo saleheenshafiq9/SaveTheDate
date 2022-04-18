@@ -1,93 +1,70 @@
 import React from "react";
 import Yellow from "../../../assets/Images/yellow-bg.jpg";
 import Hilton from "../../../assets/Images/Hilton.jpg";
-import Modern from "../../../assets/Images/Modern.jpg";
+import Bride from "../../../assets/Images/Bride.jpg";
 import "./Landcover.css";
-import { Button } from "reactstrap";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Landcover = (props) => {
   return (
     <div>
+      <br />
+      <br />
+      <br />
       <div
-        id="carouselExampleIndicators"
+        id="carouselExampleControls"
         className="carousel slide"
         data-ride="carousel"
       >
-        <ol className="carousel-indicators">
-          <li
-            data-target="#carouselExampleIndicators"
-            data-slide-to="0"
-            class="active"
-          ></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <div className="row">
-              <div className="col-9">
+          <div className="row">
+            <div className="col-6">
+              <div className="carousel-item active">
                 <img
                   className="d-block"
                   src={Yellow}
                   alt="First slide"
-                  width="800px"
-                  height="550px"
-                  id="cover"
+                  width="600px"
+                  height="400px"
                 />
               </div>
-              <div className="col-3 start">
-                <Button color="dark" size="lg">
-                  Start Exploring
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="carousel-item">
-            <div className="row">
-              <div className="col-6">
+              <div className="carousel-item">
                 <img
-                  className="d-block w-100"
+                  className="d-block"
                   src={Hilton}
                   alt="Second slide"
-                  height="600px"
+                  width="600px"
+                  height="400px"
                 />
               </div>
-              <div className="col-6">
+              <div className="carousel-item">
                 <img
-                  className="d-block w-100"
-                  src={Modern}
+                  className="d-block"
+                  src={Bride}
                   alt="Third slide"
-                  height="600px"
+                  width="600px"
+                  height="400px"
                 />
               </div>
             </div>
+            <div className="col-6 coverword">
+              <FaFacebook style={{ fontSize: "30px", margin: "20px" }} />
+              <FaInstagram style={{ fontSize: "30px", marginRight: "20px" }} />
+              <FaTwitter style={{ fontSize: "30px" }} />
+              <br />
+              Planning for wedding, birthday or your success party? Let's-
+              <br />
+              <br />
+              <br />
+              <h3 className="tagline">MAKE EACH OCCASION A FESTIVAL</h3>
+              <br />
+              <br />
+              <button type="button" className="btn btn-dark btn-lg">
+                Start Now
+              </button>
+            </div>
           </div>
-          <div className="carousel-item"></div>
         </div>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Next</span>
-        </a>
       </div>
     </div>
   );
