@@ -1,0 +1,33 @@
+#box {
+  background-color: #fff;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", sans-serif;
+  width: 400px;
+  min-height: 400px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding: 40px 30px;
+  margin-left: 450px;
+}
+
+.register-text {
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.register-text a {
+  text-decoration: none;
+  color: black;
+}
+
+.register-text a:hover {
+  text-decoration: none;
+  color: #ce6c47;
+}

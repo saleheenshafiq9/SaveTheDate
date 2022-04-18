@@ -5,6 +5,8 @@ import SaveTheDate from "./SaveTheDate/SaveTheDate";
 import Services from "./Services/Services";
 import Blogs from "./Blogs/Blogs";
 import Contact from "./Contact/Contact";
+import Login from "./Login/Login";
+import Register from "./Login/Register";
 
 const Main = (props) => {
   return (
@@ -16,6 +18,8 @@ const Main = (props) => {
           <Route path="/services" element={<Services />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </div>

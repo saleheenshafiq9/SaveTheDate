@@ -4,6 +4,7 @@ import Hilton from "../../../assets/Images/Hilton.jpg";
 import Bride from "../../../assets/Images/Bride.jpg";
 import "./Landcover.css";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Landcover = (props) => {
   return (
@@ -68,9 +69,11 @@ const Landcover = (props) => {
               <h3 className="tagline">MAKE EACH OCCASION A FESTIVAL</h3>
               <br />
               <br />
-              <button type="button" className="btn btn-dark btn-lg">
-                Start Now
-              </button>
+              <Link to="/login">
+                <button type="button" className="btn btn-dark btn-lg">
+                  Start Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>
