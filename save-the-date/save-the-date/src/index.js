@@ -8,9 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.Fragment>
-    
-      <App />
-    
+    <App />
   </React.Fragment>,
   document.getElementById("root")
 );
