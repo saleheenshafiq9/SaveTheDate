@@ -48,9 +48,18 @@ const Landcover = (props) => {
               </div>
             </div>
             <div className="col-6 coverword">
-              <FaFacebook style={{ fontSize: "30px", margin: "20px" }} />
-              <FaInstagram style={{ fontSize: "30px", marginRight: "20px" }} />
-              <FaTwitter style={{ fontSize: "30px" }} />
+              <FaFacebook
+                style={{ fontSize: "30px", margin: "20px" }}
+                id="icons"
+              />
+              <FaInstagram
+                style={{
+                  fontSize: "30px",
+                  marginRight: "20px",
+                }}
+                id="icons"
+              />
+              <FaTwitter style={{ fontSize: "30px" }} id="icons" />
               <br />
               Planning for wedding, birthday or your success party? Let's-
               <br />

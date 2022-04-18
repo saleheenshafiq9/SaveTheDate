@@ -14,3 +14,11 @@ img {
   font-family: "Proza Libre", sans-serif;
   word-spacing: 3px;
 }
+
+.btn:hover {
+  background-color: #ce6c47 !important;
+}
+
+#icons:hover {
+  color: #ce6c47;
+}
