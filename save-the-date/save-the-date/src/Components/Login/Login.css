@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 50px;
   box-sizing: border-box;
   font-family: "Source Sans Pro", sans-serif;
   width: 400px;
@@ -24,7 +24,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 70px;
+  margin-top: 50px;
   box-sizing: border-box;
   font-family: "Source Sans Pro", sans-serif;
   width: 800px;
@@ -53,7 +53,9 @@
   text-decoration: none;
   color: #ce6c47;
 }
-
+.nav {
+  margin: 20px;
+}
 .nav-link:active {
-  background-color: #ce6c47;
+  background-color: #ce6c47 !important;
 }
