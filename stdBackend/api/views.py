@@ -50,7 +50,7 @@ class CateringViewSet(ModelViewSet):
         (catering, created)=Catering.objects.get_or_create(
             user_id=request.user.id)
         if request.method=='GET':
-            serializer=VenueSerializer(catering)
+            serializer=CateringSerializer(catering)
             return Response(serializer.data)
         elif request.method=='PUT':
             serializer=CateringSerializer(catering, data=request.data)

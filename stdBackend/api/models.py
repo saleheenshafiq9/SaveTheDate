@@ -15,27 +15,37 @@ class Customer(models.Model):
 class ServiceProvider(models.Model):
     title=models.CharField(max_length=255)
     description=models.TextField(null=True, blank=True)
-    user=models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+
 
 
 class Venue(ServiceProvider):
     location=models.CharField(max_length=255)
     capacity=models.IntegerField(default=0,validators=[MinValueValidator(0)])
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
+    
 class Catering(ServiceProvider):
-    capacity=models.IntegerField()
-    pass
+    capacity=models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
 class Decorator(ServiceProvider):
-    pass
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
 class ContentMaker(ServiceProvider):
-    pass
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
 class Entertainer(ServiceProvider):
-    pass
+    user=models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
 class Appointment(models.Model):
     Category=models.CharField(max_length=255)

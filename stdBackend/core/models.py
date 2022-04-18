@@ -5,3 +5,4 @@ from django.db import models
 class User(AbstractUser):
     email=models.EmailField(unique=True)
     phoneNumber=models.CharField(max_length=255)
+    userType=models.CharField(max_length=255)
