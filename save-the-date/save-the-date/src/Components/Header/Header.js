@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import Logo from "../../assets/mirror-ball.png";
 
 const Header = () => {
@@ -22,18 +23,18 @@ const Header = () => {
               display: "contents",
             }}
           >
-            <NavLink href="#" id="NavLink">
+            <Link to="/" id="NavLink">
               Home
-            </NavLink>
-            <NavLink href="#" id="NavLink">
+            </Link>
+            <Link to="/services" id="NavLink">
               Services
-            </NavLink>
-            <NavLink href="#" id="NavLink">
+            </Link>
+            <Link to="/blogs" id="NavLink">
               Blogs
-            </NavLink>
-            <NavLink href="#" id="NavLink">
+            </Link>
+            <Link to="/contact" id="NavLink">
               Contact Us
-            </NavLink>
+            </Link>
           </NavItem>
         </Nav>
       </Navbar>
