@@ -71,7 +71,7 @@ const Landcover = (props) => {
               <br />
               <Link to="/login">
                 <button type="button" className="btn btn-dark btn-lg">
-                  Start Now
+                  Start Planning
                 </button>
               </Link>
             </div>
