@@ -1,6 +1,6 @@
 from pyexpat import model
 from rest_framework import serializers
-from .models import Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
+from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -39,4 +39,15 @@ class EntertainerSerializer(serializers.ModelSerializer):
     class Meta:
         model=Entertainer
         fields=['id', 'user_id', 'title', 'description']
+
+
+class ReviewSerailizer(serializers.ModelSerializer):
+    class Meta:
+        model=Review
+        fields=['id', 'date', 'name', 'description']
+
+    def create(self, validated_data):
+        serviceprovider_id=self.context['serviceProvider_id']
+        return Review.objects.create(serviceProvider_id=serviceprovider_id, **validated_data)
+
 

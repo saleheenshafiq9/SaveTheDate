@@ -10,4 +10,7 @@ router.register('decorators', views.DecoratorViewSet)
 router.register('contentmakers', views.ContentMakerViewSet)
 router.register('entertainers', views.EntertainerViewSet)
 
-urlpatterns=router.urls
+provider_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
+provider_router.register('reviews', views.ReviewViewSet, basename='provider-reviews')
+
+urlpatterns=router.urls+provider_router.urls
