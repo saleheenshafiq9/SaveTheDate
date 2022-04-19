@@ -1,7 +1,7 @@
 import django
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from .models import Catering, Customer, Venue
-from .serializers import CustomerSerializer, VenueSerializer, CateringSerializer
+from .models import Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
+from .serializers import CustomerSerializer, VenueSerializer, CateringSerializer, DecoratorSerializer, ContentMakerSerializer, EntertainerSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -57,3 +57,57 @@ class CateringViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+
+
+class DecoratorViewSet(ModelViewSet): 
+    queryset=Decorator.objects.all()
+    serializer_class=DecoratorSerializer
+
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (decorator, created)=Decorator.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method=='GET':
+            serializer=DecoratorSerializer(decorator)
+            return Response(serializer.data)
+        elif request.method=='PUT':
+            serializer=DecoratorSerializer(decorator, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+
+class ContentMakerViewSet(ModelViewSet): 
+    queryset=ContentMaker.objects.all()
+    serializer_class=ContentMakerSerializer
+
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (contentmaker, created)=ContentMaker.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method=='GET':
+            serializer=ContentMakerSerializer(contentmaker)
+            return Response(serializer.data)
+        elif request.method=='PUT':
+            serializer=ContentMakerSerializer(contentmaker, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+
+
+class EntertainerViewSet(ModelViewSet): 
+    queryset=Entertainer.objects.all()
+    serializer_class=EntertainerSerializer
+
+    @action(detail=False, methods=['GET', 'PUT'])
+    def me(self, request):
+        (entertainer, created)=Entertainer.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method=='GET':
+            serializer=EntertainerSerializer(entertainer)
+            return Response(serializer.data)
+        elif request.method=='PUT':
+            serializer=EntertainerSerializer(entertainer, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+
