@@ -7,7 +7,7 @@ import Register from "./Register";
 class Login extends Component {
   render() {
     return (
-      <div>
+      <div className="allogin">
         <ul
           className="nav nav-pills justify-content-center"
           id="pills-tab"
