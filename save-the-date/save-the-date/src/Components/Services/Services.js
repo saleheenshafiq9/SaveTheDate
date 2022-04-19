@@ -3,11 +3,16 @@ import Venue from "./Venue/Venue";
 import Caterer from "./Caterer/Caterer";
 import Decorator from "./Decorator/Decorator";
 import Photography from "./Photography/Photography";
+import { FiArrowRight } from "react-icons/fi";
 
 const Services = (props) => {
   return (
     <div>
-      <p>Services</p>
+      <br />
+      <h4>
+        Explore Venues <FiArrowRight />
+      </h4>
+      <br />
       <Venue />
       <Caterer />
       <Decorator />

@@ -1,0 +1,19 @@
+.card {
+  width: 400px !important;
+}
+
+.badge {
+  margin-left: 30px;
+}
+
+.btn:hover {
+  background-color: #ce6c47;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.close:hover {
+  color: #ce6c47;
+}
