@@ -41,13 +41,12 @@ class EntertainerSerializer(serializers.ModelSerializer):
         fields=['id', 'user_id', 'title', 'description']
 
 
-class ReviewSerailizer(serializers.ModelSerializer):
+class ReviewVenueSerailizer(serializers.ModelSerializer):
     class Meta:
         model=Review
         fields=['id', 'date', 'name', 'description']
 
     def create(self, validated_data):
-        serviceprovider_id=self.context['serviceProvider_id']
-        return Review.objects.create(serviceProvider_id=serviceprovider_id, **validated_data)
-
+        serviceProvider_id=self.context['serviceProvider_id']
+        return Review.objects.create(serviceProvider_id=serviceProvider_id, **validated_data)
 

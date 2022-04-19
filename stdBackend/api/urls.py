@@ -10,7 +10,11 @@ router.register('decorators', views.DecoratorViewSet)
 router.register('contentmakers', views.ContentMakerViewSet)
 router.register('entertainers', views.EntertainerViewSet)
 
-provider_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
-provider_router.register('reviews', views.ReviewViewSet, basename='provider-reviews')
+venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
+venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
 
-urlpatterns=router.urls+provider_router.urls
+catering_router=routers.NestedDefaultRouter(router, 'caterings', lookup='catering')
+catering_router.register('reviews', views.ReviewCateringViewSet, basename='provider-reviews')
+
+
+urlpatterns=router.urls+venue_router.urls+catering_router.urls

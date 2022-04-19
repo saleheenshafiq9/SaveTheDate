@@ -1,7 +1,7 @@
 import django
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
-from .serializers import CateringSerializer, ContentMakerSerializer, DecoratorSerializer, EntertainerSerializer, ReviewSerailizer, CustomerSerializer, VenueSerializer
+from .serializers import CateringSerializer, ContentMakerSerializer, DecoratorSerializer, EntertainerSerializer, ReviewVenueSerailizer, CustomerSerializer, VenueSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -111,10 +111,18 @@ class EntertainerViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
 
-class ReviewViewSet(ModelViewSet):
-    serializer_class=ReviewSerailizer
+class ReviewVenueViewSet(ModelViewSet):
+    serializer_class=ReviewVenueSerailizer
     def get_queryset(self):
-        return Review.objects.filter(serviceProvider_id=self.kwargs['serviceProvider_pk'])
+        return Review.objects.filter(serviceProvider_id=self.kwargs['venue_pk'])
     
     def get_serializer_context(self):
-        return { 'serviceProvider_id':self.kwargs['serviceProvider_pk']}
+        return { 'venue_id':self.kwargs['venue_pk']}
+
+class ReviewCateringViewSet(ModelViewSet):
+    serializer_class=ReviewVenueSerailizer
+    def get_queryset(self):
+        return Review.objects.filter(catering_id=self.kwargs['catering_pk'])
+    
+    def get_serializer_context(self):
+        return { 'catering_id':self.kwargs['catering_pk']}
