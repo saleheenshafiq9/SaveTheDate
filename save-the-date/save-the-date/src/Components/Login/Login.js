@@ -3,14 +3,14 @@ import { Formik } from "formik";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import Register from "./Register";
-import { signInWithGooglePopup } from '../../firebase/firebase';
+import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebase/firebase';
 import {FcGoogle} from "react-icons/fc";
 
 
 const Login = () => {
-  const logGoogleUser = async() => {
-    const response = await signInWithGooglePopup();
-    console.log(response);
+  const logGoogleUser = async() => { 
+    const {user} = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(user);
   }
 
   return (
