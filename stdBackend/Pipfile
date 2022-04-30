@@ -9,6 +9,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
