@@ -2,7 +2,7 @@ from pyexpat import model
 from unicodedata import category
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Customer(models.Model):
@@ -15,6 +15,11 @@ class Customer(models.Model):
 class ServiceProvider(models.Model):
     title=models.CharField(max_length=255)
     description=models.TextField(null=True, blank=True)
+    rating=models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
 
 
 
@@ -77,10 +82,11 @@ class Payment(models.Model):
         max_digits=11,
         decimal_places=2,
     )
+    party=models.ForeignKey(Party, on_delete=models.CASCADE)
     
 
 class Review(models.Model):
     serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, related_name='reviews')
     name=models.CharField(max_length=255)
     description=models.TextField()
-    date=models.DateField(auto_now_add=True)
+    postedAt=models.DateTimeField(auto_now_add=True)
