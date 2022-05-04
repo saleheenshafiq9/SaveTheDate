@@ -90,3 +90,4 @@ class Review(models.Model):
     name=models.CharField(max_length=255)
     description=models.TextField()
     postedAt=models.DateTimeField(auto_now_add=True)
+    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)

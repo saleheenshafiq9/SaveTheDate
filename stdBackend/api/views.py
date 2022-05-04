@@ -126,3 +126,12 @@ class ReviewCateringViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return { 'catering_id':self.kwargs['catering_pk']}
+
+
+class ReviewCateringViewSet(ModelViewSet):
+    serializer_class=ReviewVenueSerailizer
+    def get_queryset(self):
+        return Review.objects.filter(catering_id=self.kwargs['catering_pk'])
+    
+    def get_serializer_context(self):
+        return { 'catering_id':self.kwargs['catering_pk']}
