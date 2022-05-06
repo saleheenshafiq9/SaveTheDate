@@ -94,6 +94,10 @@ class Review(models.Model):
     postedAt=models.DateTimeField(auto_now_add=True)
     customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
 
-   
+class ProviderImage(models.Model):
+    serviceProvider = models.ForeignKey(
+        ServiceProvider, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='api/images')
 
 

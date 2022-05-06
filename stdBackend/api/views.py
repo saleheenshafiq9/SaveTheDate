@@ -1,8 +1,8 @@
 import django
 from requests import request
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
-from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer
+from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage
+from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -14,7 +14,7 @@ class CustomerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (customer, created)=Customer.objects.get_or_create(
+        customer=Customer.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=CustomerSerializer(customer)
@@ -31,7 +31,7 @@ class VenueViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (venue, created)=Venue.objects.get_or_create(
+        venue=Venue.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=VenueSerializer(venue)
@@ -48,7 +48,7 @@ class CateringViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (catering, created)=Catering.objects.get_or_create(
+        catering=Catering.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=CateringSerializer(catering)
@@ -66,7 +66,7 @@ class DecoratorViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (decorator, created)=Decorator.objects.get_or_create(
+        decorator=Decorator.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=DecoratorSerializer(decorator)
@@ -83,7 +83,7 @@ class ContentMakerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (contentmaker, created)=ContentMaker.objects.get_or_create(
+        contentmaker=ContentMaker.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=ContentMakerSerializer(contentmaker)
@@ -101,7 +101,7 @@ class EntertainerViewSet(ModelViewSet):
 
     @action(detail=False, methods=['GET', 'PUT'])
     def me(self, request):
-        (entertainer, created)=Entertainer.objects.get_or_create(
+        entertainer=Entertainer.objects.get(
             user_id=request.user.id)
         if request.method=='GET':
             serializer=EntertainerSerializer(entertainer)
@@ -233,3 +233,57 @@ class ReviewEntertainerViewSet(ModelViewSet):
         review=serializer.save()
         serializer=ReviewSerializer(review)
         return Response(serializer.data)
+
+class VenueImageViewSet(ModelViewSet):
+    serializer_class = ProviderImageSerializer
+
+    def get_serializer_context(self):
+        return {'serviceProvider_id': self.kwargs['venue_pk']}
+
+    def get_queryset(self):
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['venue_pk'])
+
+
+class CateringImageViewSet(ModelViewSet):
+    serializer_class = ProviderImageSerializer
+
+    def get_serializer_context(self):
+        return {'serviceProvider_id': self.kwargs['catering_pk']}
+
+    def get_queryset(self):
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['catering_pk'])
+
+
+class DecoratorImageViewSet(ModelViewSet):
+    serializer_class = ProviderImageSerializer
+
+    def get_serializer_context(self):
+        return {'serviceProvider_id': self.kwargs['decorator_pk']}
+
+    def get_queryset(self):
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['decorator_pk'])
+
+
+class ContentMakerImageViewSet(ModelViewSet):
+    serializer_class = ProviderImageSerializer
+
+    def get_serializer_context(self):
+        return {'serviceProvider_id': self.kwargs['contentmaker_pk']}
+
+    def get_queryset(self):
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['decorator_pk'])
+
+
+class EntertainerImageViewSet(ModelViewSet):
+    serializer_class = ProviderImageSerializer
+
+    def get_serializer_context(self):
+        return {'serviceProvider_id': self.kwargs['entertainer_pk']}
+
+    def get_queryset(self):
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['entertainer_pk'])
+
+
+
+
+
