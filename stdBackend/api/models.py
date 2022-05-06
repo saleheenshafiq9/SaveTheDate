@@ -18,7 +18,8 @@ class ServiceProvider(models.Model):
     rating=models.DecimalField(
         max_digits=3,
         decimal_places=2,
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True,
     )
 
 
@@ -71,7 +72,7 @@ class Notification(models.Model):
 
 class Payment(models.Model):
     category=models.CharField(max_length=255)
-    paymentTime=models.DateTimeField()
+    paymentTime=models.DateTimeField(auto_now=True)
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
     serviceProvider=models.ManyToManyField(ServiceProvider)
     amount=models.DecimalField(
@@ -82,7 +83,8 @@ class Payment(models.Model):
         max_digits=11,
         decimal_places=2,
     )
-    party=models.ForeignKey(Party, on_delete=models.CASCADE)
+    party=models.ForeignKey(
+        Party, on_delete=models.CASCADE)
     
 
 class Review(models.Model):
@@ -91,3 +93,7 @@ class Review(models.Model):
     description=models.TextField()
     postedAt=models.DateTimeField(auto_now_add=True)
     customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+   
+
+

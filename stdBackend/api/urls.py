@@ -16,5 +16,15 @@ venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-re
 catering_router=routers.NestedDefaultRouter(router, 'caterings', lookup='catering')
 catering_router.register('reviews', views.ReviewCateringViewSet, basename='provider-reviews')
 
+decorator_router=routers.NestedDefaultRouter(router, 'decorators', lookup='decorator')
+decorator_router.register('reviews', views.ReviewDecoratorViewSet, basename='provider-reviews')
 
-urlpatterns=router.urls+venue_router.urls+catering_router.urls
+contentmaker_router=routers.NestedDefaultRouter(router, 'contentmakers', lookup='contentmaker')
+contentmaker_router.register('reviews', views.ReviewContentMakerViewSet, basename='provider-reviews')
+
+entertainer_router=routers.NestedDefaultRouter(router, 'entertainers', lookup='entertainer')
+entertainer_router.register('reviews', views.ReviewEntertainerViewSet, basename='provider-reviews')
+
+
+
+urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls

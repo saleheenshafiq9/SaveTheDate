@@ -1,7 +1,8 @@
 import django
+from requests import request
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
-from .serializers import CateringSerializer, ContentMakerSerializer, DecoratorSerializer, EntertainerSerializer, ReviewVenueSerailizer, CustomerSerializer, VenueSerializer
+from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -111,27 +112,124 @@ class EntertainerViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
 
+
+
 class ReviewVenueViewSet(ModelViewSet):
-    serializer_class=ReviewVenueSerailizer
+
     def get_queryset(self):
-        return Review.objects.filter(serviceProvider_id=self.kwargs['venue_pk'])
+        return Review.objects.filter(id=self.kwargs['venue_pk'])
     
-    def get_serializer_context(self):
-        return { 'venue_id':self.kwargs['venue_pk']}
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateReviewSerializer
+        return ReviewSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateReviewSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['venue_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data)
+
 
 class ReviewCateringViewSet(ModelViewSet):
-    serializer_class=ReviewVenueSerailizer
     def get_queryset(self):
-        return Review.objects.filter(catering_id=self.kwargs['catering_pk'])
+        return Review.objects.filter(serviceProvider_id=self.kwargs['catering_pk'])
     
-    def get_serializer_context(self):
-        return { 'catering_id':self.kwargs['catering_pk']}
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateReviewSerializer
+        return ReviewSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateReviewSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['catering_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data)
 
 
-class ReviewCateringViewSet(ModelViewSet):
-    serializer_class=ReviewVenueSerailizer
+class ReviewDecoratorViewSet(ModelViewSet):
     def get_queryset(self):
-        return Review.objects.filter(catering_id=self.kwargs['catering_pk'])
+        return Review.objects.filter(id=self.kwargs['decorator_pk'])
     
-    def get_serializer_context(self):
-        return { 'catering_id':self.kwargs['catering_pk']}
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateReviewSerializer
+        return ReviewSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateReviewSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['decorator_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data)
+
+
+class ReviewContentMakerViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Review.objects.filter(id=self.kwargs['contentmaker_pk'])
+    
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateReviewSerializer
+        return ReviewSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateReviewSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['contentmaker_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data)
+
+
+class ReviewEntertainerViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Review.objects.filter(id=self.kwargs['entertainer_pk'])
+    
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateReviewSerializer
+        return ReviewSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateReviewSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['entertainer_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data)

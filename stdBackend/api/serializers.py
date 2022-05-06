@@ -1,9 +1,13 @@
+from asyncore import read
+from dataclasses import field
 from pyexpat import model
+from statistics import mode
 from rest_framework import serializers
-from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue
+from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Venue
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
+
     class Meta:
         model=Customer
         fields=['id', 'birthDate', 'user_id', 'gender']
@@ -41,12 +45,28 @@ class EntertainerSerializer(serializers.ModelSerializer):
         fields=['id', 'user_id', 'title', 'description']
 
 
-class ReviewVenueSerailizer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model=Review
-        fields=['id', 'date', 'name', 'description']
+        fields=['id', 'postedAt', 'name', 'description', 'customer',
+                'serviceProvider_id']
 
-    def create(self, validated_data):
-        serviceProvider_id=self.context['serviceProvider_id']
-        return Review.objects.create(serviceProvider_id=serviceProvider_id, **validated_data)
+class CreateReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Review
+        fields=['id', 'name', 'description']
 
+    def save(self):
+        serviceProvider_id=self.context['id']
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        review=Review.objects.create(
+            customer=customer,
+            serviceProvider_id=serviceProvider_id,
+            name=self.validated_data['name'],
+            description=self.validated_data['description']
+            )
+        return review
+    
+    
