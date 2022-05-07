@@ -1,11 +1,15 @@
 import django
+from django.shortcuts import get_object_or_404
 from requests import request
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from .models import Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage
-from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer
+
+from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly
+from .models import FoodItem, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage
+from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework import status
 
 # Create your views here.
 class CustomerViewSet(ModelViewSet): 
@@ -115,7 +119,7 @@ class EntertainerViewSet(ModelViewSet):
 
 
 class ReviewVenueViewSet(ModelViewSet):
-
+    permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
         return Review.objects.filter(id=self.kwargs['venue_pk'])
     
@@ -140,6 +144,7 @@ class ReviewVenueViewSet(ModelViewSet):
 
 
 class ReviewCateringViewSet(ModelViewSet):
+    permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
         return Review.objects.filter(serviceProvider_id=self.kwargs['catering_pk'])
     
@@ -164,6 +169,7 @@ class ReviewCateringViewSet(ModelViewSet):
 
 
 class ReviewDecoratorViewSet(ModelViewSet):
+    permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
         return Review.objects.filter(id=self.kwargs['decorator_pk'])
     
@@ -188,6 +194,7 @@ class ReviewDecoratorViewSet(ModelViewSet):
 
 
 class ReviewContentMakerViewSet(ModelViewSet):
+    permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
         return Review.objects.filter(id=self.kwargs['contentmaker_pk'])
     
@@ -212,6 +219,7 @@ class ReviewContentMakerViewSet(ModelViewSet):
 
 
 class ReviewEntertainerViewSet(ModelViewSet):
+    permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
         return Review.objects.filter(id=self.kwargs['entertainer_pk'])
     
@@ -283,6 +291,40 @@ class EntertainerImageViewSet(ModelViewSet):
     def get_queryset(self):
         return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['entertainer_pk'])
 
+
+class FoodItemViewSet(ModelViewSet):
+    serializer_class=FoodItemSerializer
+    http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
+
+    def get_permissions(self):
+        if self.request.method in ['GET']:
+            return [AllowAny()]
+        return [IsCateringOrReadOnly()]
+
+    def get_queryset(self):
+        return FoodItem.objects.filter(
+            catering_id=self.kwargs['catering_pk']
+        )
+    
+    def get_serializer_context(self):
+        return {
+            'catering_id':self.kwargs['catering_pk']
+        }
+
+    def private(self, request, *args, **kargs):
+        user=self.get_object()
+        data = FoodItemSerializer(user).data
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class FoodImageViewSet(ModelViewSet):
+    serializer_class = FoodImageSerializer
+
+    def get_serializer_context(self):
+        return {'item_id': self.kwargs['item_pk']}
+
+    def get_queryset(self):
+        return FoodImage.objects.filter(fooditem_id=self.kwargs['item_pk'])
 
 
 

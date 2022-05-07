@@ -1,3 +1,4 @@
+from email.mime import base
 from . import views
 from rest_framework_nested import routers
 from . import views
@@ -18,6 +19,10 @@ venue_router.register('images', views.VenueImageViewSet, basename='venue-images'
 catering_router=routers.NestedDefaultRouter(router, 'caterings', lookup='catering')
 catering_router.register('reviews', views.ReviewCateringViewSet, basename='provider-reviews')
 catering_router.register('images', views.CateringImageViewSet, basename='catering-images')
+catering_router.register('items', views.FoodItemViewSet, basename='catering-items')
+fooditem_router=routers.NestedDefaultRouter(catering_router, 'items', lookup='item')
+fooditem_router.register('images', views.FoodImageViewSet, basename='item-images')
+
 
 
 decorator_router=routers.NestedDefaultRouter(router, 'decorators', lookup='decorator')
@@ -36,4 +41,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 
-urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls
+urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls

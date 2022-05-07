@@ -1,5 +1,3 @@
-from pyexpat import model
-from unicodedata import category
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -100,4 +98,19 @@ class ProviderImage(models.Model):
     image = models.ImageField(
         upload_to='api/images')
 
+
+class FoodItem(models.Model):
+    catering=models.ForeignKey(Catering, on_delete=models.CASCADE, related_name='items')
+    title=models.CharField(max_length=255)
+    description=models.TextField()
+    unitPrice=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+    )
+
+class FoodImage(models.Model):
+    fooditem=models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name='images')
+    image=models.ImageField(
+        upload_to='api/foodimage'
+    )
 
