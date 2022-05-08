@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import Logo from "../../assets/mirror-ball.png";
-
+import { UserContext } from "../../contexts/user-context";
 const Header = () => {
+  const {currentUser} = useContext(UserContext);
+  console.log(currentUser);
+  
   return (
     <div>
       <Navbar
