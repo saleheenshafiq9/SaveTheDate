@@ -35,6 +35,9 @@ const Header = () => {
             <Link to="/contact" id="NavLink">
               Contact Us
             </Link>
+            <Link to="/navbarnew" id="NavLink">
+              Auth
+            </Link>
           </NavItem>
         </Nav>
       </Navbar>

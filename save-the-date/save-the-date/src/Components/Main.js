@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { PrivateRoute } from "./Profiles/PrivateRoute";
+import CustomerProfile from "./Profiles/CustomerProfile";
 import Header from "./Header/Header";
 import SaveTheDate from "./SaveTheDate/SaveTheDate";
 import Services from "./Services/Services";
@@ -15,6 +17,7 @@ const Main = (props) => {
       <div className="container">
         <Routes>
           <Route path="/" element={<SaveTheDate />} />
+          <Route path="/" element={<PrivateRoute> <CustomerProfile/></PrivateRoute>} />
           <Route path="/services" element={<Services />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />
