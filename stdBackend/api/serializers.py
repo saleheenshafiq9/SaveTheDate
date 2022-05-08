@@ -3,7 +3,7 @@ from dataclasses import field
 from pyexpat import model
 from statistics import mode
 from rest_framework import serializers
-from .models import FoodItem, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
+from .models import FoodItem, Party, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -147,7 +147,10 @@ class CreateReviewSerializer(serializers.ModelSerializer):
             )
         return review
 
-
+class PartySerializer(models.Model):
+    class Meta:
+        model=Party
+        fields=['id', 'customer', '']
 
 
     

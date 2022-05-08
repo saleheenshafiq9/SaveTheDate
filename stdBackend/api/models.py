@@ -60,7 +60,18 @@ class Appointment(models.Model):
 
 class Party(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-    serviceProviders=models.ManyToManyField(ServiceProvider)
+    partyTime=models.DateTimeField()
+    totalCost=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+    )
+    pendingCost=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+    )
+    status=models.CharField(max_length=255)
+
+
 
 
 class Notification(models.Model):
@@ -69,15 +80,9 @@ class Notification(models.Model):
     description=models.TextField()
 
 class Payment(models.Model):
-    category=models.CharField(max_length=255)
     paymentTime=models.DateTimeField(auto_now=True)
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-    serviceProvider=models.ManyToManyField(ServiceProvider)
     amount=models.DecimalField(
-        max_digits=11,
-        decimal_places=2,
-    )
-    vatAmount=models.DecimalField(
         max_digits=11,
         decimal_places=2,
     )
@@ -127,5 +132,21 @@ class ThemeImage(models.Model):
     theme=models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='images')
     image=models.ImageField(
         upload_to='api/themeimage'
+    )
+
+
+class FoodCart(models.Model):
+    party=models.ForeignKey(
+        Party, on_delete=models.CASCADE
+    )
+
+
+class FoodCartItem(models.Model):
+    foodcart=models.ForeignKey(
+        FoodCart, on_delete=models.CASCADE
+    )
+    fooditem=models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    quantity=models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1)]
     )
 
