@@ -27,7 +27,12 @@ fooditem_router.register('images', views.FoodImageViewSet, basename='item-images
 
 decorator_router=routers.NestedDefaultRouter(router, 'decorators', lookup='decorator')
 decorator_router.register('reviews', views.ReviewDecoratorViewSet, basename='provider-reviews')
-decorator_router.register('images', views.DecoratorImageViewSet, basename='venue-images')
+decorator_router.register('images', views.DecoratorImageViewSet, basename='theme-images')
+decorator_router.register('themes', views.ThemeViewSet, basename='decorator-themes')
+theme_router=routers.NestedDefaultRouter(decorator_router, 'themes', lookup='theme')
+theme_router.register('images', views.ThemeImageViewSet, basename='theme-images')
+
+
 
 
 contentmaker_router=routers.NestedDefaultRouter(router, 'contentmakers', lookup='contentmaker')
@@ -41,4 +46,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 
-urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls
+urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls

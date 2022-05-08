@@ -1,11 +1,9 @@
 import django
 from django.shortcuts import get_object_or_404
-from requests import request
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-
-from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly
-from .models import FoodItem, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage
-from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer
+from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
+from .models import Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage
+from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -326,6 +324,40 @@ class FoodImageViewSet(ModelViewSet):
     def get_queryset(self):
         return FoodImage.objects.filter(fooditem_id=self.kwargs['item_pk'])
 
+
+class ThemeViewSet(ModelViewSet):
+    serializer_class=ThemeSerializer
+    http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
+
+    def get_permissions(self):
+        if self.request.method in ['GET']:
+            return [AllowAny()]
+        return [IsDecoratorOrReadOnly()]
+
+    def get_queryset(self):
+        return Theme.objects.filter(
+            decorator_id=self.kwargs['decorator_pk']
+        )
+    
+    def get_serializer_context(self):
+        return {
+            'decorator_id':self.kwargs['decorator_pk']
+        }
+
+    def private(self, request, *args, **kargs):
+        user=self.get_object()
+        data = ThemeSerializer(user).data
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class ThemeImageViewSet(ModelViewSet):
+    serializer_class = ThemeImageSerializer
+
+    def get_serializer_context(self):
+        return {'theme_id': self.kwargs['theme_pk']}
+
+    def get_queryset(self):
+        return ThemeImage.objects.filter(theme_id=self.kwargs['theme_pk'])
 
 
 

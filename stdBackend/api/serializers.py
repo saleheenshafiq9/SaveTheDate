@@ -3,7 +3,7 @@ from dataclasses import field
 from pyexpat import model
 from statistics import mode
 from rest_framework import serializers
-from .models import FoodItem, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Venue, ProviderImage, FoodImage
+from .models import FoodItem, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -69,13 +69,40 @@ class CateringSerializer(serializers.ModelSerializer):
         'description', 'images', 'items']
 
 
+class ThemeImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        theme_id = self.context['theme_id']
+        return ThemeImage.objects.create(theme_id=theme_id, **validated_data)
+
+    class Meta:
+        model = ThemeImage
+        fields = ['id', 'image']
+
+
+
+class ThemeSerializer(serializers.ModelSerializer):
+    images=ThemeImageSerializer(many=True, read_only=True)
+    class Meta:
+        model=Theme
+        fields=['id', 'title',
+        'description', 'price', 'images']
+
+    def create(self, validated_data):
+        decorator_id=self.context['decorator_id']
+        return Theme.objects.create(
+            decorator_id=decorator_id,
+            **validated_data
+        )
+
+
 class DecoratorSerializer(serializers.ModelSerializer):
     images=ProviderImageSerializer(many=True, read_only=True)
     user_id=serializers.IntegerField(read_only=True)
+    themes=ThemeSerializer(many=True, read_only=True)
     class Meta:
         model=Decorator
         fields=['id', 'user_id', 'title', 'description',
-        'images']
+        'images', 'themes']
 
 
 

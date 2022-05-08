@@ -114,3 +114,18 @@ class FoodImage(models.Model):
         upload_to='api/foodimage'
     )
 
+class Theme(models.Model):
+    decorator=models.ForeignKey(Decorator, on_delete=models.CASCADE, related_name='themes')
+    title=models.CharField(max_length=255)
+    description=models.TextField()
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+    )
+
+class ThemeImage(models.Model):
+    theme=models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='images')
+    image=models.ImageField(
+        upload_to='api/themeimage'
+    )
+
