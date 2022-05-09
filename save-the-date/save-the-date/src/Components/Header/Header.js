@@ -39,9 +39,8 @@ const Header = () => {
               Contact Us
             </Link>
             {currentUser ? (
-              <span className="NavLink"> Sign Out</span>
-             ) : (<Link className="NavLink" to='/login'>
-                Sign In
+              <span id="NavLink"> Sign Out</span>
+             ) : (<Link id="NavLink" to='/login'>Sign In
               </Link>
             )}
           </NavItem>
