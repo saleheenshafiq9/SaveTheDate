@@ -147,7 +147,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
             )
         return review
 
-class PartySerializer(models.Model):
+class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model=Party
         fields=['id', 'customer', '']
