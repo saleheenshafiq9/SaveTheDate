@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import Logo from "../../assets/mirror-ball.png";
-
+import { UserContext } from "../../contexts/user-context";
 const Header = () => {
+  const {currentUser} = useContext(UserContext);
+  //console.log(currentUser);
+
   return (
     <div>
       <Navbar
@@ -35,9 +38,12 @@ const Header = () => {
             <Link to="/contact" id="NavLink">
               Contact Us
             </Link>
-            <Link to="/navbarnew" id="NavLink">
-              Auth
-            </Link>
+            {currentUser ? (
+              <span className="NavLink"> Sign Out</span>
+             ) : (<Link className="NavLink" to='/login'>
+                Sign In
+              </Link>
+            )}
           </NavItem>
         </Nav>
       </Navbar>

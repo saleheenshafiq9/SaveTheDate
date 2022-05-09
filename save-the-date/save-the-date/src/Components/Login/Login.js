@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { Formik } from "formik";
 import "./Login.css";
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import Register from "./Register";
 import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebase/firebase';
 import {FcGoogle} from "react-icons/fc";
 import axios from "axios";
+import { UserContext } from "../../contexts/user-context";
+
 const tokenurl="http://127.0.0.1:8000";
 const login_key='/auth/jwt/create/';
 const refresh_key='/auth/jwt/refresh';
@@ -52,7 +54,9 @@ const Login = () => {
   const [username,setUser]=useState("")
   const [password,setPassword]=useState("");
   
-   function handlePassChange(e){
+  const {setCurrentUser} = useContext(UserContext);
+
+  function handlePassChange(e){
     setPassword(e.target.value);
    
   }
@@ -82,6 +86,7 @@ const Login = () => {
       token.access=acces_token.access;
       localStorage.setItem("stdBackend",JSON.stringify(token));
     }
+    setCurrentUser(token);
 
   }
   
