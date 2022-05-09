@@ -150,7 +150,8 @@ class CreateReviewSerializer(serializers.ModelSerializer):
 class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model=Party
-        fields=['id', 'customer', '']
+        fields=['id', 'partyTime', 'totalCost', 'pendingCost',
+        'status']
 
 
     
