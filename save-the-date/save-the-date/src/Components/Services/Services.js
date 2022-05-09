@@ -20,7 +20,17 @@ const Services = (props) => {
       </h4>
       <br />
       <Caterer />
+      <br /><br />
+      <h4>
+        Explore Decorators <FiArrowRight />
+      </h4>
+      <br />
       <Decorator />
+      <br /><br />
+      <h4>
+        Explore Photographers <FiArrowRight />
+      </h4>
+      <br />
       <Photography />
     </div>
   );
