@@ -14,6 +14,11 @@ const Services = (props) => {
       </h4>
       <br />
       <Venue />
+      <br /><br />
+      <h4>
+        Explore Caterers <FiArrowRight />
+      </h4>
+      <br />
       <Caterer />
       <Decorator />
       <Photography />

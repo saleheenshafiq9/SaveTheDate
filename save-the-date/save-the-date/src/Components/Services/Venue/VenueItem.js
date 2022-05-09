@@ -2,7 +2,7 @@ import React from "react";
 import "./Venue.css";
 
 const VenueItem = (props) => {
-  console.log(props);
+  //console.log(props);
   return (
     <div>
       <div className="card w-75">

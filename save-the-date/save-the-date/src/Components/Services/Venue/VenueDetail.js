@@ -17,7 +17,7 @@ const VenueDetail = (props) => {
           </CardTitle>
           <CardText>{props.venue.desc}</CardText>
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
-            Preview
+            Contact
           </button>
           <button className="btn btn-success" onClick={props.onVenueSelect}>
             Book Now
@@ -31,6 +31,10 @@ const VenueDetail = (props) => {
             <br />
             <b>Address: </b>
             {props.venue.address}
+            <br />
+            <br />
+            <b>Capacity: </b>
+            {props.venue.capacity}
           </div>
         </CardBody>
       </Card>
