@@ -4,6 +4,7 @@ import { FiArrowRight } from "react-icons/fi";
 import Caterer from "../../Services/Caterer/Caterer";
 import Decorator from "../../Services/Decorator/Decorator";
 import Photography from "../../Services/Photography/Photography";
+import AddCart from "../../AddCart/AddCart";
 
 const Homepage = (props) => {
   return (

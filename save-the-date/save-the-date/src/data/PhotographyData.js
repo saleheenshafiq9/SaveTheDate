@@ -1,4 +1,4 @@
-const DecoratorData = [
+const PhotographyData = [
     {
       id: 0,
       name: "Capital FilmsBd",
@@ -25,4 +25,4 @@ const DecoratorData = [
     },
   ];
   
-  export default DecoratorData;
+  export default PhotographyData;

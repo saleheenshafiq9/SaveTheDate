@@ -4,14 +4,17 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Footer from "./Components/Footer/Footer";
 import {UserProvider} from "./contexts/user-context";
+import {CartsProvider} from "./contexts/cart";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
       <UserProvider>
-      <Main />
-        <Footer />
+        <CartsProvider>
+          <Main />
+          <Footer />
+        </CartsProvider>
       </UserProvider>
       </BrowserRouter>
     </div>
