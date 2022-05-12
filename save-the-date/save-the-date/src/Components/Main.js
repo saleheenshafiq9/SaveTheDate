@@ -17,7 +17,7 @@ const Main = (props) => {
       <div className="container">
         <Routes>
           <Route path="/" element={<SaveTheDate />} />
-          <Route path="/" element={<PrivateRoute> <CustomerProfile/></PrivateRoute>} />
+          <Route path="/customerProfile" element={<CustomerProfile/>} />
           <Route path="/services" element={<Services />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import { Formik } from "formik";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Register from "./Register";
 import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebase/firebase';
 import {FcGoogle} from "react-icons/fc";
@@ -46,6 +46,8 @@ validate={(values) => {
 // export default Login;
 
 const Login = () => {
+  // const [isLoggedIn, setLoggedIn]=useState("");
+  const navigate = useNavigate();
   const logGoogleUser = async() => { 
     const {user} = await signInWithGooglePopup();
     setCurrentUser(user);
@@ -59,7 +61,6 @@ const Login = () => {
 
   function handlePassChange(e){
     setPassword(e.target.value);
-   
   }
   async function handleSubmit(e){
     const nameInput=e.target.username.value;
@@ -88,7 +89,21 @@ const Login = () => {
       localStorage.setItem("stdBackend",JSON.stringify(token));
     }
     setCurrentUser(token);
+    const data_key='/auth/users/me';
+    const access_tok = "JWT" + " " + token.access;
+    console.log(access_tok);
+    const fetchData = await axios.get(tokenurl+data_key, {
+      headers: {
+      'Authorization': access_tok,
+      }
+    }).then(s=>s.data)
 
+    // const fetchData= await axios.get(tokenurl+data_key,token.access);
+    console.log(fetchData.email);
+    if(fetchData.email) {
+      navigate('../customerProfile');
+    }
+    // fetchData.email? navigate('./customerProfile') : null;
   }
   
   
