@@ -49,7 +49,7 @@ class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model=FoodItem
         fields=['id', 'title',
-        'description', 'unitPrice', 'images']
+        'description', 'unitPrice', 'images', 'catering_id']
 
     def create(self, validated_data):
         catering_id=self.context['catering_id']

@@ -2,8 +2,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage
-from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
+from .models import Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
+from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -277,7 +277,7 @@ class ContentMakerImageViewSet(ModelViewSet):
         return {'serviceProvider_id': self.kwargs['contentmaker_pk']}
 
     def get_queryset(self):
-        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['decorator_pk'])
+        return ProviderImage.objects.filter(serviceProvider_id=self.kwargs['contentmaker_pk'])
 
 
 class EntertainerImageViewSet(ModelViewSet):
@@ -360,4 +360,7 @@ class ThemeImageViewSet(ModelViewSet):
         return ThemeImage.objects.filter(theme_id=self.kwargs['theme_pk'])
 
 
+class PartyViewSet(ModelViewSet):
+    queryset=Party.objects.all()
+    serializer_class=PartySerializer
 
