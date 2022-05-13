@@ -1,5 +1,6 @@
-import React from "react";
-import { Formik, Field } from "formik";
+import { UserContext } from "../../contexts/user-context";
+import { useContext } from "react";
+// import { Formik, Field } from "formik";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import "react-phone-number-input/style.css";
@@ -68,6 +69,7 @@ import { useState } from "react";
 
 function Register() {
   const tokenurl='http://127.0.0.1:8000';
+  const {currUser,setCurrentUser} = useContext(UserContext);
   const reg_key='/auth/users/';
   const [formInput,SetInputs]=useState({
       first_name:'',
@@ -85,9 +87,7 @@ function Register() {
           {...formInput,
               [e.target.name]:e.target.value
           }
-      )
-
-  }
+      )}
   const  handleSubmit= async (e)=>{
       e.preventDefault();
       const username=e.target.username.value;
@@ -108,17 +108,18 @@ function Register() {
           "userType":userType
       }
 
-      if(password!=confirmpassword) {
+      if(password!==confirmpassword) {
         alert("Passwords do not match");
         return;
       }
 
-      const isReg=await axios.post(tokenurl+reg_key,data,{
+      const userData=await axios.post(tokenurl+reg_key,data,{
           headers:{
             Accept:"application/json;",
             'Content-Type':'application/json;charset=UTF-8'
           }
         }).then(s=>console.log(s));
+      setCurrentUser(userData)
       
   }
   
@@ -128,7 +129,7 @@ function Register() {
 <div className="mb-3">
   <div className="row">
     <div className="col">
-      <label for="exampleInputFirstName1" className="form-label">
+      <label htmlFor="exampleInputFirstName1" className="form-label">
         <b>First Name</b>
       </label>
       <input
@@ -143,7 +144,7 @@ function Register() {
       />
     </div>
     <div className="col">
-      <label for="exampleInputLastName1" className="form-label">
+      <label htmlFor="exampleInputLastName1" className="form-label">
         <b>Last Name</b>
       </label>
       <input
@@ -161,7 +162,7 @@ function Register() {
 </div>
 
 <div className="mb-3">
-  <label for="exampleInputEmail1" className="form-label">
+  <label htmlFor="exampleInputEmail1" className="form-label">
     <b>Email</b>
   </label>
   <input
@@ -181,7 +182,7 @@ function Register() {
 <div className="mb-3">
   <div className="row">
     <div className="col">
-      <label for="exampleInputUsername1" className="form-label">
+      <label htmlFor="exampleInputUsername1" className="form-label">
         <b>Username</b>
       </label>
       <input
@@ -195,7 +196,7 @@ function Register() {
       />
     </div>
     <div className="col typechoose">
-      <label for="exampleInputtype1" className="form-label">
+      <label htmlFor="exampleInputtype1" className="form-label">
         <b>User Type</b>
       </label>
       <br />
@@ -214,7 +215,7 @@ function Register() {
   </div>
 </div>
 <div className="mb-3">
-  <label for="exampleInputPhone1" className="form-label">
+  <label htmlFor="exampleInputPhone1" className="form-label">
     <b>Phone Number</b>
   </label>
   <input
@@ -228,7 +229,7 @@ function Register() {
   />
 </div>
 <div className="mb-3">
-  <label for="exampleInputPassword1" className="form-label">
+  <label htmlFor="exampleInputPassword1" className="form-label">
     <b>Password</b>
   </label>
   <input
@@ -243,7 +244,7 @@ function Register() {
 </div>
 <div className="mb-3">
   <label
-    for="exampleInputConfirmPassword1"
+    htmlFor="exampleInputConfirmPassword1"
     className="form-label"
   >
     <b>Confirm Password</b>

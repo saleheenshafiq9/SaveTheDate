@@ -1,4 +1,5 @@
 import React, {useContext, useState} from "react";
+
 import { Formik } from "formik";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +8,7 @@ import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebas
 import {FcGoogle} from "react-icons/fc";
 import axios from "axios";
 import { UserContext } from "../../contexts/user-context";
+import PostReq from "../../helper/PostReq";
 
 const tokenurl="http://127.0.0.1:8000";
 const login_key='/auth/jwt/create/';
@@ -57,7 +59,7 @@ const Login = () => {
   const [username,setUser]=useState("")
   const [password,setPassword]=useState("");
   
-  const {setCurrentUser} = useContext(UserContext);
+  const {currUser,setCurrentUser} = useContext(UserContext);
 
   function handlePassChange(e){
     setPassword(e.target.value);
@@ -67,43 +69,30 @@ const Login = () => {
     const passInput=e.target.password.value;
     e.preventDefault();
     const data={"username":nameInput,"password":passInput};
-    const token= await axios.post(tokenurl+login_key,data,
-      {
-        headers:{
-        Accept: "application/json",
-          'Content-Type':'application/json;charset=UTF-8'
-      }  
-    }).then(res=>res.data)
+    const token= PostReq(tokenurl,login_key,data);
       console.log(token);
 
     if (token.refresh){
       setPassword('');
       setUser('');
-      const acces_token= await axios.post(tokenurl+refresh_key,{"refresh":token.refresh},{
-        headers:{
-          Accept:"application/json;",
-          'Content-Type':'application/json;charset=UTF-8'
-        }
-      }).then(s=>s.data)
+      const acces_token= PostReq(tokenurl,refresh_key,{"refresh":token.refresh})
       token.access=acces_token.access;
       localStorage.setItem("stdBackend",JSON.stringify(token));
     }
     setCurrentUser(token);
     const data_key='/auth/users/me';
-    const access_tok = "JWT" + " " + token.access;
+    const access_tok = `JWT  ${token.access}`;
     console.log(access_tok);
-    const fetchData = await axios.get(tokenurl+data_key, {
+    const fetchedData = await axios.get(tokenurl+data_key, {
       headers: {
       'Authorization': access_tok,
       }
     }).then(s=>s.data)
 
     // const fetchData= await axios.get(tokenurl+data_key,token.access);
-    console.log(fetchData.email);
-    if(fetchData.email) {
-      navigate('../customerProfile');
-    }
-    // fetchData.email? navigate('./customerProfile') : null;
+    setCurrentUser(fetchedData)
+    fetchedData.email && navigate('../customerProfile');
+    
   }
   
   
@@ -157,7 +146,7 @@ const Login = () => {
             <div className="container" id="box">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label for="exampleInputEmail" className="form-label">
+                  <label htmlFor="exampleInputEmail" className="form-label">
                     <b>Username</b>
                   </label>
                   <input
@@ -172,7 +161,7 @@ const Login = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label for="exampleInputPassword" className="form-label">
+                  <label htmlFor="exampleInputPassword" className="form-label">
                     <b>Password</b>
                   </label>
                   <input
