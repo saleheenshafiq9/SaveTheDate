@@ -4,6 +4,8 @@ import "./Header.css";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import Logo from "../../assets/mirror-ball.png";
 import { UserContext } from "../../contexts/user-context";
+import Logout from "../../pages/Login/Logout";
+
 const Header = () => {
   const {currentUser} = useContext(UserContext);
   //console.log(currentUser);
@@ -39,7 +41,7 @@ const Header = () => {
               Contact Us
             </Link>
             {currentUser ? (
-              <span id="NavLink"> Sign Out</span>
+              <Logout></Logout>
              ) : (<Link id="NavLink" to='/login'>Sign In
               </Link>
             )}

@@ -58,7 +58,7 @@ const Login = () => {
   const [username,setUser]=useState("")
   const [password,setPassword]=useState("");
   
-  const {currentUser,setCurrentUser} = useContext(UserContext);
+  const {currentUser,setCurrentUser,handleSubmit} = useContext(UserContext);
 
 
   
@@ -66,47 +66,47 @@ const Login = () => {
   function handlePassChange(e){
     setPassword(e.target.value);
   }
-  async function handleSubmit(e){
-    const nameInput=e.target.username.value;
-    const passInput=e.target.password.value;
-    e.preventDefault();
-    const data={"username":nameInput,"password":passInput};
-    const token= await axios.post(tokenurl+login_key,data,{
-      headers:{
-        Accept:"application/json;",
-        'Content-Type':'application/json;charset=UTF-8'
-      }
-    }).then(s=>s.data)
-      console.log(token);
+  // async function handleSubmit(e){
+  //   const nameInput=e.target.username.value;
+  //   const passInput=e.target.password.value;
+  //   e.preventDefault();
+  //   const data={"username":nameInput,"password":passInput};
+  //   const token= await axios.post(tokenurl+login_key,data,{
+  //     headers:{
+  //       Accept:"application/json;",
+  //       'Content-Type':'application/json;charset=UTF-8'
+  //     }
+  //   }).then(s=>s.data)
+  //     console.log(token);
 
-    if (token.refresh){
-      setPassword('');
-      setUser('');
-      const acces_token= await axios.post(tokenurl+refresh_key,{"refresh":token.refresh},
-        {
-          headers:{
-          Accept: "application/json",
-            'Content-Type':'application/json;charset=UTF-8'
-        }  
-      }).then(res=>res.data)
-      token.access=acces_token.access;
-      localStorage.setItem("stdBackend",JSON.stringify(token));
-    }
-    setCurrentUser(token);
-    const data_key='/auth/users/me';
-    const access_tok = `JWT ${token.access}`;
-    console.log(token);
-    const fetchedData = await axios.get(tokenurl+data_key, {
-      headers: {
-      'Authorization': access_tok,
-      }
-    }).then(s=>s.data)
-    console.table(fetchedData);
-    setCurrentUser(fetchedData);
+  //   if (token.refresh){
+  //     setPassword('');
+  //     setUser('');
+  //     const acces_token= await axios.post(tokenurl+refresh_key,{"refresh":token.refresh},
+  //       {
+  //         headers:{
+  //         Accept: "application/json",
+  //           'Content-Type':'application/json;charset=UTF-8'
+  //       }  
+  //     }).then(res=>res.data)
+  //     token.access=acces_token.access;
+  //     localStorage.setItem("stdBackend",JSON.stringify(token));
+  //   }
+  //   setCurrentUser(token);
+  //   const data_key='/auth/users/me';
+  //   const access_tok = `JWT ${token.access}`;
+  //   console.log(token);
+  //   const fetchedData = await axios.get(tokenurl+data_key, {
+  //     headers: {
+  //     'Authorization': access_tok,
+  //     }
+  //   }).then(s=>s.data)
+  //   console.table(fetchedData);
+  //   setCurrentUser(fetchedData);
+
+  //   //currentUser.email&& navigate('/customerProfile');
     
-    currentUser.email&& navigate('/customerProfile');
-    
-  }
+  // }
   
   
   function handleUserChange(e){
