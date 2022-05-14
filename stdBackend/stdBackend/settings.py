@@ -95,7 +95,7 @@ DATABASES = {
         'NAME': 'savethedate',
         'HOST':'localhost',
         'USER': 'root',
-        'PASSWORD': 'nilbilla',
+        'PASSWORD': 'password',
     }
 }
 
