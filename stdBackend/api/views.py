@@ -364,3 +364,11 @@ class PartyViewSet(ModelViewSet):
     queryset=Party.objects.all()
     serializer_class=PartySerializer
 
+    def get_serializer_context(self):
+        return {
+            'user_id':self.request.user.id
+        }
+
+
+
+

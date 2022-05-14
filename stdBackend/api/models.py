@@ -61,7 +61,6 @@ class Appointment(models.Model):
 class Party(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
     catering=models.ManyToManyField(Catering)
-    partyTime=models.DateTimeField()
     totalCost=models.DecimalField(
         max_digits=11,
         decimal_places=2,

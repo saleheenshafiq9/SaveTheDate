@@ -2,6 +2,7 @@ from asyncore import read
 from dataclasses import field
 from pyexpat import model
 from statistics import mode
+from wsgiref import validate
 from rest_framework import serializers
 from .models import FoodItem, Party, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
 
@@ -150,8 +151,19 @@ class CreateReviewSerializer(serializers.ModelSerializer):
 class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model=Party
-        fields=['id', 'partyTime', 'totalCost', 'pendingCost',
+        fields=['id', 'totalCost', 'pendingCost',
         'status']
 
+    def save(self):
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        party=Party.objects.create(
+            customer=customer,
+            totalCost=self.validated_data['totalCost'],
+            pendingCost=self.validated_data['pendingCost'],
+            status=self.validated_data['status']
+        )
+        return party
 
     

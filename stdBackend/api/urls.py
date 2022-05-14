@@ -13,6 +13,10 @@ router.register('entertainers', views.EntertainerViewSet)
 router.register('partys', views.PartyViewSet)
 
 
+party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
+party_router.register('caterings', views.CateringViewSet)
+
+
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
 venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
 venue_router.register('images', views.VenueImageViewSet, basename='venue-images')
