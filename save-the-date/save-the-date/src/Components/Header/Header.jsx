@@ -41,7 +41,7 @@ const Header = () => {
               Contact Us
             </Link>
             {currentUser ? (
-              <Logout></Logout>
+              <Logout />
              ) : (<Link id="NavLink" to='/login'>Sign In
               </Link>
             )}

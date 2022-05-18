@@ -15,11 +15,15 @@ export const UserProvider = ({children}) => {
     const [token, setToken] = useState(storageToken);
     const [loading,setLoading]=useState(true);
     const [currentUser, setCurrentUser] = useState(null);
+
     const updateToken=useCallback(async()=>{
-        const accessToken=axios.post(tokenurl+refresh_key,{'refresh':token?.refresh})
+        console.log(JSON.parse(localStorage.getItem("stdBackend")));
+        localStorage.getItem('stdBackend').access && setToken(JSON.parse(localStorage.getItem("stdBackend")));
+        axios.post(tokenurl+refresh_key,{'refresh':token?.refresh})
         .then(res=>res.data)
         .then((resp)=>{
             setToken(tok=>({...tok,'access':resp.access}))
+            // localStorage.setItem('stdBackend',token)
         return resp});
         const access_tok = `JWT ${token?.access}`;
         console.log(token);   
@@ -28,10 +32,11 @@ export const UserProvider = ({children}) => {
                 setCurrentUser(resp);
                 return resp
         })
+
         loading&& setLoading(false);
             
         fetchedData&& navigate('/customerProfile');
-    },[token,loading,navigate])
+    },[token,navigate,loading])
     useEffect(()=>{
         if(loading){
             updateToken();
@@ -46,7 +51,7 @@ export const UserProvider = ({children}) => {
 //    token&&login();
    
    
-    const value = { currentUser,setCurrentUser,updateToken,token};
+    const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     
 
 

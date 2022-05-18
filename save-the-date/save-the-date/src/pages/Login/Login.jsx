@@ -51,7 +51,7 @@ validate={(values) => {
 const Login = () => {
   // const [error, setError]=useState(false);
   const navigate = useNavigate();
-  const {currentUser,login,setCurrentUser} = useContext(UserContext);
+  const {currentUser,updateToken,setCurrentUser,setToken} = useContext(UserContext);
   const logGoogleUser = async() => { 
     const {user} = await signInWithGooglePopup();
     setCurrentUser(user);
@@ -79,10 +79,12 @@ const Login = () => {
     let token=await axios.post(tokenurl+login_key,data)
     .then(res=>res.data).then(res=>
       {localStorage.setItem("stdBackend",JSON.stringify(res));
+        setToken(res);
+      
       return res
    });
 
-    login()
+    updateToken()
     // const access_tok = `JWT ${token.access}`;
     // console.log(token);
     // const fetchedData = await axios.get(tokenurl+data_key, {
@@ -94,7 +96,6 @@ const Login = () => {
     // fect.then(res=>setCurrentUser(res));
     
     // setCurrentUser(fetchedData);
-    
     // currentUser.email && navigate('/customerProfile');
     
   }

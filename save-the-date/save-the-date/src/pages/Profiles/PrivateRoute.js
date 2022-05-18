@@ -9,23 +9,11 @@ const tokenurl="http://127.0.0.1:8000";
 
 
 export const PrivateRoute = ({children}) => {
-  const {currentUser,setCurrentUser} = useContext(UserContext);
-  const  access_token=JSON.parse(localStorage.getItem('stdBackend')).access;
-  const navigate=useNavigate();
-  const access_tok = `JWT ${access_token}`;
-  if (!currentUser.email){
-    const fetchedData =  axios.get(tokenurl+data_key, {
-      headers: {
-      'Authorization': access_tok,
-      }
-    }).then(s=>s.data);
-    setCurrentUser(fetchedData)
-  }
+  const {currentUser,updateToken} = useContext(UserContext);
+  
+  
     
-  console.log(currentUser);
-
-    
-  const auth=currentUser.email?true:false;
+  const auth=currentUser?true:false;
 ;
   return(
     <>
