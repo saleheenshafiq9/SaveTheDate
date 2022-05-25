@@ -1,3 +1,4 @@
+from cgitb import lookup
 from email.mime import base
 from . import views
 from rest_framework_nested import routers
@@ -10,6 +11,12 @@ router.register('caterings', views.CateringViewSet)
 router.register('decorators', views.DecoratorViewSet)
 router.register('contentmakers', views.ContentMakerViewSet)
 router.register('entertainers', views.EntertainerViewSet)
+router.register('partys', views.PartyViewSet)
+
+
+party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
+party_router.register('caterings', views.CateringViewSet, basename='party-caterings')
+
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
 venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
