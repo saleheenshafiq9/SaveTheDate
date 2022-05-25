@@ -1,5 +1,5 @@
 import { UserContext } from "../../contexts/user-context";
-import { useContext,useEffect } from "react";
+import React,{ useContext,useEffect } from "react";
 import { Navigate,  } from "react-router";
 
 function CustomerProfile() {
