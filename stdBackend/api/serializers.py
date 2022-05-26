@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import FoodItem, Party, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
+from .models import FoodCart, FoodCartItem, FoodItem, Party, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -154,16 +154,41 @@ class PartySerializer(serializers.ModelSerializer):
         fields=['id', 'totalCost', 'pendingCost',
         'status']
 
+
+class CreatePartySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Party
+        fields=['id']
+
     def save(self):
         customer=Customer.objects.get(
             user_id=self.context['user_id']
         )
         party=Party.objects.create(
-            customer=customer,
-            totalCost=self.validated_data['totalCost'],
-            pendingCost=self.validated_data['pendingCost'],
-            status=self.validated_data['status']
+            customer=customer
         )
         return party
 
-    
+class AddPartyCateringSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Catering
+        fields=['id']
+
+
+class FoodCartItemSerializer(serializers.ModelSerializer):
+    totalPrice = serializers.SerializerMethodField()
+
+    def get_total_price(self, cart_item: FoodCartItem):
+        return cart_item.quantity * cart_item.fooditem.unit_price
+
+    class Meta:
+        model=FoodCartItem
+        fields=['id', 'fooditem', 'quantity', 'totalPrice']
+
+
+class PartyFoodCartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=FoodCart
+        fields=['id', 'party_id']
+
+

@@ -1,9 +1,10 @@
+import queue
 import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
-from .serializers import CateringSerializer, ContentMakerSerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
+from .models import FoodCart, Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
+from .serializers import AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, PartyFoodCartSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -361,8 +362,26 @@ class ThemeImageViewSet(ModelViewSet):
 
 
 class PartyViewSet(ModelViewSet):
-    queryset=Party.objects.all()
-    serializer_class=PartySerializer
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_staff:
+            return Party.objects.all()
+
+        customer_id = Customer.objects.only(
+            'id').get(user_id=user.id)
+        return Party.objects.filter(customer_id=customer_id)
+
+    def get_permissions(self):
+        if self.request.method=='POST':
+            return [IsCustomerOrReadOnly()]
+        return [AllowAny()]
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreatePartySerializer
+        return PartySerializer
+
 
     def get_serializer_context(self):
         return {
@@ -373,10 +392,22 @@ class PartyViewSet(ModelViewSet):
 class PartyCateringViewSet(ModelViewSet):
 
     def get_queryset(self):
-        return Catering.objects.filter(id=self.kwargs['party_pk'])
+        return Catering.objects \
+            .filter(party__id=self.kwargs['party_pk']) \
+            .prefetch_related('Party').all()
+
 
     def get_serializer_class(self):
+        if self.request.method=='POST':
+            return AddPartyCateringSerializer
         return CateringSerializer
     
+
+class PartyFoodCartViewSet(ModelViewSet):
+    serializer_class=PartyFoodCartSerializer
+
+    def get_queryset(self):
+        return [FoodCart.objects.get(party_id=self.kwargs['party_pk'])]
+
 
 
