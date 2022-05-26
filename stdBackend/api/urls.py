@@ -15,7 +15,7 @@ router.register('partys', views.PartyViewSet)
 
 
 party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
-party_router.register('caterings', views.CateringViewSet, basename='party-caterings')
+party_router.register('caterings', views.PartyCateringViewSet, basename='party-caterings')
 
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
@@ -53,4 +53,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 
-urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls
+urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls

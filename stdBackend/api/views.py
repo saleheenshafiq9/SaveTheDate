@@ -370,5 +370,13 @@ class PartyViewSet(ModelViewSet):
         }
 
 
+class PartyCateringViewSet(ModelViewSet):
+
+    def get_queryset(self):
+        return Catering.objects.filter(id=self.kwargs['party_pk'])
+
+    def get_serializer_class(self):
+        return CateringSerializer
+    
 
 
