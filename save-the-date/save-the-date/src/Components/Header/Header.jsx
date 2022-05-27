@@ -40,6 +40,9 @@ const Header = () => {
             <Link to="/contact" id="NavLink">
               Contact Us
             </Link>
+            <Link to="/providerProfile" id="NavLink">
+              Provider Profile
+            </Link>
             {currentUser ? (
               <Logout />
              ) : (<Link id="NavLink" to='/login'>Sign In
