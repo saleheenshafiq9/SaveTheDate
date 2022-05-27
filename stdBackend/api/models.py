@@ -64,12 +64,14 @@ class Party(models.Model):
     totalCost=models.DecimalField(
         max_digits=11,
         decimal_places=2,
+        default=0,
     )
     pendingCost=models.DecimalField(
         max_digits=11,
         decimal_places=2,
+        default=0,
     )
-    status=models.CharField(max_length=255)
+    status=models.CharField(max_length=255, default="unconfirmed")
 
 
 
@@ -78,6 +80,7 @@ class Notification(models.Model):
     notifiedAt=models.DateTimeField(auto_now=True)
     mobileNumber=models.CharField(max_length=255)
     description=models.TextField()
+
 
 class Payment(models.Model):
     paymentTime=models.DateTimeField(auto_now=True)
@@ -136,7 +139,7 @@ class ThemeImage(models.Model):
 
 
 class FoodCart(models.Model):
-    party=models.ForeignKey(
+    party=models.OneToOneField(
         Party, on_delete=models.CASCADE
     )
 
