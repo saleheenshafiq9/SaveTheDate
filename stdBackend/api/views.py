@@ -2,9 +2,9 @@ import queue
 import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from .permissions import IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import FoodCart, Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
-from .serializers import AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodItemSerializer, PartyFoodCartSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
+from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
+from .models import FoodCart, FoodCartItem, Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
+from .serializers import AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartyFoodCartSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -406,8 +406,27 @@ class PartyCateringViewSet(ModelViewSet):
 class PartyFoodCartViewSet(ModelViewSet):
     serializer_class=PartyFoodCartSerializer
 
+    def get_permissions(self):
+        if self.request.method=='POST':
+            return [DenyAll()]
+        return [IsAuthenticatedOrReadOnly()]
+
     def get_queryset(self):
         return [FoodCart.objects.get(party_id=self.kwargs['party_pk'])]
 
 
+class FoodCartItemViewset(ModelViewSet):
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return AddFoodCartItemSerializer
+        return FoodCartItemSerializer
+
+    def get_serializer_context(self):
+        return {'foodcart_id': self.kwargs['foodcart_pk']}
+
+    def get_queryset(self):
+        return FoodCartItem.objects \
+            .filter(foodcart_id=self.kwargs['foodcart_pk']) \
+            .select_related('fooditem')
 

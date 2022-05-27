@@ -139,16 +139,22 @@ class ThemeImage(models.Model):
 
 
 class FoodCart(models.Model):
-    party=models.OneToOneField(
+    party=models.ForeignKey(
         Party, on_delete=models.CASCADE
     )
 
 
 class FoodCartItem(models.Model):
     foodcart=models.ForeignKey(
-        FoodCart, on_delete=models.CASCADE
+        FoodCart, on_delete=models.CASCADE,
+        related_name='foodcartitem'
     )
-    fooditem=models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+
+    fooditem=models.ForeignKey(
+        FoodItem, 
+        on_delete=models.CASCADE, 
+        )
+
     quantity=models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)]
     )

@@ -178,8 +178,8 @@ class AddPartyCateringSerializer(serializers.ModelSerializer):
 class FoodCartItemSerializer(serializers.ModelSerializer):
     totalPrice = serializers.SerializerMethodField()
 
-    def get_total_price(self, cart_item: FoodCartItem):
-        return cart_item.quantity * cart_item.fooditem.unit_price
+    def get_totalPrice(self, cart_item: FoodCartItem):
+        return cart_item.quantity * cart_item.fooditem.unitPrice
 
     class Meta:
         model=FoodCartItem
@@ -187,8 +187,40 @@ class FoodCartItemSerializer(serializers.ModelSerializer):
 
 
 class PartyFoodCartSerializer(serializers.ModelSerializer):
+    foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
+    
     class Meta:
         model=FoodCart
-        fields=['id', 'party_id']
+        fields=['id', 'party_id', 'foodcartitem']
 
 
+class AddFoodCartItemSerializer(serializers.ModelSerializer):
+    fooditem_id=serializers.IntegerField()
+
+    def validate_fooditem_id(self, value):
+        if not FoodItem.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No product with the given ID was found.')
+        return value
+
+    def save(self, **kwargs):
+        foodcart_id = self.context['foodcart_id']
+        fooditem_id = self.validated_data['fooditem_id']
+        quantity = self.validated_data['quantity']
+
+        try:
+            cart_item = FoodCartItem.objects.get(
+                foodcart_id=foodcart_id, fooditem_id=fooditem_id)
+            cart_item.quantity += quantity
+            cart_item.save()
+            self.instance = cart_item
+        except FoodCartItem.DoesNotExist:
+            self.instance = FoodCartItem.objects.create(
+                foodcart_id=foodcart_id, **self.validated_data)
+
+        return self.instance
+
+
+    class Meta:
+        model = FoodCartItem
+        fields = ['id', 'fooditem_id', 'quantity']
