@@ -81,7 +81,7 @@ const Login = () => {
       {localStorage.setItem("stdBackend",JSON.stringify(res));
         setToken(res);
       
-      return res
+      return res;
    });
 
     updateToken()
