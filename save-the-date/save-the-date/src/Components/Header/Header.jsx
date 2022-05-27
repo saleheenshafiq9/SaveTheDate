@@ -37,7 +37,7 @@ const Header = () => {
             <Link to="/blogs" id="NavLink">
               Blogs
             </Link>
-            <Link to="/contact" id="NavLink">
+            <Link to="/providerProfile" id="NavLink">
               Contact Us
             </Link>
             {currentUser ? (
