@@ -15,10 +15,11 @@ export const UserContext = createContext(
 export const UserProvider = ({children}) => {
     const navigate=useNavigate();
     let storageToken=localStorage.getItem('stdBackend')?getToken("stdBackend"):null;
+    
     const [token, setToken] = useState(storageToken);
     const [loading,setLoading]=useState(true);
     const [currentUser, setCurrentUser] = useState(null);
-    const [error,setError]= useState(false)
+    const [loggedIn,setLoggedIn]= useState(false)
 
     const updateToken=useCallback(async()=>{
         console.log(getToken("stdBackend"));
@@ -38,14 +39,26 @@ export const UserProvider = ({children}) => {
                 return resp
         })
         loading&& setLoading(false);
-        fetchedData&& navigate('/customerProfile');
+        currentUser && setLoggedIn(true)
+        
     },[token,navigate,loading])
-    useEffect(()=>{
-        if(loading){
-            updateToken();
-        }
-    },[token,loading,updateToken])
+
     
+    //
+    // 
+    useEffect(()=>{
+       currentUser && setLoggedIn(true)
+    },[currentUser])
+
+    useEffect(()=>{
+        !loggedIn && updateToken()
+    },[loading,updateToken])
+    
+    useEffect(()=>{
+        currentUser?.userType=="Customer" && navigate('../customerProfile')
+        currentUser?.userType=="Provider" &&  navigate('../Provider')
+        
+    },[loading,currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     
