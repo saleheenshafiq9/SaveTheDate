@@ -53,10 +53,10 @@ export const UserProvider = ({children}) => {
     useEffect(()=>{
         !loggedIn && updateToken()
     },[loading,updateToken])
-    
+
     useEffect(()=>{
         currentUser?.userType=="Customer" && navigate('../customerProfile')
-        currentUser?.userType=="Provider" &&  navigate('../Provider')
+        currentUser?.userType=="Provider" &&  navigate('../providerProfile')
         
     },[loading,currentUser])
 
