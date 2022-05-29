@@ -71,7 +71,6 @@ function Register() {
         }).then(s=>s.data);
         console.log(userData);
       setCurrentUser(userData)
-      
   }
   
   return (

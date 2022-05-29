@@ -7,3 +7,49 @@
     width: 100%;
     height: 200px;
 }
+
+.card {
+    width: 670px !important;
+
+    background: hsla(221, 45%, 73%, 1);
+
+    background: hsla(40, 94%, 74%, 1);
+
+    background: linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    background: -moz-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    background: -webkit-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FBD07C", endColorstr="#F7F779", GradientType=1 );
+}
+
+#booking-card {
+    width: 300px!important;
+    
+    background: hsla(221, 45%, 73%, 1);
+
+    background: hsla(40, 94%, 74%, 1);
+
+    background: linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    background: -moz-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    background: -webkit-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FBD07C", endColorstr="#F7F779", GradientType=1 );
+}
+
+#plantext {
+    text-decoration: none;
+    color: white;
+}
+
+#exploretext {
+    text-decoration: none;
+    color: black;
+}
+
+#starttext {
+    padding-left: 170px;
+}
