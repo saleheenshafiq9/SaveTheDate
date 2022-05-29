@@ -28,9 +28,9 @@ function ProviderProfile() {
                     <button className="btn btn-dark">
                         Edit Profile
                     </button>
-                    <button className="btn btn-success">
+                    <a className="btn btn-success" href="#cal">
                         Go to Calendar
-                    </button>
+                    </a>
                 </div>
             </div>
             <hr />
@@ -83,7 +83,7 @@ function ProviderProfile() {
                 <ReactCalender />
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-3" id="cal">
             <h4 className="text-dark my-3">Appointment & Booking Schedule</h4><br />
             <ScheduleAppoint />
             </div>

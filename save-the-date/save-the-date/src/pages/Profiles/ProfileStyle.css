@@ -7,3 +7,11 @@
     width: 100%;
     height: 200px;
 }
+
+.card {
+    width: 670px !important;
+}
+
+#booking-card {
+    width: 200px!important;
+}
