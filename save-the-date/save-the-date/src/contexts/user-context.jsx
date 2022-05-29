@@ -58,7 +58,7 @@ export const UserProvider = ({children}) => {
         currentUser?.userType=="Customer" && navigate('../customerProfile')
         currentUser?.userType=="Provider" &&  navigate('../providerProfile')
         
-    },[loading,currentUser])
+    },[loggedIn,currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     
