@@ -10,6 +10,14 @@ import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Login/Register";
 import ProviderProfile from "../pages/Profiles/ProviderProfile";
+import RecommendationParameters from "../pages/Profiles/CustomerQuery";
+import Venue from "./Services/Venue/Venue";
+import Caterer from "./Services/Caterer/Caterer";
+import Decorator from "./Services/Decorator/Decorator";
+import Photography from "./Services/Photography/Photography";
+import EditVenue from "../pages/editProfiles/editVenue";
+import EditCaterer from "../pages/editProfiles/editCaterer";
+import CatererProfile from "../pages/Profiles/CatererProfile";
 
 const Main = (props) => {
   return (
@@ -25,6 +33,14 @@ const Main = (props) => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/providerProfile" element={<ProviderProfile />} />
+          <Route path="/catererProfile" element={<CatererProfile />} />
+          <Route path="/recommendation" element={<RecommendationParameters />} />
+          <Route path="/venue" element={<Venue />} />
+          <Route path="/caterer" element={<Caterer />} />
+          <Route path="/decorator" element={<Decorator />} />
+          <Route path="/photography" element={<Photography />} />
+          <Route path="/editvenue" element={<EditVenue />} />
+          <Route path="/editcaterer" element={<EditCaterer />} />
         </Routes>
       </div>
     </div>
