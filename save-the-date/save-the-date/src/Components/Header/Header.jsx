@@ -41,7 +41,12 @@ const Header = () => {
               Contact Us
             </Link>
             {currentUser ? (
+            <>
+              { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink"> customerProfile</Link>}
+              { currentUser.usertype=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
+              { currentUser.usertype=='catering'&& <Link to="cateringProfile " id="NavLink" >VenueProfile</Link> } 
               <Logout />
+            </>
              ) : (<Link id="NavLink" to='/login'>Sign In
               </Link>
             )}

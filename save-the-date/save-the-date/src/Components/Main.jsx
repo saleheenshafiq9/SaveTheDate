@@ -59,7 +59,7 @@ const Main = (props) => {
           } />
           
 
-          <Route path="/providerProfile" 
+          <Route path="/venueProfile" 
             element={
               <PrivateRoute>
                 <VenueProfile />
