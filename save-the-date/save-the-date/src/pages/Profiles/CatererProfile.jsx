@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./ProfileStyle.css";
-import {FaUserFriends} from "react-icons/fa";
+import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
+import {MdModeEditOutline} from "react-icons/md";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
@@ -27,10 +28,14 @@ function CatererProfile() {
                 <div className="col-3"></div>
                 <div className="col-3">
                     <button className="btn btn-dark">
-                        <Link to='/editcaterer' id="plantext">Edit Profile</Link>
+                        <Link to='/editcaterer' id="plantext">Edit Profile <MdModeEditOutline style={{
+                    marginLeft: "7px"
+                }}/></Link>
                     </button>
                     <a className="btn btn-success" href="#cal">
-                        Go to Calendar
+                        Go to Calendar <FaRegCalendarAlt style={{
+                    marginLeft: "7px"
+                }}/>
                     </a>
                 </div>
             </div>

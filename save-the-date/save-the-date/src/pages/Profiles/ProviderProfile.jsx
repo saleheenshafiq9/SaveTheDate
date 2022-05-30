@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./ProfileStyle.css";
-import {FaUserFriends} from "react-icons/fa";
+import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
+import {MdModeEditOutline} from "react-icons/md";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+import Gallery from "./Gallery";
 
 function ProviderProfile() {
     return(
@@ -27,40 +29,21 @@ function ProviderProfile() {
                 <div className="col-3"></div>
                 <div className="col-3">
                     <button className="btn btn-dark">
-                        <Link to='/editvenue' id="plantext">Edit Profile</Link>
+                        <Link to='/editvenue' id="plantext">Edit Profile<MdModeEditOutline style={{
+                    marginLeft: "7px"
+                }}/></Link>
                     </button>
                     <a className="btn btn-success" href="#cal">
-                        Go to Calendar
+                        Go to Calendar <FaRegCalendarAlt style={{
+                    marginLeft: "7px"
+                }}/>
                     </a>
                 </div>
             </div>
             <hr />
             <div className="row"><br /><br />
                 <h4 className="text-center">Gallery</h4>
-                <div className="col-3">
-                <img src="/venue/One.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/venue/Two.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/venue/Three.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/venue/Four.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3"><br />
-                <img src="/venue/Four.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3"><br />
-                <img src="/venue/Three.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3"><br />
-                <img src="/venue/Two.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3"><br />
-                <img src="/venue/One.jpg" className="gallery-img"/>
-                </div>
+                    <Gallery />
             </div>
             <div className="row p-5">
                 <div className="col-6 text-secondary">

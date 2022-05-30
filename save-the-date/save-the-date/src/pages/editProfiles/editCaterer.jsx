@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
-import { MdAddAPhoto} from "react-icons/md";
+import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
+import { BiArrowBack} from "react-icons/bi";
 
 class EditCaterer extends Component {
     constructor(props) {
@@ -77,7 +78,12 @@ class EditCaterer extends Component {
                     />
                     </Col>
                 </FormGroup>
-                <Button className="btn btn-dark" id="saveprof">Save</Button>
+                <Button className="btn btn-success" id="saveprof">Save<MdOutlineSaveAlt style={{
+                    marginLeft: "7px"
+                }}/></Button>
+                <Button className="btn btn-dark"><BiArrowBack style={{
+                    marginRight: "7px"
+                }}/><Link to="/providerProfile" id="plantext">Go Back</Link></Button>
             </Form>
         </div>
                 <div className="col-4 text-center m-5">
