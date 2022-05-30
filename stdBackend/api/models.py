@@ -140,7 +140,8 @@ class ThemeImage(models.Model):
 
 class FoodCart(models.Model):
     party=models.ForeignKey(
-        Party, on_delete=models.CASCADE
+        Party, on_delete=models.CASCADE,
+        related_name='foodcart'
     )
 
 
@@ -158,4 +159,21 @@ class FoodCartItem(models.Model):
     quantity=models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)]
     )
+
+
+class VenueSlot(models.Model):
+    venue=models.ForeignKey(Venue, on_delete=models.CASCADE)
+    startTime=models.DateTimeField()
+    endTime=models.DateTimeField()
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+        default=0,
+    )
+
+class PartyVenueSlot(models.Model):
+    party=models.OneToOneField(Party, on_delete=models.CASCADE)
+    venueslot=models.ForeignKey(VenueSlot, on_delete=models.CASCADE, null=True)
+
+
 

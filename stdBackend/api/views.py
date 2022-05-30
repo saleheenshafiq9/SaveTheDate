@@ -3,8 +3,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import FoodCart, FoodCartItem, Party, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem
-from .serializers import AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartyFoodCartSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer
+from .models import FoodCart, FoodCartItem, Party, PartyVenueSlot, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
+from .serializers import PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartyFoodCartSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -170,7 +170,7 @@ class ReviewCateringViewSet(ModelViewSet):
 class ReviewDecoratorViewSet(ModelViewSet):
     permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
-        return Review.objects.filter(id=self.kwargs['decorator_pk'])
+        return Review.objects.filter(serviceProvider_id=self.kwargs['decorator_pk'])
     
 
     def get_serializer_class(self):
@@ -195,7 +195,7 @@ class ReviewDecoratorViewSet(ModelViewSet):
 class ReviewContentMakerViewSet(ModelViewSet):
     permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
-        return Review.objects.filter(id=self.kwargs['contentmaker_pk'])
+        return Review.objects.filter(serviceProvider_id=self.kwargs['contentmaker_pk'])
     
 
     def get_serializer_class(self):
@@ -367,10 +367,11 @@ class PartyViewSet(ModelViewSet):
 
         if user.is_staff:
             return Party.objects.all()
-
-        customer_id = Customer.objects.only(
-            'id').get(user_id=user.id)
-        return Party.objects.filter(customer_id=customer_id)
+        
+        if user.userType=="customer":
+            customer_id = Customer.objects.only(
+                'id').get(user_id=user.id)
+            return Party.objects.filter(customer_id=customer_id)
 
     def get_permissions(self):
         if self.request.method=='POST':
@@ -430,3 +431,41 @@ class FoodCartItemViewset(ModelViewSet):
             .filter(foodcart_id=self.kwargs['foodcart_pk']) \
             .select_related('fooditem')
 
+
+class VenueSlotViewSet(ModelViewSet):
+    def get_queryset(self):
+        return VenueSlot.objects.filter(venue_id=self.kwargs['venue_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateVenueSlotSerializer
+        return VenueSlotSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateVenueSlotSerializer(
+            data=request.data,
+            context={
+                'id':self.kwargs['venue_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        venue=serializer.save()
+        serializer=VenueSlotSerializer(venue)
+        return Response(serializer.data)
+
+class PartyVenueSlotViewSet(ModelViewSet):
+    http_method_names = ['get', 'put', 'patch', 'delete']
+    
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return UpdatePartyVenueSlotSerializer
+        return PartyVenueSlotSerializer
+
+    def get_serializer_context(self):
+        return {'party_id': self.kwargs['party_pk']}
+
+
+    def get_queryset(self):
+        return PartyVenueSlot.objects \
+            .filter(party_id=self.kwargs['party_pk']) \
+            .select_related('venueslot')

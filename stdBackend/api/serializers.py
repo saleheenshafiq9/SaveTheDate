@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import FoodCart, FoodCartItem, FoodItem, Party, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage
+from .models import FoodCart, FoodCartItem, FoodItem, Party, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -148,12 +148,6 @@ class CreateReviewSerializer(serializers.ModelSerializer):
             )
         return review
 
-class PartySerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Party
-        fields=['id', 'totalCost', 'pendingCost',
-        'status']
-
 
 class CreatePartySerializer(serializers.ModelSerializer):
     class Meta:
@@ -188,10 +182,14 @@ class FoodCartItemSerializer(serializers.ModelSerializer):
 
 class PartyFoodCartSerializer(serializers.ModelSerializer):
     foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
-    
+    totalPrice=serializers.SerializerMethodField()
+
+    def get_totalPrice(self, foodcart: FoodCart):
+        return sum([item.quantity * item.fooditem.unitPrice for item in foodcart.foodcartitem.all()])
+
     class Meta:
         model=FoodCart
-        fields=['id', 'party_id', 'foodcartitem']
+        fields=['id', 'party_id', 'foodcartitem', 'totalPrice']
 
 
 class AddFoodCartItemSerializer(serializers.ModelSerializer):
@@ -224,3 +222,56 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodCartItem
         fields = ['id', 'fooditem_id', 'quantity']
+
+
+class VenueSlotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=VenueSlot
+        fields=['id', 'startTime', 'endTime', 'price']
+
+class CreateVenueSlotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=VenueSlot
+        fields=['id', 'startTime', 'endTime', 'price']
+        
+    
+    def save(self):
+        venue_id=self.context['id']
+        venueslot=VenueSlot.objects.create(
+            venue_id=venue_id,
+            startTime=self.validated_data['startTime'],
+            endTime=self.validated_data['endTime'],
+            price=self.validated_data['price']
+            )
+        return venueslot
+
+class UpdatePartyVenueSlotSerializer(serializers.ModelSerializer):
+    venueslot_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenueSlot
+        fields=['id', 'venueslot_id']
+
+    def validate_venueslot_id(self, value):
+        if not VenueSlot.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No venue slot with the given ID was found.')
+        return value
+
+
+class PartyVenueSlotSerializer(serializers.ModelSerializer):
+    venueslot=VenueSlotSerializer(many=False, read_only=True)
+    
+    class Meta:
+        model=PartyVenueSlot
+        fields=['id', 'venueslot']
+
+
+class PartySerializer(serializers.ModelSerializer):
+    foodcart=PartyFoodCartSerializer(many=False, read_only=True)
+
+    class Meta:
+        model=Party
+        fields=['id', 'totalCost', 'pendingCost',
+        'status', 'foodcart']
+
+
