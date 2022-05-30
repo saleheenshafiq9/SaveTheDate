@@ -94,7 +94,7 @@ function CustomerProfile() {
           </div>
           <div className="row">
             <div className="col text-center mt-3" id="starttext">
-              <button type="button" class="btn btn-success" disabled>Go to Checkout</button>
+              <button type="button" className="btn btn-success" disabled>Go to Checkout</button>
             </div>
           </div>
         </div>
