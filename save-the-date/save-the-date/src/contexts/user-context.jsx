@@ -40,12 +40,12 @@ export const UserProvider = ({children}) => {
         
     },[token,navigate,loading])
 
-    const NavigateToProfile=useCallback(()=>{ currentUser?.userType=="customer" && navigate('../customerProfile')
+    const NavigateToProfile=()=>{ currentUser?.userType=="customer" && navigate('../customerProfile')
     currentUser?.userType=="venue" &&  navigate('../providerProfile')
     currentUser?.userType=="catering" &&  navigate('../catererProfile')
-    currentUser?.userType=="photographer" &&  navigate('../photographyProfile')  
+    currentUser?.userType=="photographer" &&  navigate('../photographyProfile')
 
-    })
+    }
     
     useEffect(()=>{
        currentUser && setLoggedIn(true)
