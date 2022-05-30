@@ -44,8 +44,6 @@ export const UserProvider = ({children}) => {
     },[token,navigate,loading])
 
     
-    //
-    // 
     useEffect(()=>{
        currentUser && setLoggedIn(true)
     },[currentUser])
@@ -56,8 +54,8 @@ export const UserProvider = ({children}) => {
 
     useEffect(()=>{
         currentUser?.userType=="Customer" && navigate('../customerProfile')
-        currentUser?.userType=="Provider" &&  navigate('../providerProfile')
-        
+        currentUser?.userType=="venue" &&  navigate('../providerProfile')
+        currentUser?.userType=="catering" &&  navigate('../catererProfile')
     },[loggedIn,currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
