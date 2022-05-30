@@ -4,8 +4,10 @@ import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/user-context";
 
 class EditDecorator extends Component {
+    static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {

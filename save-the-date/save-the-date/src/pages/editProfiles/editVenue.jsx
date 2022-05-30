@@ -5,7 +5,13 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 
+
+import PutReq from "../../helper/PutReq";
+import { UserContext } from "../../contexts/user-context";
+
+
 class EditVenue extends Component {
+    static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -20,19 +26,26 @@ class EditVenue extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
-      handleInputChange = (event) => {
+      handleInputChange(event) {
+
         const value = event.target.value;
         const name = event.target.name;
         this.setState({
           [name]: value,
         });
+        
       };
       
-    handleSubmit = (event) => {
-        console.log(this.state);
+    handleSubmit(event) {
         event.preventDefault();
+        const {currentUser}=this.context;
 
+        const {image,...reqData}=this.state
+        console.log(reqData);
         
+        const data_key=`api/venues/${currentUser.id}/`;
+        PutReq(data_key,reqData)
+
       };
 
     render() {
@@ -99,7 +112,10 @@ class EditVenue extends Component {
                     />
                     </Col>
                 </FormGroup>
-                <Button className="btn btn-success" id="saveprof">Save<MdOutlineSaveAlt style={{
+                <Button className="btn btn-success" type="submit"
+                 onClick ={()=>this.handleSubmit} 
+                 id="saveprof">
+                     Save <MdOutlineSaveAlt style={{
                     marginLeft: "7px"
                 }}/></Button>
                 <Button className="btn btn-dark"><BiArrowBack style={{
@@ -112,7 +128,9 @@ class EditVenue extends Component {
                     width: "200px",
                     height: "80px"
                 }}/><br/><br/>
-                <input type="file" id="myfile" style={{
+                <input type="file" id="myfile"
+                onChange={this.handleInputChange}
+                 style={{
                     paddingLeft: "100px"
                 }} value={this.state.image}/>
             </div>

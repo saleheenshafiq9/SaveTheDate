@@ -5,9 +5,7 @@ import { useNavigate } from "react-router";
 import ReqWithHead from "../helper/ReqWithHead";
 import getToken from "../helper/getToken";
 import setltoken from "../helper/setToken";
-const refresh_key='/auth/jwt/refresh';
-const data_key='/auth/users/me';
-const tokenurl="http://127.0.0.1:8000";
+import {refresh_key,data_key,tokenUrl} from "../constants/constants.js"
 
 export const UserContext = createContext(
     null)
@@ -25,7 +23,7 @@ export const UserProvider = ({children}) => {
         console.log(getToken("stdBackend"));
         let stToken=getToken('stdBackend');
         stToken&& setToken(getToken("stdBackend"));
-        axios.post(tokenurl+refresh_key,{'refresh':token?.refresh})
+        axios.post(tokenUrl+refresh_key,{'refresh':token?.refresh})
         .then(res=>res.data)
         .then((resp)=>{
             setToken(tok=>({...tok,'access':resp.access}))
@@ -33,30 +31,34 @@ export const UserProvider = ({children}) => {
         return resp});
         const access_tok = `JWT ${token?.access}`;
         console.log(token);   
-        const fetchedData=await ReqWithHead(tokenurl,data_key,access_tok)
+        const fetchedData=await ReqWithHead(tokenUrl,data_key,access_tok)
         .then(resp=>{
                 setCurrentUser(resp);
                 return resp
         })
         loading&& setLoading(false);
-        currentUser && setLoggedIn(true)
         
     },[token,navigate,loading])
 
+    const NavigateToProfile=useCallback(()=>{ currentUser?.userType=="customer" && navigate('../customerProfile')
+    currentUser?.userType=="venue" &&  navigate('../providerProfile')
+    currentUser?.userType=="catering" &&  navigate('../catererProfile')
+    currentUser?.userType=="photographer" &&  navigate('../photographyProfile')  
+
+    })
     
     useEffect(()=>{
        currentUser && setLoggedIn(true)
     },[currentUser])
 
     useEffect(()=>{
-        !loggedIn && updateToken()
-    },[loading,updateToken])
+        !loggedIn && token && updateToken()
+    },[loading])
 
     useEffect(()=>{
-        currentUser?.userType=="Customer" && navigate('../customerProfile')
-        currentUser?.userType=="venue" &&  navigate('../providerProfile')
-        currentUser?.userType=="catering" &&  navigate('../catererProfile')
-    },[loggedIn,currentUser])
+        NavigateToProfile();
+            
+    },[loggedIn])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     

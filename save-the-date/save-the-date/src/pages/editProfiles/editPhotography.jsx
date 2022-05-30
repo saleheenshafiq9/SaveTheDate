@@ -3,9 +3,11 @@ import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
+import { UserContext } from "../../contexts/user-context";
 import { Link } from "react-router-dom";
 
 class EditPhotography extends Component {
+    static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -67,7 +69,7 @@ class EditPhotography extends Component {
                     />
                     </Col>
                 </FormGroup>
-                <Button className="btn btn-success" id="saveprof">Save<MdOutlineSaveAlt style={{
+                <Button className="btn btn-success"  id="saveprof">Save<MdOutlineSaveAlt style={{
                     marginLeft: "7px"
                 }}/></Button>
                 <Button className="btn btn-dark"><BiArrowBack style={{

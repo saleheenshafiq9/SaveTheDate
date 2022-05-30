@@ -4,8 +4,10 @@ import CatererDetail from "./CatererDetail";
 import CatererItem from "./CatererItem";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
+import { UserContext } from "../../../contexts/user-context";
 
 class Caterer extends Component {
+  
   state = {
     caterers: CatererData,
     selectedVenue: null,

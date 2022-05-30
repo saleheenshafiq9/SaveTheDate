@@ -4,8 +4,10 @@ import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/user-context";
 
 class EditCaterer extends Component {
+    static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -95,9 +97,11 @@ class EditCaterer extends Component {
                     width: "200px",
                     height: "80px"
                 }}/><br/><br/>
-                <input type="file" id="myfile" style={{
-                    paddingLeft: "100px"
-                }} value={this.state.image}/>
+                <input type="file" id="myfile"
+                    onChange={this.handleInputChange}
+                    style={{
+                        paddingLeft: "100px"}} 
+                    value={this.state.image}/>
             </div>
         </div>
     )
