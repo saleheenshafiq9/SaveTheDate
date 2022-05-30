@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
+import { MdAddAPhoto} from "react-icons/md";
 
 class EditCaterer extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class EditCaterer extends Component {
           capacity: "",
           title: "",
           description: "",
+          image: ""
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,7 +32,8 @@ class EditCaterer extends Component {
 
     render() {
         return(
-            <div className="col-12 col-md-7 mt-5">
+            <div className="row">
+                <div className="col-8 col-md-6 mt-5">
                 <Form onSubmit={this.handleSubmit}>
                 <FormGroup row>
                     <Label htmlFor="capacity" md={2}>
@@ -77,6 +80,16 @@ class EditCaterer extends Component {
                 <Button className="btn btn-dark" id="saveprof">Save</Button>
             </Form>
         </div>
+                <div className="col-4 text-center m-5">
+                <MdAddAPhoto style={{
+                    width: "200px",
+                    height: "80px"
+                }}/><br/><br/>
+                <input type="file" id="myfile" style={{
+                    paddingLeft: "100px"
+                }} value={this.state.image}/>
+            </div>
+            </div>
     )
     }
 }
