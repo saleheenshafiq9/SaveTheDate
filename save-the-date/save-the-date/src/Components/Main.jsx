@@ -8,7 +8,7 @@ import Services from "./Services/Services";
 import Blogs from "../pages/Blogs/Blogs";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Login/Login";
-import Register from "../pages/Login/Register";
+import Register from "../pages/Register/Register";
 import ProviderProfile from "../pages/Profiles/ProviderProfile";
 import RecommendationParameters from "../pages/Profiles/CustomerQuery";
 import Venue from "./Services/Venue/Venue";

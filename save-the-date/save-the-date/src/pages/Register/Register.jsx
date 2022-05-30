@@ -2,7 +2,7 @@ import { UserContext } from "../../contexts/user-context";
 import React,{ useContext,useEffect } from "react";
 
 import { useNavigate,Link } from "react-router-dom";
-import "./Login.css";
+import "../Login/Login.css";
 import "react-phone-number-input/style.css";
 import axios from "axios";
 import { useState } from "react";
@@ -159,8 +159,11 @@ function Register() {
           value={formInput.userType}
           onChange={handleChange}
           required >
-          <option value="Customer">Customer</option>
-          <option value="Provider"> Provider</option>
+          <option value="customer">Customer</option>
+          <option value="venue">Venue Provider</option>
+          <option value="catering"> Caterer</option>
+          <option value="entertainer">Entertainer</option>
+          <option value="contentmaker">Content Maker</option>
         </select>
         </div>
       </div>

@@ -3,7 +3,7 @@ import React, {useContext, useState,useEffect} from "react";
 
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import Register from "./Register";
+import Register from "../Register/Register";
 import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebase/firebase';
 import {FcGoogle} from "react-icons/fc";
 import axios from "axios";
