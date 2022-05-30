@@ -32,9 +32,10 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/providerProfile" element={<ProviderProfile />} />
-          <Route path="/catererProfile" element={<CatererProfile />} />
-          <Route path="/recommendation" element={<RecommendationParameters />} />
+          <Route path="/providerProfile" 
+          element={<PrivateRoute><ProviderProfile /></PrivateRoute>} />
+          <Route path="/catererProfile" element={<PrivateRoute><CatererProfile /></PrivateRoute>} />
+          <Route path="/recommendation" element={<PrivateRoute><RecommendationParameters /></PrivateRoute>} />
           <Route path="/venue" element={<Venue />} />
           <Route path="/caterer" element={<Caterer />} />
           <Route path="/decorator" element={<Decorator />} />
