@@ -5,7 +5,7 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-class EditVenue extends Component {
+class EditDecorator extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -90,4 +90,4 @@ class EditVenue extends Component {
     }
 }
 
-export default EditVenue;
+export default EditDecorator;

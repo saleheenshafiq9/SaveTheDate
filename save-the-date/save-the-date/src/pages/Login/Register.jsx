@@ -30,6 +30,7 @@ function Register() {
     currentUser?.userType=="Venue"&& navigate("../providerProfile");
     currentUser?.userType=="Caterer"&& navigate("../catererProfile");
     currentUser?.userType=="Decorator"&& navigate("../decoratorProfile");
+    currentUser?.userType=="Photography"&& navigate("../photographyProfile");
   
   }, [currentUser])
   

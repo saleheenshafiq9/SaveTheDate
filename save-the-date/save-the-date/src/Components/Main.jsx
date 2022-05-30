@@ -20,6 +20,8 @@ import EditCaterer from "../pages/editProfiles/editCaterer";
 import CatererProfile from "../pages/Profiles/CatererProfile";
 import EditDecorator from "../pages/editProfiles/editDecorator";
 import DecoratorProfile from "../pages/Profiles/DecoratorProfile";
+import EditPhotography from "../pages/editProfiles/editPhotography";
+import PhotographyProfile from "../pages/Profiles/PhotographyProfile";
 
 const Main = (props) => {
   return (
@@ -37,6 +39,7 @@ const Main = (props) => {
           <Route path="/providerProfile" element={<VenueProfile />} />
           <Route path="/catererProfile" element={<CatererProfile />} />
           <Route path="/decoratorProfile" element={<DecoratorProfile />} />
+          <Route path="/photographyProfile" element={<PhotographyProfile />} />
           <Route path="/recommendation" element={<RecommendationParameters />} />
           <Route path="/venue" element={<Venue />} />
           <Route path="/caterer" element={<Caterer />} />
@@ -45,6 +48,7 @@ const Main = (props) => {
           <Route path="/editvenue" element={<EditVenue />} />
           <Route path="/editcaterer" element={<EditCaterer />} />
           <Route path="/editdecorator" element={<EditDecorator />} />
+          <Route path="/editphotography" element={<EditPhotography />} />
         </Routes>
       </div>
     </div>
