@@ -21,6 +21,9 @@ const PhotographyDetail = (props) => {
           <button className="btn btn-success" onClick={props.onPhotographySelect}>
             Book Now
           </button>
+          <button className="btn btn-danger" onClick={props.onVenueSelect}>
+            Set Appointment
+          </button>
           <br />
           <br />
           <div className="card-footer">
