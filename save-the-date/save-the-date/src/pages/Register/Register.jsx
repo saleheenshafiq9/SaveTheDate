@@ -27,7 +27,10 @@ function Register() {
 
   useEffect(() => {
     currentUser?.userType=="Cusotmer"&& navigate("../customerProfile");
-    currentUser?.userType=="Provider"&& navigate("../provider");
+    currentUser?.userType=="Venue"&& navigate("../providerProfile");
+    currentUser?.userType=="Caterer"&& navigate("../catererProfile");
+    currentUser?.userType=="Decorator"&& navigate("../decoratorProfile");
+    currentUser?.userType=="Photography"&& navigate("../photographyProfile");
   
   }, [currentUser])
   
@@ -164,6 +167,7 @@ function Register() {
           <option value="catering"> Caterer</option>
           <option value="entertainer">Entertainer</option>
           <option value="contentmaker">Content Maker</option>
+
         </select>
         </div>
       </div>

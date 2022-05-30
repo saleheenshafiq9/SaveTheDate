@@ -5,11 +5,10 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-class EditVenue extends Component {
+class EditDecorator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          location: "",
           capacity: "",
           title: "",
           description: "",
@@ -37,38 +36,10 @@ class EditVenue extends Component {
         return(
             <div className="row">
                 <h4 className="mt-4">
-                    Edit Venue Information
+                    Edit Decorator Information
                 </h4>
                 <div className="col-8 col-md-6 mt-5">
                 <Form onSubmit={this.handleSubmit}>
-                <FormGroup row>
-                    <Label htmlFor="location" md={2}>
-                        Location
-                    </Label>
-                    <Col md={10}>
-                    <Input
-                        type="text"
-                        name="location"
-                        placeholder="Where's the venue situated?"
-                        value={this.state.location}
-                        onChange={this.handleInputChange}
-                    />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label htmlFor="capacity" md={2}>
-                    Capacity
-                    </Label>
-                    <Col md={10}>
-                    <Input
-                        type="number"
-                        name="capacity"
-                        value={this.state.capacity}
-                        placeholder="Approx. number of guests?"
-                        onChange={this.handleInputChange}
-                    />
-                    </Col>
-                </FormGroup>
                 <FormGroup row>
                     <Label htmlFor="title" md={2}>
                         Title
@@ -78,7 +49,7 @@ class EditVenue extends Component {
                         type="text"
                         name="title"
                         value={this.state.title}
-                        placeholder="Venue name?"
+                        placeholder="Decorators name?"
                         onChange={this.handleInputChange}
                     />
                     </Col>
@@ -92,7 +63,7 @@ class EditVenue extends Component {
                         type="textarea"
                         name="description"
                         value={this.state.description}
-                        placeholder="Details of the venue?"
+                        placeholder="Details of the services?"
                         onChange={this.handleInputChange}
                     />
                     </Col>
@@ -102,7 +73,7 @@ class EditVenue extends Component {
                 }}/></Button>
                 <Button className="btn btn-dark"><BiArrowBack style={{
                     marginRight: "7px"
-                }}/><Link to="/providerProfile" id="plantext">Go Back</Link></Button>
+                }}/><Link to="/decoratorProfile" id="plantext">Go Back</Link></Button>
             </Form>
             </div>
             <div className="col-4 text-center m-5">
@@ -119,4 +90,4 @@ class EditVenue extends Component {
     }
 }
 
-export default EditVenue;
+export default EditDecorator;
