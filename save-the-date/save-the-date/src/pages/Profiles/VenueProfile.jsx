@@ -7,7 +7,7 @@ import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
 import Gallery from "./Gallery";
 
-function ProviderProfile() {
+function VenueProfile() {
     return(
         <div>
             <div className="row">
@@ -75,4 +75,4 @@ function ProviderProfile() {
     )
 }
 
-export default ProviderProfile;
+export default VenueProfile;

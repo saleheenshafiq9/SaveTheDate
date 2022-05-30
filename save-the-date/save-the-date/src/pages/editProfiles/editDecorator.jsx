@@ -5,7 +5,7 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-class EditCaterer extends Component {
+class EditVenue extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,24 +36,10 @@ class EditCaterer extends Component {
         return(
             <div className="row">
                 <h4 className="mt-4">
-                    Edit Caterer Information
+                    Edit Decorator Information
                 </h4>
                 <div className="col-8 col-md-6 mt-5">
                 <Form onSubmit={this.handleSubmit}>
-                <FormGroup row>
-                    <Label htmlFor="capacity" md={2}>
-                    Capacity
-                    </Label>
-                    <Col md={10}>
-                    <Input
-                        type="number"
-                        name="capacity"
-                        value={this.state.capacity}
-                        placeholder="Highest limit of guests can handle?"
-                        onChange={this.handleInputChange}
-                    />
-                    </Col>
-                </FormGroup>
                 <FormGroup row>
                     <Label htmlFor="title" md={2}>
                         Title
@@ -63,7 +49,7 @@ class EditCaterer extends Component {
                         type="text"
                         name="title"
                         value={this.state.title}
-                        placeholder="Caterer name?"
+                        placeholder="Decorators name?"
                         onChange={this.handleInputChange}
                     />
                     </Col>
@@ -87,7 +73,7 @@ class EditCaterer extends Component {
                 }}/></Button>
                 <Button className="btn btn-dark"><BiArrowBack style={{
                     marginRight: "7px"
-                }}/><Link to="/catererProfile" id="plantext">Go Back</Link></Button>
+                }}/><Link to="/decoratorProfile" id="plantext">Go Back</Link></Button>
             </Form>
             </div>
             <div className="col-4 text-center m-5">
@@ -104,4 +90,4 @@ class EditCaterer extends Component {
     }
 }
 
-export default EditCaterer;
+export default EditVenue;

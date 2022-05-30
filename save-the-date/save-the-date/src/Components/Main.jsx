@@ -9,7 +9,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Login/Register";
-import ProviderProfile from "../pages/Profiles/ProviderProfile";
+import VenueProfile from "../pages/Profiles/VenueProfile";
 import RecommendationParameters from "../pages/Profiles/CustomerQuery";
 import Venue from "./Services/Venue/Venue";
 import Caterer from "./Services/Caterer/Caterer";
@@ -18,6 +18,8 @@ import Photography from "./Services/Photography/Photography";
 import EditVenue from "../pages/editProfiles/editVenue";
 import EditCaterer from "../pages/editProfiles/editCaterer";
 import CatererProfile from "../pages/Profiles/CatererProfile";
+import EditDecorator from "../pages/editProfiles/editDecorator";
+import DecoratorProfile from "../pages/Profiles/DecoratorProfile";
 
 const Main = (props) => {
   return (
@@ -32,8 +34,9 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/providerProfile" element={<ProviderProfile />} />
+          <Route path="/providerProfile" element={<VenueProfile />} />
           <Route path="/catererProfile" element={<CatererProfile />} />
+          <Route path="/decoratorProfile" element={<DecoratorProfile />} />
           <Route path="/recommendation" element={<RecommendationParameters />} />
           <Route path="/venue" element={<Venue />} />
           <Route path="/caterer" element={<Caterer />} />
@@ -41,6 +44,7 @@ const Main = (props) => {
           <Route path="/photography" element={<Photography />} />
           <Route path="/editvenue" element={<EditVenue />} />
           <Route path="/editcaterer" element={<EditCaterer />} />
+          <Route path="/editdecorator" element={<EditDecorator />} />
         </Routes>
       </div>
     </div>
