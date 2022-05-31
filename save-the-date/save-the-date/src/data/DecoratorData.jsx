@@ -6,7 +6,7 @@ const DecoratorData = [
       category: "decorator",
       label: "Regular",
       location: "Uttara, Dhaka",
-      menuItem: "Modern, Classic, Traditional"
+      menuItem: "Modern, Classic, Traditional, Elegant"
     },
     {
       id: 1,
@@ -15,7 +15,7 @@ const DecoratorData = [
       category: "decorator",
       label: "Premium",
       location: "Mohammadpur, Dhaka",
-      menuItem: "Modern, Classic, Romantic, Elegant"
+      menuItem: "Modern, Romantic, Elegant"
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ const DecoratorData = [
       category: "decorator",
       label: "Moderate",
       location: "Dhanmondi, Dhaka",
-      menuItem: "Traditional, All White, Energetic",
+      menuItem: "All White, Energetic",
     },
   ];
   
