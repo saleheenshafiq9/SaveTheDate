@@ -165,7 +165,7 @@ function Register() {
           <option value="customer">Customer</option>
           <option value="venue">Venue Provider</option>
           <option value="catering"> Caterer</option>
-          <option value="photography">Photographer </option>
+          <option value="contentmaker">Photographer </option>
           <option value="entertainer">Entertainer </option>
           <option value="decorator">Content Maker</option>
 
