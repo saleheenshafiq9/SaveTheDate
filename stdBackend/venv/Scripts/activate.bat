@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=F:\pyth\nil_Billi\SaveTheDate\stdBackend\venv"
+set "VIRTUAL_ENV=D:\GitHub\SaveTheDate\stdBackend\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
