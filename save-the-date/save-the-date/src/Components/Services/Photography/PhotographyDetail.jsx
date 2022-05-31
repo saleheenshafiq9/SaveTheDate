@@ -1,7 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import Alert from "../../Alert";
+
 
 const PhotographyDetail = (props) => {
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  }
+
+  const cartAdded = () => {
+    showAlert("Successfully Added to Cart!","success");
+    props.onPhotographySelect;
+  }
+
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
@@ -18,16 +37,17 @@ const PhotographyDetail = (props) => {
           <button className="btn btn-dark" onClick={props.onPhotographySelect}>
             Contact
           </button>
-          <button className="btn btn-success" onClick={props.onPhotographySelect}>
-            Book Now
+          <button className="btn btn-success" onClick={cartAdded}>
+            Add to Cart
           </button>
-          <button className="btn btn-danger" onClick={props.onVenueSelect}>
+          <button className="btn btn-danger" onClick={props.onPhotographySelect}>
             Set Appointment
           </button>
+          <Alert alert={alert}/>
           <br />
           <br />
           <div className="card-footer">
-            <b>Food Menu: </b>
+            <b>Services: </b>
             {props.photography.menuItem}
           </div>
         </CardBody>

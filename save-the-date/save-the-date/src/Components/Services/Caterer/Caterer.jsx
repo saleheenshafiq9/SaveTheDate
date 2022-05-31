@@ -40,7 +40,7 @@ class Caterer extends Component {
     return (
       <div className="container">
         <CardColumns>{finalcaterer}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen}>
           <ModalBody>{catererDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

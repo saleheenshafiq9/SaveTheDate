@@ -38,7 +38,7 @@ class Venue extends Component {
     return (
       <div className="container">
         <CardColumns>{finalvenue}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen} >
           <ModalBody>{venueDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

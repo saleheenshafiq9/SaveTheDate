@@ -15,7 +15,7 @@ const CatererData = [
       category: "caterer",
       label: "Premium",
       location: "Mohammadpur, Dhaka",
-      menuItem: "Buffet, Chinese, Traditional"
+      menuItem: "Buffet, Chinese"
     },
     {
       id: 2,
