@@ -171,6 +171,7 @@ class AddPartyCateringSerializer(serializers.ModelSerializer):
 
 class FoodCartItemSerializer(serializers.ModelSerializer):
     totalPrice = serializers.SerializerMethodField()
+    fooditem=FoodItemSerializer(many=False, read_only=True)
 
     def get_totalPrice(self, cart_item: FoodCartItem):
         return cart_item.quantity * cart_item.fooditem.unitPrice
@@ -260,18 +261,29 @@ class UpdatePartyVenueSlotSerializer(serializers.ModelSerializer):
 
 class PartyVenueSlotSerializer(serializers.ModelSerializer):
     venueslot=VenueSlotSerializer(many=False, read_only=True)
-    
+    price=serializers.SerializerMethodField()
+
     class Meta:
         model=PartyVenueSlot
-        fields=['id', 'venueslot']
+        fields=['id', 'venueslot', 'price']
+
+    def get_price(self, partyvenueslot):
+        return partyvenueslot.venueslot.price
 
 
 class PartySerializer(serializers.ModelSerializer):
     foodcart=PartyFoodCartSerializer(many=False, read_only=True)
+    partyvenueslot=PartyVenueSlotSerializer(many=True, read_only=True)
+    totalCost=serializers.SerializerMethodField()
 
     class Meta:
         model=Party
         fields=['id', 'totalCost', 'pendingCost',
-        'status', 'foodcart']
+        'status', 'foodcart', 'partyvenueslot']
+
+    def get_totalCost(self, party):
+        return sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+        
+
 
 

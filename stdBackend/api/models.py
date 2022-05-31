@@ -139,7 +139,7 @@ class ThemeImage(models.Model):
 
 
 class FoodCart(models.Model):
-    party=models.ForeignKey(
+    party=models.OneToOneField(
         Party, on_delete=models.CASCADE,
         related_name='foodcart'
     )
@@ -172,8 +172,8 @@ class VenueSlot(models.Model):
     )
 
 class PartyVenueSlot(models.Model):
-    party=models.OneToOneField(Party, on_delete=models.CASCADE)
-    venueslot=models.ForeignKey(VenueSlot, on_delete=models.CASCADE, null=True)
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partyvenueslot')
+    venueslot=models.ForeignKey(VenueSlot, on_delete=models.CASCADE, null=True, related_name='partyvenueslot')
 
 
 
