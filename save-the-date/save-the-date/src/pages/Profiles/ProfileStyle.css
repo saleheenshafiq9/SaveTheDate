@@ -54,3 +54,12 @@
     padding-left: 170px;
 }
 
+#profileimg {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin-left: 48px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+

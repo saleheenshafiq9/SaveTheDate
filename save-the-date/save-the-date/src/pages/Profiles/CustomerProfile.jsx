@@ -17,7 +17,8 @@ function CustomerProfile() {
             <div className="card w-100">
             <img
               className="card-img-top"
-              src="/Customer/one.png"
+              id="profileimg"
+              src="/Customer/user.png"
               alt={currentUser.username}
             />
             <div className="card-body">
@@ -41,10 +42,10 @@ function CustomerProfile() {
         <div className="col-9">
           <div className="row">
             <div className="col text-center m-3" id="starttext">
-              <h5>Haven't start planning yet?</h5>
-              <button className="btn btn-dark mt-3">
+              <h5>Haven't start planning yet?              
+                <button className="btn btn-dark">
                 <Link to="/recommendation" id="plantext">Start here</Link>
-              </button>
+              </button></h5>
             </div>
           </div>
           <div className="row">
@@ -99,11 +100,25 @@ function CustomerProfile() {
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
-          Past Bookings
-        </div>
-        <div className="col-6">
-          Booking Info
+        <p>
+          <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+        </p>
+        <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>)
