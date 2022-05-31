@@ -12,6 +12,10 @@ class Venue extends Component {
     modalOpen: false,
   };
 
+  componentDidMount() {
+
+  }
+  
   onVenueSelect = (venue) => {
     //console.log(venue);
     this.setState({ selectedVenue: venue, modalOpen: !this.state.modalOpen });

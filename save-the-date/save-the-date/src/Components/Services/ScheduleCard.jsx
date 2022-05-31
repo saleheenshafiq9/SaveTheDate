@@ -11,20 +11,21 @@ export default function ScheduleCard() {
 
     const changeAppointment1 = () => {
         setSuccess1(true);
-        setConfirm("Confirm?")
+        setConfirm("Selected")
     }
 
     const changeAppointment2 = () => {
         setSuccess2(true);
-        setConfirm("Confirm?")
+        setConfirm("Selected")
     }
 
     const changeAppointment3 = () => {
         setSuccess3(true);
-        setConfirm("Confirm?")
+        setConfirm("Selected")
     }
 
   return (
+      <>
         <div class="card-deck mt-3">
             <div class="card mb-3" id='schedulebg' onClick={changeAppointment1}>
                 <div class="card-body" style={{
@@ -51,5 +52,17 @@ export default function ScheduleCard() {
                 </div>
             </div>
         </div>
+        <div className='text-center mt-4'>
+        <select
+                className='text-center'
+                required >
+                <option value="visit">Visit</option>
+                <option value="phone call">Phone Call</option>
+        </select>
+        </div>
+        <div className='text-center mt-4'>
+            <button className='btn btn-dark'>Confirm</button>
+        </div>
+      </>
   )
 }
