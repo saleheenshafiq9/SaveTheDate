@@ -27,10 +27,11 @@ function VenueProfile() {
             <br /><br />
             <div className="row">
                 <div className="col-6">
-                    <h2>Shimanta Convention Center</h2>
-                    <p className="text-secondary">Dhanmondi, Road 2, Near Pilkana inside Shimanto (Rifles) Square Market, Dhaka 1205
+                    <h2>{venueData?venueData.title:"Title"}</h2>
+                    <p className="text-secondary">
+                    {venueData?venueData.location :"Location"}
                     <br/>
-                    <FaUserFriends /> 500 People</p>
+                    <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People</p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">

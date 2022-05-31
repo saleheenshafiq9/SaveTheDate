@@ -30,6 +30,7 @@ function CatererProfile() {
                 <div className="col-6">
                     <h2>Alpha Catering</h2>
                     <p className="text-secondary">Dhanmondi, Dhaka 1205
+                    {}
                     <br/>
                     <FaUserFriends /> 500 People</p>
                 </div>
