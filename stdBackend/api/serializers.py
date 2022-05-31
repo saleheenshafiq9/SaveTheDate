@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import FoodCart, FoodCartItem, FoodItem, Party, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import FoodCartItem, FoodItem, Party, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -181,17 +181,6 @@ class FoodCartItemSerializer(serializers.ModelSerializer):
         fields=['id', 'fooditem', 'quantity', 'totalPrice']
 
 
-class PartyFoodCartSerializer(serializers.ModelSerializer):
-    foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
-    totalPrice=serializers.SerializerMethodField()
-
-    def get_totalPrice(self, foodcart: FoodCart):
-        return sum([item.quantity * item.fooditem.unitPrice for item in foodcart.foodcartitem.all()])
-
-    class Meta:
-        model=FoodCart
-        fields=['id', 'party_id', 'foodcartitem', 'totalPrice']
-
 
 class AddFoodCartItemSerializer(serializers.ModelSerializer):
     fooditem_id=serializers.IntegerField()
@@ -203,19 +192,19 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
         return value
 
     def save(self, **kwargs):
-        foodcart_id = self.context['foodcart_id']
+        party_id = self.context['party_id']
         fooditem_id = self.validated_data['fooditem_id']
         quantity = self.validated_data['quantity']
 
         try:
             cart_item = FoodCartItem.objects.get(
-                foodcart_id=foodcart_id, fooditem_id=fooditem_id)
+                party_id=party_id, fooditem_id=fooditem_id)
             cart_item.quantity += quantity
             cart_item.save()
             self.instance = cart_item
         except FoodCartItem.DoesNotExist:
             self.instance = FoodCartItem.objects.create(
-                foodcart_id=foodcart_id, **self.validated_data)
+                party_id=party_id, **self.validated_data)
 
         return self.instance
 
@@ -259,6 +248,26 @@ class UpdatePartyVenueSlotSerializer(serializers.ModelSerializer):
         return value
 
 
+class AddPartyVenueSlotSerializer(serializers.ModelSerializer):
+    venueslot_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenueSlot
+        fields=['id', 'venueslot_id']
+
+    def validate_venueslot_id(self, value):
+        if not VenueSlot.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No venue slot with the given ID was found.')
+        return value
+
+    def save(self, **kwargs):
+        party_id = self.context['party_id']
+        self.instance = PartyVenueSlot.objects.create(
+            party_id=party_id, **self.validated_data)
+
+        return self.instance
+
+
 class PartyVenueSlotSerializer(serializers.ModelSerializer):
     venueslot=VenueSlotSerializer(many=False, read_only=True)
     price=serializers.SerializerMethodField()
@@ -272,18 +281,18 @@ class PartyVenueSlotSerializer(serializers.ModelSerializer):
 
 
 class PartySerializer(serializers.ModelSerializer):
-    foodcart=PartyFoodCartSerializer(many=False, read_only=True)
+    foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
     partyvenueslot=PartyVenueSlotSerializer(many=True, read_only=True)
     totalCost=serializers.SerializerMethodField()
 
     class Meta:
         model=Party
         fields=['id', 'totalCost', 'pendingCost',
-        'status', 'foodcart', 'partyvenueslot']
+        'status', 'foodcartitem', 'partyvenueslot']
 
     def get_totalCost(self, party):
         try:
-            return sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+            return (sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])+sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()]) )
         except AttributeError:
             return 0
         

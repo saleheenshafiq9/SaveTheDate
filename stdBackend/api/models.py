@@ -138,16 +138,10 @@ class ThemeImage(models.Model):
     )
 
 
-class FoodCart(models.Model):
-    party=models.OneToOneField(
-        Party, on_delete=models.CASCADE,
-        related_name='foodcart'
-    )
-
 
 class FoodCartItem(models.Model):
-    foodcart=models.ForeignKey(
-        FoodCart, on_delete=models.CASCADE,
+    party=models.ForeignKey(
+        Party, on_delete=models.CASCADE,
         related_name='foodcartitem'
     )
 
