@@ -1,4 +1,6 @@
-import React from "react";
+import React,{useContext} from "react";
+import { UserContext } from "../../contexts/user-context";
+import { tokenUrl } from "../../constants/constants";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt, FaPhotoVideo} from "react-icons/fa";
 import {MdModeEditOutline} from "react-icons/md";
@@ -6,7 +8,11 @@ import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
 
+
 function PhotographyProfile() {
+    const {token}= useContext(UserContext);
+    const {data:photoData,error,loading}=useFetch(tokenUrl,"/api/venues/me",token?.access);
+    console.log(photoData);
     return(
         <div>
             <div className="row">

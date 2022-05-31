@@ -1,4 +1,6 @@
-import React from "react";
+import React,{useContext} from "react";
+import { UserContext } from "../../contexts/user-context";
+import { tokenUrl } from "../../constants/constants";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt} from "react-icons/fa";
 import {GiPartyFlags} from "react-icons/gi";
@@ -8,6 +10,9 @@ import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
 
 function DecoratorProfile() {
+    const {token}= useContext(UserContext);
+    const {data:decoratorData,error,loading}=useFetch(tokenUrl,"/api/venues/me",token?.access);
+    console.log(decoratorData);
     return(
         <div>
             <div className="row">

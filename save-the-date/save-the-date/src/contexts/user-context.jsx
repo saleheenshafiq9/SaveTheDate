@@ -60,7 +60,6 @@ export const UserProvider = ({children}) => {
     useEffect(()=>{
         currentUser &&  NavigateToProfile();
 
-            
     },[currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};

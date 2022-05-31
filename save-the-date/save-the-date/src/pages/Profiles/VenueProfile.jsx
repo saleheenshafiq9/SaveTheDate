@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useContext} from "react";
+import { UserContext } from "../../contexts/user-context";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
 import {MdModeEditOutline} from "react-icons/md";
@@ -6,8 +7,13 @@ import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
 import Gallery from "./Gallery";
+import useFetch from "../../hooks/useFetch"
+import {tokenUrl} from "../../constants/constants"
 
 function VenueProfile() {
+    const {token}= useContext(UserContext);
+    const {data:venueData,error,loading}=useFetch(tokenUrl,"/api/venues/me",token?.access);
+    console.log(venueData);
     return(
         <div>
             <div className="row">

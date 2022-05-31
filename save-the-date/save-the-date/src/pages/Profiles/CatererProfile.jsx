@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
 import {MdModeEditOutline} from "react-icons/md";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+import { tokenUrl,cateringProfKey } from "../../constants/constants";
+import { UserContext } from "../../contexts/user-context";
+
 
 function CatererProfile() {
+    const {token}=useContext(UserContext)
+    
+    const {data:catererData,error,loading}=useFetch(tokenUrl,cateringProfKey,token?.access)
+    console.log(catererData);
+
     return(
         <div>
             <div className="row">
