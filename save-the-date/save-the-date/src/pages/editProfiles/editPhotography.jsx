@@ -36,7 +36,7 @@ class EditPhotography extends Component {
 
         const {image,...reqData}=this.state
         console.log(reqData);
-        const data_key=`api/contenmaker/me/`;
+        const data_key=`api/contenmakers/me/`;
         PutReq(data_key,reqData,header)
       };
 

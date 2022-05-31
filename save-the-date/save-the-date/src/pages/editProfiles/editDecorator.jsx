@@ -39,7 +39,7 @@ class EditDecorator extends Component {
         const {image,...reqData}=this.state
         console.log(reqData);
         
-        const data_key=`api/decorator/me/`;
+        const data_key=`api/decorators/me/`;
         PutReq(data_key,reqData,header)
       };
 
