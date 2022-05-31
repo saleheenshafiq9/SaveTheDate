@@ -282,7 +282,10 @@ class PartySerializer(serializers.ModelSerializer):
         'status', 'foodcart', 'partyvenueslot']
 
     def get_totalCost(self, party):
-        return sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+        try:
+            return sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+        except AttributeError:
+            return 0
         
 
 
