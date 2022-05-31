@@ -55,13 +55,13 @@ export const UserProvider = ({children}) => {
 
     useEffect(()=>{
         !loggedIn && token && updateToken()
-    },[token,loading])
+    },[loggedIn])
 
     useEffect(()=>{
-        loggedIn&&  NavigateToProfile();
+        currentUser &&  NavigateToProfile();
 
             
-    },[currentUser,loggedIn])
+    },[currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     
