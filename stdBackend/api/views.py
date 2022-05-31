@@ -454,7 +454,7 @@ class VenueSlotViewSet(ModelViewSet):
         return Response(serializer.data)
 
 class PartyVenueSlotViewSet(ModelViewSet):
-    http_method_names = ['get', 'put', 'patch', 'delete']
+    http_method_names = ['get', 'put', 'patch', 'delete', 'post']
     
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
