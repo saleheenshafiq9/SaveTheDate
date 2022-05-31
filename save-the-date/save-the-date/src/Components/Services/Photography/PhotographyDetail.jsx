@@ -55,7 +55,7 @@ const PhotographyDetail = (props) => {
             {cartText}
           </button>
           <button className="btn btn-danger" onClick={scheduleAdded}>
-            Set AppointmentT
+            Set Appointment
           </button>
           <Alert alert={alert}/>
           { scheduleCard? <ScheduleCard /> : null }
