@@ -44,7 +44,11 @@ const Header = () => {
             <>
               { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink"> customerProfile</Link>}
               { currentUser.usertype=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
-              { currentUser.usertype=='catering'&& <Link to="cateringProfile " id="NavLink" >VenueProfile</Link> } 
+              { currentUser.usertype=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
+              { currentUser.usertype=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Caterer</Link> } 
+              
+              { currentUser.usertype=='entertainer'&& <Link to="cateringProfile " id="NavLink" >Entertainer</Link> } 
+              { currentUser.usertype=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
               <Logout />
             </>
              ) : (<Link id="NavLink" to='/login'>Sign In
