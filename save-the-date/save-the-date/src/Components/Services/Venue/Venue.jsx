@@ -4,21 +4,27 @@ import VenueItem from "./VenueItem";
 import VenueDetail from "./VenueDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
+import GetReq from "../../../helper/getReq";
 
 class Venue extends Component {
   state = {
     venues: VenueData,
     selectedVenue: null,
     modalOpen: false,
+    newVenues: []
   };
 
   componentDidMount() {
-
+    GetReq("/api/venues").then((res) => {
+      this.setState({newVenues: res});
+      console.log(res);
+      console.log(this.state.newVenues);
+    })
   }
   
-  onVenueSelect = (venue) => {
+  onVenueSelect = (newVenue) => {
     //console.log(venue);
-    this.setState({ selectedVenue: venue, modalOpen: !this.state.modalOpen });
+    this.setState({ selectedVenue: newVenue, modalOpen: !this.state.modalOpen });
   };
 
   toggleModal = () => {
@@ -26,7 +32,7 @@ class Venue extends Component {
   };
 
   render() {
-    const finalvenue = this.state.venues.map((item) => {
+    const finalvenue = this.state.newVenues.map((item) => {
       return (
         <VenueItem
           venue={item}

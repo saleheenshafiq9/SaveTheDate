@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
+import useFetch from "../../hooks/useFetch";
 import {MdModeEditOutline} from "react-icons/md";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
