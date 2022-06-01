@@ -8,11 +8,11 @@ const VenueItem = (props) => {
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.venue.image}
-          alt={props.venue.name}
+          src={props.venue.images[0].image}
+          alt={props.venue.title}
         />
         <div className="card-body">
-          <h5 className="card-title">{props.venue.name}</h5>
+          <h5 className="card-title">{props.venue.title}</h5>
           <br />
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
             Preview

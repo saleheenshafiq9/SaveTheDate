@@ -1,5 +1,6 @@
 import React,{useContext} from "react";
 import { UserContext } from "../../contexts/user-context";
+import useFetch from "../../hooks/useFetch";
 import { tokenUrl } from "../../constants/constants";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt, FaPhotoVideo} from "react-icons/fa";
@@ -11,7 +12,7 @@ import { Link } from "react-router-dom";
 
 function PhotographyProfile() {
     const {token}= useContext(UserContext);
-    const {data:photoData,error,loading}=useFetch(tokenUrl,"/api/venues/me",token?.access);
+    const {data:photoData,error,loading}=useFetch(tokenUrl,"/api/contentmakers/me",token?.access);
     console.log(photoData);
     return(
         <div>

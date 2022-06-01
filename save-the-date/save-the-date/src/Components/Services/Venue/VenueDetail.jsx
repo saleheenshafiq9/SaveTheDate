@@ -45,11 +45,11 @@ const VenueDetail = (props) => {
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.venue.image} alt={props.venue.name} />
+        <CardImg top src={props.venue.images[0].image} alt={props.venue.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.venue.name}
+              {props.venue.title}
               <span className="badge badge-warning text-dark">
                 {props.venue.label}
               </span>
@@ -75,7 +75,7 @@ const VenueDetail = (props) => {
             <br />
             <br />
             <b>Address: </b>
-            {props.venue.address}
+            {props.venue.location}
             <br />
             <br />
             <b>Capacity: </b>
