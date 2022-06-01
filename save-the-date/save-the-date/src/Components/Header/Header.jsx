@@ -49,21 +49,11 @@ const Header = () => {
             </Link>
             {currentUser ? (
             <>
-<<<<<<< HEAD
-              { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink"> customerProfile</Link>}
-              { currentUser.userType=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
-              { currentUser.userType=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
-              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Caterer</Link> } 
-              
-              { currentUser.userType=='entertainer'&& <Link to="cateringProfile " id="NavLink" >Entertainer</Link> } 
-              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
-=======
               { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink">CustomerProfile</Link>}
               { currentUser.usertype=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
               { currentUser.usertype=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
               { currentUser.usertype=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Decorator</Link> } 
               { currentUser.usertype=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
->>>>>>> rewind-profile-version
               <Logout />
             </>
              ) : (<Link id="NavLink" to='/login'>Sign In
