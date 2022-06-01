@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 import Alert from "../../Alert";
 import ScheduleCard from "../ScheduleCard";
@@ -8,6 +10,8 @@ const VenueDetail = (props) => {
   const [cartText, setcartText] = useState("Add to Cart");
   const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
+
+  const { addToCartItems } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -24,10 +28,14 @@ const VenueDetail = (props) => {
     }, 2000);
   }
 
+  const addServiceToCart = () => addToCartItems(props.venue);
+
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
     props.onVenueSelect;
+    console.log(props.venue);
     handleCartClick();
+    addServiceToCart();
   }
 
   const scheduleAdded = () => {
