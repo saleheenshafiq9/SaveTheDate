@@ -31,7 +31,7 @@ const VenueDetail = (props) => {
   }
 
   const scheduleAdded = () => {
-    setscheduleCard(true);
+    setscheduleCard(!scheduleCard);
   }
 
   return (
