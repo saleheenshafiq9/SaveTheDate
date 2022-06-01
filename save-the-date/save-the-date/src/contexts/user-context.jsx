@@ -44,7 +44,8 @@ export const UserProvider = ({children}) => {
         currentUser?.userType=="customer" && navigate('../customerProfile')
         currentUser?.userType=="venue" &&  navigate('../venueProfile')
         currentUser?.userType=="catering" &&  navigate('../catererProfile')
-        currentUser?.userType=="photographer" &&  navigate('../photographyProfile')
+        currentUser?.userType=="contentmaker" &&  navigate('../photographyProfile')
+        currentUser?.userType=="decorator" &&  navigate('../decoratorProfile')
 
     }
     

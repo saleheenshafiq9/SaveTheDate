@@ -28,7 +28,7 @@ function Register() {
   useEffect(() => {
     currentUser?.userType=="cusotmer"&& navigate("../customerProfile");
     currentUser?.userType=="venue"&& navigate("../providerProfile");
-    currentUser?.userType=="caterer"&& navigate("../catererProfile");
+    currentUser?.userType=="catering"&& navigate("../catererProfile");
     currentUser?.userType=="decorator"&& navigate("../decoratorProfile");
     currentUser?.userType=="photography"&& navigate("../photographyProfile");
   
@@ -164,10 +164,9 @@ function Register() {
           required >
           <option value="customer">Customer</option>
           <option value="venue">Venue Provider</option>
-          <option value="catering"> Caterer</option>
-          <option value="contentmaker">Photographer </option>
-          <option value="entertainer">Entertainer </option>
-          <option value="decorator">Content Maker</option>
+          <option value="catering">Caterer</option>
+          <option value="contentmaker">Photographer</option>
+          <option value="decorator">Decorator</option>
 
         </select>
         </div>

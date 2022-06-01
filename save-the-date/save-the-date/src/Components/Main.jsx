@@ -66,12 +66,7 @@ const Main = (props) => {
               </PrivateRoute>
           
           } />
-          <Route path="/catererProfile" 
-            element={
-              <PrivateRoute>
-                <CatererProfile />
-              </PrivateRoute>
-            } />
+
           <Route path="/decoratorProfile" 
             element={
               <PrivateRoute>

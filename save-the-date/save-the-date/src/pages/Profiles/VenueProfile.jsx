@@ -57,15 +57,31 @@ function VenueProfile() {
                 <h4 className="text-dark">About Venue</h4><br />
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam cumque odio ut nisi laboriosam quibusdam unde sequi excepturi harum debitis adipisci sunt quaerat nemo, qui facere asperiores nam libero accusantium dignissimos fugit! Pariatur aliquam deleniti, quos voluptatibus earum ipsa eos sed illo nostrum molestiae magni dolorum ullam omnis amet possimus assumenda quaerat facere, quisquam fuga voluptas nulla totam? Recusandae esse facilis tempora culpa hic asperiores non, tenetur molestias quos quasi nihil obcaecati amet, quae, laboriosam consequatur est ipsam similique aspernatur iusto blanditiis laudantium. Numquam tenetur, quis praesentium, nam qui iusto dolores doloremque magni provident officiis ex aliquid incidunt ipsum exercitationem.</p>
                 </div>
-                <div className="col-6">
-                <h4 className="text-dark mx-5">Our Services</h4><br />
-                <ul className="text-secondary my-3 mx-2">
-                    <li>Dressing room / Bridal Suite</li>
-                    <li>Event coordinator</li>
-                    <li>Service staff</li>
-                    <li>Liability insurance</li>
-                    <li>Wifi</li>
-                </ul>
+                <div className="col-6 text-center">
+                    <p>
+                    <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+                    </p>
+                    <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          </div>
+          <p>
+          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+          </p>
+          <div className="row">
+          <div class="col">
+            <div class="collapse multi-collapse ml-5" id="multiCollapseExample2">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          </div>
                 </div>
             </div>
             <div className="row p-3">
