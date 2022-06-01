@@ -20,7 +20,7 @@ const PhotographyItem = (props) => {
           <span class="badge badge-warning text-dark">{props.photography.label}</span>
         </div>
         <div className="card-footer">
-          <b>Food Menu: </b>
+          <b>Services: </b>
           {props.photography.menuItem}
           <br />
           <br />

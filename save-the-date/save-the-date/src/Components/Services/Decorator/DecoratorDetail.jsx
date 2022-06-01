@@ -1,7 +1,44 @@
-import React from "react";
+import React, {useState, useContext} from "react";
+import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import Alert from "../../Alert";
+import ScheduleCard from "../ScheduleCard";
+
 
 const DecoratorDetail = (props) => {
+  const [alert, setAlert] = useState(null);
+  const [cartText, setcartText] = useState("Add to Cart");
+  const [disable, setdisable] = useState(false);
+  const [scheduleCard, setscheduleCard] = useState(false);
+  const { addToCartItems } = useContext(CartContext);
+
+  const handleCartClick = () => {
+    setcartText("Added");
+    setdisable(true);
+  }
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  }
+  const addServiceToCart = () => addToCartItems(props.decorator);
+
+  const cartAdded = () => {
+    showAlert("Successfully Added to Cart!","success");
+    props.onDecoratorSelect;
+    handleCartClick();
+    addServiceToCart();
+  }
+
+  const scheduleAdded = () => {
+    setscheduleCard(true);
+  }
+
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
@@ -16,11 +53,16 @@ const DecoratorDetail = (props) => {
             </h5>
           </CardTitle>
           <button className="btn btn-dark" onClick={props.onDecoratorSelect}>
-            Contact
+          <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>
-          <button className="btn btn-success" onClick={props.onDecoratorSelect}>
-            Book Now
+          <button className="btn btn-success" onClick={cartAdded} disabled={disable}>
+          {cartText}
           </button>
+          <button className="btn btn-danger" onClick={scheduleAdded}>
+            Set Appointment
+          </button>
+          <Alert alert={alert}/>
+          { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />
           <div className="card-footer">

@@ -38,7 +38,7 @@ class Decorator extends Component {
     return (
       <div className="container">
         <CardColumns>{finaldecorator}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen}>
           <ModalBody>{decoratorDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

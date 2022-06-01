@@ -4,8 +4,10 @@ import CatererDetail from "./CatererDetail";
 import CatererItem from "./CatererItem";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
+import { UserContext } from "../../../contexts/user-context";
 
 class Caterer extends Component {
+  
   state = {
     caterers: CatererData,
     selectedVenue: null,
@@ -38,7 +40,7 @@ class Caterer extends Component {
     return (
       <div className="container">
         <CardColumns>{finalcaterer}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen}>
           <ModalBody>{catererDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

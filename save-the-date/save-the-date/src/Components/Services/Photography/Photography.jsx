@@ -38,7 +38,7 @@ class Photography extends Component {
     return (
       <div className="container">
         <CardColumns>{finalphotography}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen}>
           <ModalBody>{photographyDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

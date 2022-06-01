@@ -17,3 +17,8 @@
 .close:hover {
   color: #ce6c47;
 }
+
+#mailto {
+  text-decoration: none;
+  color: white;
+}

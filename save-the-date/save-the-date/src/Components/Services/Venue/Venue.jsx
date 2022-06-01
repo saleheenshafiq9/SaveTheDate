@@ -12,6 +12,10 @@ class Venue extends Component {
     modalOpen: false,
   };
 
+  componentDidMount() {
+
+  }
+  
   onVenueSelect = (venue) => {
     //console.log(venue);
     this.setState({ selectedVenue: venue, modalOpen: !this.state.modalOpen });
@@ -38,7 +42,7 @@ class Venue extends Component {
     return (
       <div className="container">
         <CardColumns>{finalvenue}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen} >
           <ModalBody>{venueDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose
