@@ -15,13 +15,10 @@ const addCartItem = (cartItems, serviceToAdd) => {
 export const CartContext = createContext({
     cartItems: [],
     addToCartItems: () => {},
-    cartCount: 0
 });
 
 export const CartsProvider = ({children}) => {
     const [cartItems, setCartItems] = useState([]);
-    const [cartCount, setCartCount] = useState(0);
-    
     const addToCartItems = (serviceToAdd) => {
         setCartItems(addCartItem(cartItems, serviceToAdd));
     }
