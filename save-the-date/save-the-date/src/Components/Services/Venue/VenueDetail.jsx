@@ -4,6 +4,7 @@ import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 import Alert from "../../Alert";
 import ScheduleCard from "../ScheduleCard";
+import CartVenue from "../../cart-item/cart-venue";
 
 const VenueDetail = (props) => {
   const [alert, setAlert] = useState(null);
@@ -12,6 +13,7 @@ const VenueDetail = (props) => {
   const [scheduleCard, setscheduleCard] = useState(false);
 
   const { addToCartItems } = useContext(CartContext);
+  const { cartVenueAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -28,7 +30,10 @@ const VenueDetail = (props) => {
     }, 2000);
   }
 
-  const addServiceToCart = () => addToCartItems(props.venue);
+  const addServiceToCart = () => {
+    addToCartItems(props.venue);
+    cartVenueAdded(props.venue);
+  }
 
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");

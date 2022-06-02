@@ -11,6 +11,7 @@ const DecoratorDetail = (props) => {
   const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
   const { addToCartItems } = useContext(CartContext);
+  const { cartDecoratorAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -26,7 +27,10 @@ const DecoratorDetail = (props) => {
       setAlert(null);
     }, 2000);
   }
-  const addServiceToCart = () => addToCartItems(props.decorator);
+  const addServiceToCart = () => {
+    addToCartItems(props.decorator);
+    cartDecoratorAdded(props.decorator);
+  }
 
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
