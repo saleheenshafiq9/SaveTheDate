@@ -4,13 +4,21 @@ import DecoratorDetail from "./DecoratorDetail";
 import DecoratorItem from "./DecoratorItem";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
+import GetReq from "../../../helper/getReq";
 
 class Decorator extends Component {
   state = {
     decorators: DecoratorData,
     selectedVenue: null,
     modalOpen: false,
+    newDecorators: []
   };
+
+  componentDidMount() {
+    GetReq("/api/decorators").then((res) => {
+      this.setState({newDecorators: res});
+    })
+  }
 
   onDecoratorSelect = (decorator) => {
     //console.log(venue);
@@ -22,7 +30,7 @@ class Decorator extends Component {
   };
 
   render() {
-    const finaldecorator = this.state.decorators.map((item) => {
+    const finaldecorator = this.state.newDecorators.map((item) => {
       return (
         <DecoratorItem
           decorator={item}

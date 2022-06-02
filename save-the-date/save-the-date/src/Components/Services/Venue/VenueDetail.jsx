@@ -4,6 +4,7 @@ import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
 import Alert from "../../Alert";
 import ScheduleCard from "../ScheduleCard";
+import CartVenue from "../../cart-item/cart-venue";
 
 const VenueDetail = (props) => {
   const [alert, setAlert] = useState(null);
@@ -12,6 +13,7 @@ const VenueDetail = (props) => {
   const [scheduleCard, setscheduleCard] = useState(false);
 
   const { addToCartItems } = useContext(CartContext);
+  const { cartVenueAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -28,12 +30,14 @@ const VenueDetail = (props) => {
     }, 2000);
   }
 
-  const addServiceToCart = () => addToCartItems(props.venue);
+  const addServiceToCart = () => {
+    addToCartItems(props.venue);
+    cartVenueAdded(props.venue);
+  }
 
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
     props.onVenueSelect;
-    console.log(props.venue);
     handleCartClick();
     addServiceToCart();
   }
@@ -51,11 +55,11 @@ const VenueDetail = (props) => {
             <h5>
               {props.venue.title}
               <span className="badge badge-warning text-dark">
-                {props.venue.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
-          <CardText>{props.venue.desc}</CardText>
+          <CardText>{props.venue.description}</CardText>
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
             <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

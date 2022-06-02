@@ -1,9 +1,9 @@
 import React from 'react'
 import "./cart-item.css";
 
-const CartItem = ({cartItem}) => {
-    const { title, images, price } = cartItem;
-    console.log(cartItem);
+const CartVenue = ({cartVenue}) => {
+    const { title, images, price } = cartVenue;
+    console.log(cartVenue);
   return (
     <div className='cart-item-container'>
         <img src={images[0].image} alt={`${title}`} id="cartimg"/>
@@ -15,4 +15,4 @@ const CartItem = ({cartItem}) => {
   )
 }
 
-export default CartItem;
+export default CartVenue;

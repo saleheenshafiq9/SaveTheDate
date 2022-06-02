@@ -42,16 +42,17 @@ const CatererDetail = (props) => {
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.caterer.image} alt={props.caterer.name} />
+        <CardImg top src={props.caterer.images[0].image} alt={props.caterer.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.caterer.name}
+              {props.caterer.title}
               <span className="badge badge-warning text-dark">
-                {props.caterer.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
+          <CardText>{`${props.caterer.description.substring(0, 250)}`}</CardText>
           <button className="btn btn-dark" onClick={props.onCatererSelect}>
           <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

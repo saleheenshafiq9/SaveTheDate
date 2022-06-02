@@ -10,6 +10,7 @@ const VenueItem = (props) => {
           className="card-img-top"
           src={props.venue.images[0].image}
           alt={props.venue.title}
+          height="200px"
         />
         <div className="card-body">
           <h5 className="card-title">{props.venue.title}</h5>
@@ -17,7 +18,7 @@ const VenueItem = (props) => {
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
             Preview
           </button>
-          <span class="badge badge-warning text-dark">{props.venue.label}</span>
+          <span class="badge badge-warning text-dark">Regular</span>
         </div>
         <div className="card-footer">
           <b>Price: </b>

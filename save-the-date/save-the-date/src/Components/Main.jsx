@@ -40,7 +40,10 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
+          <Route path="/venue" element={<Venue />} />
+          <Route path="/caterer" element={<Caterer />} />
+          <Route path="/decorator" element={<Decorator />} />
+          <Route path="/photography" element={<Photography />} />
           {/* Edit Profiles */}
           <Route path="/editvenue" element={<EditVenue />} />
           <Route path="/editcaterer" element={<EditCaterer />} />
