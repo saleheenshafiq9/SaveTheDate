@@ -170,4 +170,8 @@ class PartyVenueSlot(models.Model):
     venueslot=models.ForeignKey(VenueSlot, on_delete=models.CASCADE, null=True, related_name='partyvenueslot')
 
 
+class PartyThemeSlot(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partythemeslot')
+    theme=models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='theme')
+
 

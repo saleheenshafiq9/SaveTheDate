@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import FoodCartItem, FoodItem, Party, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import FoodCartItem, FoodItem, Party, PartyThemeSlot, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -280,19 +280,69 @@ class PartyVenueSlotSerializer(serializers.ModelSerializer):
         return partyvenueslot.venueslot.price
 
 
+class UpdatePartyThemeSlotSerializer(serializers.ModelSerializer):
+    theme_id=serializers.IntegerField()
+    class Meta:
+        model=PartyThemeSlot
+        fields=['id', 'theme_id']
+
+    def validate_theme_id(self, value):
+        if not Theme.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No theme with the given ID was found.')
+        return value
+
+
+class AddPartyThemeSlotSerializer(serializers.ModelSerializer):
+    theme_id=serializers.IntegerField()
+    class Meta:
+        model=PartyThemeSlot
+        fields=['id', 'theme_id']
+
+    def validate_theme_id(self, value):
+        if not Theme.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No theme with the given ID was found.')
+        return value
+
+    def save(self, **kwargs):
+        party_id = self.context['party_id']
+        self.instance = PartyThemeSlot.objects.create(
+            party_id=party_id, **self.validated_data)
+
+        return self.instance
+
+
+class PartyThemeSlotSerializer(serializers.ModelSerializer):
+    theme=ThemeSerializer(many=False, read_only=True)
+    price=serializers.SerializerMethodField()
+
+    class Meta:
+        model=PartyThemeSlot
+        fields=['id', 'theme', 'price']
+
+    def get_price(self, partythemeslot):
+        return partythemeslot.theme.price
+
+
+
 class PartySerializer(serializers.ModelSerializer):
     foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
     partyvenueslot=PartyVenueSlotSerializer(many=True, read_only=True)
     totalCost=serializers.SerializerMethodField()
+    partythemeslot=PartyThemeSlotSerializer(many=True, read_only=True)
 
     class Meta:
         model=Party
         fields=['id', 'totalCost', 'pendingCost',
-        'status', 'foodcartitem', 'partyvenueslot']
+        'status', 'foodcartitem', 'partyvenueslot', 'partythemeslot']
 
     def get_totalCost(self, party):
         try:
-            return (sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])+sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()]) )
+            totalCost=(sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+            +sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()])
+            +sum([partythemeslot.theme.price  for partythemeslot in party.partythemeslot.all()]) )
+            return totalCost
         except AttributeError:
             return 0
         

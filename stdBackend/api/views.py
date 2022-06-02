@@ -3,8 +3,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import FoodCartItem, Party, PartyVenueSlot, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyVenueSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .models import FoodCartItem, Party, PartyThemeSlot, PartyVenueSlot, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
+from .serializers import AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -295,10 +295,6 @@ class FoodItemViewSet(ModelViewSet):
     serializer_class=FoodItemSerializer
     http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
 
-    def get_permissions(self):
-        if self.request.method in ['GET']:
-            return [AllowAny()]
-        return [IsCateringOrReadOnly()]
 
     def get_queryset(self):
         return FoodItem.objects.filter(
@@ -386,12 +382,11 @@ class PartyViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {
-            'user_id':self.request.user.id
+            'user_id':self.request.user.id,
         }
 
 
 class PartyCateringViewSet(ModelViewSet):
-
     def get_queryset(self):
         return Catering.objects \
             .filter(party__id=self.kwargs['party_pk']) \
@@ -460,3 +455,23 @@ class PartyVenueSlotViewSet(ModelViewSet):
         return PartyVenueSlot.objects \
             .filter(party_id=self.kwargs['party_pk']) \
             .select_related('venueslot')
+
+
+class PartyThemeSlotViewSet(ModelViewSet):
+    http_method_names = ['get', 'put', 'patch', 'delete', 'post']
+    
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UpdatePartyThemeSlotSerializer
+        elif self.request.method in ['POST']:
+            return AddPartyThemeSlotSerializer
+        return PartyThemeSlotSerializer
+
+    def get_serializer_context(self):
+        return {'party_id': self.kwargs['party_pk']}
+
+
+    def get_queryset(self):
+        return PartyThemeSlot.objects \
+            .filter(party_id=self.kwargs['party_pk']) \
+            .select_related('theme')
