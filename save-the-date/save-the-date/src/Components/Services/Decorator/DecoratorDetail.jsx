@@ -42,16 +42,17 @@ const DecoratorDetail = (props) => {
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.decorator.image} alt={props.decorator.name} />
+        <CardImg top src={props.decorator.images[0].image} alt={props.decorator.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.decorator.name}
+              {props.decorator.title}
               <span className="badge badge-warning text-dark">
-                {props.decorator.label}
+                Regular              
               </span>
             </h5>
           </CardTitle>
+          <CardText>{props.decorator.description}</CardText>
           <button className="btn btn-dark" onClick={props.onDecoratorSelect}>
           <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

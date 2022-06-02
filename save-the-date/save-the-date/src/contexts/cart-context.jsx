@@ -8,7 +8,7 @@ const addCartItem = (cartItems, serviceToAdd) => {
         return cartItems.map((cartItem) => cartItem
         );
     }
-
+    
     return [...cartItems, {...serviceToAdd}];
 }
 

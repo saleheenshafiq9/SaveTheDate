@@ -33,7 +33,6 @@ const VenueDetail = (props) => {
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
     props.onVenueSelect;
-    console.log(props.venue);
     handleCartClick();
     addServiceToCart();
   }
@@ -51,11 +50,11 @@ const VenueDetail = (props) => {
             <h5>
               {props.venue.title}
               <span className="badge badge-warning text-dark">
-                {props.venue.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
-          <CardText>{props.venue.desc}</CardText>
+          <CardText>{props.venue.description}</CardText>
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
             <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

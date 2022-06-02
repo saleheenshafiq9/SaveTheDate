@@ -44,16 +44,17 @@ const PhotographyDetail = (props) => {
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.photography.image} alt={props.photography.name} />
+        <CardImg top src={props.photography.images[0].image} alt={props.photography.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.photography.name}
+              {props.photography.title}
               <span className="badge badge-warning text-dark">
-                {props.photography.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
+          <CardText>{`${props.photography.description.substring(0, 250)}`}</CardText>
           <button className="btn btn-dark" onClick={props.onPhotographySelect}>
           <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

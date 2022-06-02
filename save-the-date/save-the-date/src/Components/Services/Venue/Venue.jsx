@@ -17,8 +17,6 @@ class Venue extends Component {
   componentDidMount() {
     GetReq("/api/venues").then((res) => {
       this.setState({newVenues: res});
-      console.log(res);
-      console.log(this.state.newVenues);
     })
   }
   

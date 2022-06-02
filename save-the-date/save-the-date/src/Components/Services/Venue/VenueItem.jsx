@@ -10,6 +10,7 @@ const VenueItem = (props) => {
           className="card-img-top"
           src={props.venue.images[0].image}
           alt={props.venue.title}
+          height="200px"
         />
         <div className="card-body">
           <h5 className="card-title">{props.venue.title}</h5>

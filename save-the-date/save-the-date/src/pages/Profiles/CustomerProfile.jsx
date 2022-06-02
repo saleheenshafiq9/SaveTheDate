@@ -1,14 +1,16 @@
 import { UserContext } from "../../contexts/user-context";
+import { CartContext } from "../../contexts/cart-context";
 import React,{ useContext,useEffect } from "react";
 import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
+import CartItem from "../../Components/cart-item/cart-item";
 
 function CustomerProfile() {
   
   const {currentUser} = useContext(UserContext);
+  const {cartItems} = useContext(CartContext);
   // currentUser===null  && navigate('/');
-  
   
   return (
     (<div className="p-3">
@@ -55,7 +57,11 @@ function CustomerProfile() {
           <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Venue</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartItems.map(item => (
+          <CartItem key={item.id} cartItem={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/venue' id="exploretext"><b style={{fontWeight:"500"}}>Explore Venues</b></Link></button>
             </div>
           </div>
