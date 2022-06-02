@@ -31,7 +31,7 @@ class VenueSerializer(serializers.ModelSerializer):
     class Meta:
         model=Venue
         fields=['id', 'location', 'capacity', 'user_id', 
-        'title', 'description', 'images']
+        'title', 'description', 'images', 'price']
 
 
 class FoodImageSerializer(serializers.ModelSerializer):
@@ -67,7 +67,7 @@ class CateringSerializer(serializers.ModelSerializer):
     class Meta:
         model=Catering
         fields=['id', 'capacity', 'user_id', 'title', 
-        'description', 'images', 'items']
+        'description', 'images', 'items', 'location']
 
 
 class ThemeImageSerializer(serializers.ModelSerializer):
@@ -103,7 +103,7 @@ class DecoratorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Decorator
         fields=['id', 'user_id', 'title', 'description',
-        'images', 'themes']
+        'images', 'themes', 'location']
 
 
 
@@ -112,7 +112,7 @@ class ContentMakerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
     class Meta:
         model=ContentMaker
-        fields=['id', 'user_id', 'title', 'description', 'images']
+        fields=['id', 'user_id', 'title', 'description', 'images', 'price', 'location']
 
 
 class EntertainerSerializer(serializers.ModelSerializer):

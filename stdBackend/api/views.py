@@ -5,10 +5,11 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
 from .models import FoodCartItem, Party, PartyThemeSlot, PartyVenueSlot, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
 from .serializers import AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, ReviewSerializer, CustomerSerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework import status
+
 
 # Create your views here.
 class CustomerViewSet(ModelViewSet): 
@@ -475,3 +476,10 @@ class PartyThemeSlotViewSet(ModelViewSet):
         return PartyThemeSlot.objects \
             .filter(party_id=self.kwargs['party_pk']) \
             .select_related('theme')
+
+@api_view(['GET' 'POST'])
+def recommendation(request):
+    if request.method=='GET':
+        partyset=Party.objects.all().select_related('totalCost')
+        return Response(partyset) 
+    

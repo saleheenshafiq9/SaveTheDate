@@ -19,14 +19,19 @@ class ServiceProvider(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         null=True,
     )
+    location=models.CharField(max_length=255, null=True)
 
 
 
 class Venue(ServiceProvider):
-    location=models.CharField(max_length=255)
     capacity=models.IntegerField(default=0,validators=[MinValueValidator(0)])
     user=models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+        null=True
     )
 
     
@@ -44,6 +49,11 @@ class Decorator(ServiceProvider):
 class ContentMaker(ServiceProvider):
     user=models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+        null=True
     )
 
 class Entertainer(ServiceProvider):
@@ -73,6 +83,17 @@ class Party(models.Model):
     )
     status=models.CharField(max_length=255, default="unconfirmed")
 
+    @property
+    def get_totalCost(self, party):
+        try:
+            totalCost=(sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+            +sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()])
+            +sum([partythemeslot.theme.price  for partythemeslot in party.partythemeslot.all()]) )
+            
+            self.totalCost=totalCost
+            return totalCost
+        except AttributeError:
+            return 0
 
 
 

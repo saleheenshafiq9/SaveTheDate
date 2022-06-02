@@ -1,5 +1,6 @@
 from cgitb import lookup
 from email.mime import base
+from django.urls import path
 from . import views
 from rest_framework_nested import routers
 from . import views
@@ -60,3 +61,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls
+urlpatterns+=[path('recommendation', views.recommendation)]
