@@ -1,15 +1,21 @@
 import { UserContext } from "../../contexts/user-context";
+import { CartContext } from "../../contexts/cart-context";
 import React,{ useContext,useEffect } from "react";
 import { Navigate,  } from "react-router";
-import RecommendationParameters from "./CustomerQuery";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
+import CartItem from "../../Components/cart-item/cart-item";
+import CartDecorator from "../../Components/cart-item/cart-decorator";
+import CartVenue from "../../Components/cart-item/cart-venue";
 
 function CustomerProfile() {
   
   const {currentUser} = useContext(UserContext);
+  const {cartItems} = useContext(CartContext);
+  const {cartDecorators} = useContext(CartContext);
+  const {cartVenues} = useContext(CartContext);
+  // console.log(isDecorators);
   // currentUser===null  && navigate('/');
-  
   
   return (
     (<div className="p-3">
@@ -18,8 +24,9 @@ function CustomerProfile() {
             <div className="card w-100">
             <img
               className="card-img-top"
-              src="/Customer/one.png"
+              src="/Customer/user.png"
               alt={currentUser.username}
+              id="profileimg"
             />
             <div className="card-body">
               <h5 className="card-title">{currentUser.first_name} {currentUser.last_name}</h5>
@@ -42,10 +49,11 @@ function CustomerProfile() {
         <div className="col-9">
           <div className="row">
             <div className="col text-center m-3" id="starttext">
-              <h5>Haven't start planning yet?</h5>
-              <button className="btn btn-dark mt-3">
+              <h5>Haven't start planning yet?
+              <button className="btn btn-dark">
                 <Link to="/recommendation" id="plantext">Start here</Link>
               </button>
+              </h5>
             </div>
           </div>
           <div className="row">
@@ -54,7 +62,11 @@ function CustomerProfile() {
           <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Venue</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartVenues.map(item => (
+          <CartVenue key={item.id} cartVenue={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/venue' id="exploretext"><b style={{fontWeight:"500"}}>Explore Venues</b></Link></button>
             </div>
           </div>
@@ -64,7 +76,10 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Caterer</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+                {cartItems.map(item => (
+          <CartItem key={item.id} cartItem={item} />
+          ))}</p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/caterer' id="exploretext"><b style={{fontWeight:"500"}}>Explore Caterers</b></Link></button>
             </div>
           </div>
@@ -76,7 +91,11 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Decorator</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartDecorators.map(item => (
+          <CartDecorator key={item.id} cartDecorator={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/decorator' id="exploretext"><b style={{fontWeight:"500"}}>Explore Decorators</b></Link></button>
             </div>
           </div>
@@ -99,13 +118,27 @@ function CustomerProfile() {
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col-6">
-          Past Bookings
-        </div>
-        <div className="col-6">
-          Booking Info
-        </div>
+      <div className="row m-5">
+      <p>
+          <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+        </p>
+        <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          </div>
       </div>
     </div>)
   )

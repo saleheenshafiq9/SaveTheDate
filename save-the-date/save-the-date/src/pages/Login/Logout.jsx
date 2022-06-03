@@ -11,7 +11,9 @@ const Logout = () => {
         
     }
     return (
-        <span id="NavLink"  onClick={handleClick}> Sign Out</span>
+        <span id="NavLink"  onClick={handleClick} style={{
+            cursor: "pointer"
+        }}> Sign Out</span>
     )
 }
 

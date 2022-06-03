@@ -1,27 +1,76 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+
+import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import Alert from "../../Alert";
+import ScheduleCard from "../ScheduleCard";
+import CartVenue from "../../cart-item/cart-venue";
 
 const VenueDetail = (props) => {
+  const [alert, setAlert] = useState(null);
+  const [cartText, setcartText] = useState("Add to Cart");
+  const [disable, setdisable] = useState(false);
+  const [scheduleCard, setscheduleCard] = useState(false);
+
+  const { addToCartItems } = useContext(CartContext);
+  const { cartVenueAdded } = useContext(CartContext);
+
+  const handleCartClick = () => {
+    setcartText("Added");
+    setdisable(true);
+  }
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  }
+
+  const addServiceToCart = () => {
+    addToCartItems(props.venue);
+    cartVenueAdded(props.venue);
+  }
+
+  const cartAdded = () => {
+    showAlert("Successfully Added to Cart!","success");
+    props.onVenueSelect;
+    handleCartClick();
+    addServiceToCart();
+  }
+
+  const scheduleAdded = () => {
+    setscheduleCard(!scheduleCard);
+  }
+
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.venue.image} alt={props.venue.name} />
+        <CardImg top src={props.venue.images[0].image} alt={props.venue.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.venue.name}
+              {props.venue.title}
               <span className="badge badge-warning text-dark">
-                {props.venue.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
-          <CardText>{props.venue.desc}</CardText>
+          <CardText>{props.venue.description}</CardText>
           <button className="btn btn-dark" onClick={props.onVenueSelect}>
-            Contact
+            <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>
-          <button className="btn btn-success" onClick={props.onVenueSelect}>
-            Book Now
+          <button className="btn btn-success" onClick={cartAdded} disabled={disable}>
+            {cartText}
           </button>
+          <button className="btn btn-danger" onClick={scheduleAdded}>
+            Set Appointment
+          </button>
+          <Alert alert={alert}/>
+          { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />
           <div className="card-footer">
@@ -30,7 +79,7 @@ const VenueDetail = (props) => {
             <br />
             <br />
             <b>Address: </b>
-            {props.venue.address}
+            {props.venue.location}
             <br />
             <br />
             <b>Capacity: </b>

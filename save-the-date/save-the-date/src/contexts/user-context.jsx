@@ -40,25 +40,28 @@ export const UserProvider = ({children}) => {
         
     },[token,navigate,loading])
 
-    const NavigateToProfile=useCallback(()=>{ currentUser?.userType=="customer" && navigate('../customerProfile')
-    currentUser?.userType=="venue" &&  navigate('../providerProfile')
-    currentUser?.userType=="catering" &&  navigate('../catererProfile')
-    currentUser?.userType=="photographer" &&  navigate('../photographyProfile')  
+    const NavigateToProfile=()=>{
+        currentUser?.userType=="customer" && navigate('../customerProfile')
+        currentUser?.userType=="venue" &&  navigate('../venueProfile')
+        currentUser?.userType=="catering" &&  navigate('../catererProfile')
+        currentUser?.userType=="contentmaker" &&  navigate('../photographyProfile')
+        currentUser?.userType=="decorator" &&  navigate('../decoratorProfile')
 
-    })
+    }
     
     useEffect(()=>{
        currentUser && setLoggedIn(true)
+       !currentUser && setLoggedIn(false)
     },[currentUser])
 
     useEffect(()=>{
         !loggedIn && token && updateToken()
-    },[loading])
+    },[loggedIn])
 
     useEffect(()=>{
-        NavigateToProfile();
-            
-    },[loggedIn])
+        currentUser &&  NavigateToProfile();
+
+    },[currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     

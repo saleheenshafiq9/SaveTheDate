@@ -1,0 +1,13 @@
+#schedulebg {
+    color: white;
+    background: #DC3545;
+    height: 120px;
+}
+
+#schedulebg:hover {
+    background: #ce6c47;
+}
+
+#confirm {
+    margin-left: 17px;
+}

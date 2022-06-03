@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
+import useFetch from "../../hooks/useFetch";
 import {MdModeEditOutline} from "react-icons/md";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+import { tokenUrl,cateringProfKey } from "../../constants/constants";
+import { UserContext } from "../../contexts/user-context";
 
 function CatererProfile() {
+    const {token}=useContext(UserContext)
+    
+    const {data:catererData,error,loading}=useFetch(tokenUrl,cateringProfKey,token?.access)
+    console.log(catererData);
+
     return(
         <div>
             <div className="row">
@@ -20,10 +28,11 @@ function CatererProfile() {
             <br /><br />
             <div className="row">
                 <div className="col-6">
-                    <h2>Alpha Catering</h2>
-                    <p className="text-secondary">Dhanmondi, Dhaka 1205
+                    <h2>{catererData?catererData.title:"Title"}</h2>
+                    <p className="text-secondary">
+                    {catererData?catererData.location :"Location"}
                     <br/>
-                    <FaUserFriends /> 500 People</p>
+                    <FaUserFriends />{catererData?catererData.capacity: "Capacity No." } People</p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
@@ -43,7 +52,7 @@ function CatererProfile() {
             <div className="row"><br /><br />
                 <h4 className="text-center">Food Menu</h4>
                 <div className="col-3">
-                <img src="/Caterer/One.jpg" className="gallery-img"/>
+                <img src={"/Caterer/One.jpg"} className="gallery-img"/>
                 </div>
                 <div className="col-3">
                 <img src="/Caterer/Two.jpg" className="gallery-img"/>
@@ -55,17 +64,33 @@ function CatererProfile() {
             <div className="row p-5">
                 <div className="col-6 text-secondary">
                 <h4 className="text-dark">About Caterers</h4><br />
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam cumque odio ut nisi laboriosam quibusdam unde sequi excepturi harum debitis adipisci sunt quaerat nemo, qui facere asperiores nam libero accusantium dignissimos fugit! Pariatur aliquam deleniti, quos voluptatibus earum ipsa eos sed illo nostrum molestiae magni dolorum ullam omnis amet possimus assumenda quaerat facere, quisquam fuga voluptas nulla totam? Recusandae esse facilis tempora culpa hic asperiores non, tenetur molestias quos quasi nihil obcaecati amet, quae, laboriosam consequatur est ipsam similique aspernatur iusto blanditiis laudantium. Numquam tenetur, quis praesentium, nam qui iusto dolores doloremque magni provident officiis ex aliquid incidunt ipsum exercitationem.</p>
+                    <p>{catererData?catererData.description: "Description" }</p>
                 </div>
-                <div className="col-6">
-                <h4 className="text-dark mx-5">Our Cuisines</h4><br />
-                <ul className="text-secondary my-3 mx-2">
-                    <li>Chinese</li>
-                    <li>Bengali</li>
-                    <li>Indian</li>
-                    <li>Dessert Items</li>
-                    <li>Drinks</li>
-                </ul>
+                <div className="col-6 text-center">
+                    <p>
+                    <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+                    </p>
+                    <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          </div>
+          <p>
+          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+          </p>
+          <div className="row">
+          <div class="col">
+            <div class="collapse multi-collapse ml-5" id="multiCollapseExample2">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+          </div>
+          </div>
                 </div>
             </div>
             <div className="row p-3">

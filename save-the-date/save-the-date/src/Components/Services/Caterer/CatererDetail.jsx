@@ -1,26 +1,69 @@
-import React from "react";
+import React,{useState, useContext} from "react";
+import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import Alert from "../../Alert";
+import ScheduleCard from "../ScheduleCard";
+
 
 const CatererDetail = (props) => {
+  const [alert, setAlert] = useState(null);
+  const [cartText, setcartText] = useState("Add to Cart");
+  const [disable, setdisable] = useState(false);
+  const [scheduleCard, setscheduleCard] = useState(false);
+  const { addToCartItems } = useContext(CartContext);
+
+  const handleCartClick = () => {
+    setcartText("Added");
+    setdisable(true);
+  }
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  }
+  const addServiceToCart = () => addToCartItems(props.caterer);
+
+  const cartAdded = () => {
+    showAlert("Successfully Added to Cart!","success");
+    props.onCatererSelect;
+    handleCartClick();
+    addServiceToCart();
+  }
+
+  const scheduleAdded = () => {
+    setscheduleCard(true);
+  }
+
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.caterer.image} alt={props.caterer.name} />
+        <CardImg top src={props.caterer.images[0].image} alt={props.caterer.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.caterer.name}
+              {props.caterer.title}
               <span className="badge badge-warning text-dark">
-                {props.caterer.label}
+                Regular
               </span>
             </h5>
           </CardTitle>
+          <CardText>{`${props.caterer.description.substring(0, 250)}`}</CardText>
           <button className="btn btn-dark" onClick={props.onCatererSelect}>
-            Contact
+          <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>
-          <button className="btn btn-success" onClick={props.onCatererSelect}>
-            Book Now
+          <button className="btn btn-success" onClick={cartAdded} disabled={disable}>
+          {cartText}
           </button>
+          <button className="btn btn-danger" onClick={scheduleAdded}>
+            Set Appointment
+          </button>
+          <Alert alert={alert}/>
+          { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />
           <div className="card-footer">

@@ -38,13 +38,15 @@ class EditVenue extends Component {
       
     handleSubmit(event) {
         event.preventDefault();
-        const {currentUser}=this.context;
+        const {token}=this.context;
+        const header=`JWT ${token.access}`
+        console.log(header);
 
         const {image,...reqData}=this.state
         console.log(reqData);
         
-        const data_key=`api/venues/${currentUser.id}/`;
-        PutReq(data_key,reqData)
+        const data_key=`api/venues/me/`;
+        PutReq(data_key,reqData,header)
 
       };
 

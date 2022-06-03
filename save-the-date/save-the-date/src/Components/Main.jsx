@@ -9,6 +9,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Login/Login";
 
+
 import Register from "../pages/Register/Register";
 
 import RecommendationParameters from "../pages/Profiles/CustomerQuery";
@@ -25,6 +26,7 @@ import DecoratorProfile from "../pages/Profiles/DecoratorProfile";
 import EditPhotography from "../pages/editProfiles/editPhotography";
 import PhotographyProfile from "../pages/Profiles/PhotographyProfile";
 
+
 const Main = (props) => {
   return (
     <div>
@@ -38,6 +40,10 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/venue" element={<Venue />} />
+          <Route path="/caterer" element={<Caterer />} />
+          <Route path="/decorator" element={<Decorator />} />
+          <Route path="/photography" element={<Photography />} />
           {/* Edit Profiles */}
           <Route path="/editvenue" element={<EditVenue />} />
           <Route path="/editcaterer" element={<EditCaterer />} />
@@ -59,19 +65,14 @@ const Main = (props) => {
           } />
           
 
-          <Route path="/providerProfile" 
+          <Route path="/venueProfile" 
             element={
               <PrivateRoute>
                 <VenueProfile />
               </PrivateRoute>
           
           } />
-          <Route path="/catererProfile" 
-            element={
-              <PrivateRoute>
-                <CatererProfile />
-              </PrivateRoute>
-            } />
+
           <Route path="/decoratorProfile" 
             element={
               <PrivateRoute>

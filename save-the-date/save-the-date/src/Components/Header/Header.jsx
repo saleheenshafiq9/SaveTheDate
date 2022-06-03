@@ -1,13 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import Logo from "../../assets/mirror-ball.png";
+import CartIcon from "../cart-icon/cart-icon";
+import CartDropdown from "../cart-dropdown/cart-dropdown";
 import { UserContext } from "../../contexts/user-context";
 import Logout from "../../pages/Login/Logout";
 
 const Header = () => {
   const {currentUser} = useContext(UserContext);
+  const [dropdown, setDropdown] = useState(false);
+
+  const clickDropdown = () => {
+    setDropdown(!dropdown);
+  }
   //console.log(currentUser);
 
   return (
@@ -15,10 +22,10 @@ const Header = () => {
       <Navbar
         style={{
           backgroundColor: "#FDCA40",
-          height: "75px",
+          height: "100px",
         }}
       >
-        <NavbarBrand href="/" className="mr-auto ml-md-5 Brand">
+        <NavbarBrand href="/" className="mr-auto ml-md-5 mb-4 Brand">
           <img src={Logo} alt="Logo" width="40px" />
           SaveTheDate
         </NavbarBrand>
@@ -37,17 +44,26 @@ const Header = () => {
             <Link to="/blogs" id="NavLink">
               Blogs
             </Link>
-            <Link to="/contact" id="NavLink">
+            <Link to="/providerProfile" id="NavLink">
               Contact Us
             </Link>
             {currentUser ? (
+            <>
+              { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink">CustomerProfile</Link>}
+              { currentUser.userType=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
+              { currentUser.userType=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
+              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Decorator</Link> } 
+              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
               <Logout />
+            </>
              ) : (<Link id="NavLink" to='/login'>Sign In
               </Link>
             )}
+            <a onClick={clickDropdown}><CartIcon /></a>
           </NavItem>
         </Nav>
       </Navbar>
+      {dropdown ? <CartDropdown /> : null }
     </div>
   );
 };

@@ -29,8 +29,15 @@ class EditPhotography extends Component {
       };
       
     handleSubmit = (event) => {
-        console.log(this.state);
         event.preventDefault();
+        const {token}=this.context;
+        const header=`JWT ${token.access}`
+        console.log(header);
+
+        const {image,...reqData}=this.state
+        console.log(reqData);
+        const data_key=`api/contenmakers/me/`;
+        PutReq(data_key,reqData,header)
       };
 
     render() {

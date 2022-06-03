@@ -2,24 +2,35 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 
 
-const useFetch = (url,key,pending) => {
+const useFetch = (url,key,token) => {
 
     const [data,setData] =useState(null);
-    const [loading,setLoading]=useState(pending);
+    const [loading,setLoading]=useState(false);
     const [error, setErorr]=useState(null);
 
-
+    const reqHead=token?{
+        headers:{
+            "Authorization":`JWT ${token}`
+        }
+    }:null;
     
     useEffect(
-        ()=>{  
-
-            loading && axios.get(url+key).then(res=>setData(res.data))
-            loading && setLoading(false)
+        ()=>{   
+            setLoading(true)
+            const fetchedData=token?axios.get(url+key,reqHead):axios.get(url+key)
             
-        },[loading]
+            fetchedData.then(res=>{
+                setLoading(false)
+                setData(res.data)
+            }).catch(err=>{
+                setErorr(err.message);
+                setLoading(false)
+            })
+            
+        },[]
     )
     
     return {data,error,loading}
 }
 
-export default useAuth;
+export default useFetch;
