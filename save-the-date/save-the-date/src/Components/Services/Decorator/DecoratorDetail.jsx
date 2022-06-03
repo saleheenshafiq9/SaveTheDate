@@ -11,6 +11,7 @@ const DecoratorDetail = (props) => {
   const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
   const { addToCartItems } = useContext(CartContext);
+  const { cartDecoratorAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -26,7 +27,10 @@ const DecoratorDetail = (props) => {
       setAlert(null);
     }, 2000);
   }
-  const addServiceToCart = () => addToCartItems(props.decorator);
+  const addServiceToCart = () => {
+    addToCartItems(props.decorator);
+    cartDecoratorAdded(props.decorator);
+  }
 
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
@@ -42,16 +46,17 @@ const DecoratorDetail = (props) => {
   return (
     <div>
       <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.decorator.image} alt={props.decorator.name} />
+        <CardImg top src={props.decorator.images[0].image} alt={props.decorator.title} />
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h5>
-              {props.decorator.name}
+              {props.decorator.title}
               <span className="badge badge-warning text-dark">
-                {props.decorator.label}
+                Regular              
               </span>
             </h5>
           </CardTitle>
+          <CardText>{props.decorator.description}</CardText>
           <button className="btn btn-dark" onClick={props.onDecoratorSelect}>
           <a href="mailto:venue@std.com" id="mailto">Contact</a>
           </button>

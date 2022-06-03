@@ -27,3 +27,8 @@ class IsDecoratorOrReadOnly(permissions.BasePermission):
             return False 
         return bool(request.user and request.user.userType=="decorator")
 
+
+class DenyAll(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return False
+

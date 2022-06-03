@@ -1,5 +1,6 @@
 from cgitb import lookup
 from email.mime import base
+from django.urls import path
 from . import views
 from rest_framework_nested import routers
 from . import views
@@ -16,12 +17,17 @@ router.register('partys', views.PartyViewSet, basename='party')
 
 party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
 party_router.register('caterings', views.PartyCateringViewSet, basename='party-caterings')
-party_router.register('foodcarts', views.PartyFoodCartViewSet, basename='party-foodcarts')
+party_router.register('foodcartitems', views.FoodCartItemViewset, basename='party-fooditems')
+party_router.register('venueslots', views.PartyVenueSlotViewSet, basename='party-venueslots')
+party_router.register('themeslots', views.PartyThemeSlotViewSet, basename='party-themeslots')
+
 
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
 venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
 venue_router.register('images', views.VenueImageViewSet, basename='venue-images')
+venue_router.register('slots', views.VenueSlotViewSet, basename='venue-slots')
+
 
 
 catering_router=routers.NestedDefaultRouter(router, 'caterings', lookup='catering')
@@ -55,3 +61,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls
+urlpatterns+=[path('recommendation', views.recommendation)]

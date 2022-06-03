@@ -1,6 +1,7 @@
 import React,{useContext} from "react";
 import { UserContext } from "../../contexts/user-context";
 import { tokenUrl } from "../../constants/constants";
+import useFetch from "../../hooks/useFetch";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt} from "react-icons/fa";
 import {GiPartyFlags} from "react-icons/gi";
@@ -11,7 +12,7 @@ import { Link } from "react-router-dom";
 
 function DecoratorProfile() {
     const {token}= useContext(UserContext);
-    const {data:decoratorData,error,loading}=useFetch(tokenUrl,"/api/venues/me",token?.access);
+    const {data:decoratorData,error,loading}=useFetch(tokenUrl,"/api/decorators/me",token?.access);
     console.log(decoratorData);
     return(
         <div>
@@ -26,8 +27,8 @@ function DecoratorProfile() {
             <br /><br />
             <div className="row">
                 <div className="col-6">
-                    <h2>BD Wedding Planner</h2>
-                    <p className="text-secondary">Uttara, Dhaka
+                    <h2>{decoratorData?decoratorData.title:"Title"}</h2>
+                    <p className="text-secondary">{decoratorData?decoratorData.location :"Location"}
                     <br/>
                     <GiPartyFlags /> Modern, Classic, Traditional</p>
                 </div>
@@ -61,7 +62,7 @@ function DecoratorProfile() {
             <div className="row p-5">
                 <div className="col-6 text-secondary">
                 <h4 className="text-dark">About Decorators</h4><br />
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam cumque odio ut nisi laboriosam quibusdam unde sequi excepturi harum debitis adipisci sunt quaerat nemo, qui facere asperiores nam libero accusantium dignissimos fugit! Pariatur aliquam deleniti, quos voluptatibus earum ipsa eos sed illo nostrum molestiae magni dolorum ullam omnis amet possimus assumenda quaerat facere, quisquam fuga voluptas nulla totam? Recusandae esse facilis tempora culpa hic asperiores non, tenetur molestias quos quasi nihil obcaecati amet, quae, laboriosam consequatur est ipsam similique aspernatur iusto blanditiis laudantium. Numquam tenetur, quis praesentium, nam qui iusto dolores doloremque magni provident officiis ex aliquid incidunt ipsum exercitationem.</p>
+                    <p>{decoratorData?decoratorData.description: "Description" }</p>
                 </div>
                 <div className="col-6 text-center">
                     <p>

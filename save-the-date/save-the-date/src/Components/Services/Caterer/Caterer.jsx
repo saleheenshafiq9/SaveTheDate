@@ -5,6 +5,7 @@ import CatererItem from "./CatererItem";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
 import { UserContext } from "../../../contexts/user-context";
+import GetReq from "../../../helper/getReq";
 
 class Caterer extends Component {
   
@@ -12,7 +13,14 @@ class Caterer extends Component {
     caterers: CatererData,
     selectedVenue: null,
     modalOpen: false,
+    newCaterers: []
   };
+
+  componentDidMount() {
+    GetReq("/api/caterings").then((res) => {
+      this.setState({newCaterers: res});
+    })
+  }
 
   onCatererSelect = (caterer) => {
     //console.log(venue);
@@ -24,7 +32,7 @@ class Caterer extends Component {
   };
 
   render() {
-    const finalcaterer = this.state.caterers.map((item) => {
+    const finalcaterer = this.state.newCaterers.map((item) => {
       return (
         <CatererItem
           caterer={item}

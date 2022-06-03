@@ -44,16 +44,16 @@ const Header = () => {
             <Link to="/blogs" id="NavLink">
               Blogs
             </Link>
-            <Link to="/contact" id="NavLink">
+            <Link to="/providerProfile" id="NavLink">
               Contact Us
             </Link>
             {currentUser ? (
             <>
               { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink">CustomerProfile</Link>}
-              { currentUser.usertype=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
-              { currentUser.usertype=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
-              { currentUser.usertype=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Decorator</Link> } 
-              { currentUser.usertype=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
+              { currentUser.userType=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
+              { currentUser.userType=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
+              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Decorator</Link> } 
+              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
               <Logout />
             </>
              ) : (<Link id="NavLink" to='/login'>Sign In

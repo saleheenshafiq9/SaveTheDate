@@ -8,16 +8,17 @@ const CatererItem = (props) => {
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.caterer.image}
-          alt={props.caterer.name}
+          src={props.caterer.images[0].image}
+          alt={props.caterer.title}
+          height="200px"
         />
         <div className="card-body">
-          <h5 className="card-title">{props.caterer.name}</h5>
+          <h5 className="card-title">{props.caterer.title}</h5>
           <br />
           <button className="btn btn-dark" onClick={props.onCatererSelect}>
             Preview
           </button>
-          <span class="badge badge-warning text-dark">{props.caterer.label}</span>
+          <span class="badge badge-warning text-dark">Regular</span>
         </div>
         <div className="card-footer">
           <b>Food Menu: </b>

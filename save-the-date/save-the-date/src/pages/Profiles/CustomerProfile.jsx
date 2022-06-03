@@ -1,14 +1,21 @@
 import { UserContext } from "../../contexts/user-context";
+import { CartContext } from "../../contexts/cart-context";
 import React,{ useContext,useEffect } from "react";
 import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
+import CartItem from "../../Components/cart-item/cart-item";
+import CartDecorator from "../../Components/cart-item/cart-decorator";
+import CartVenue from "../../Components/cart-item/cart-venue";
 
 function CustomerProfile() {
   
   const {currentUser} = useContext(UserContext);
+  const {cartItems} = useContext(CartContext);
+  const {cartDecorators} = useContext(CartContext);
+  const {cartVenues} = useContext(CartContext);
+  // console.log(isDecorators);
   // currentUser===null  && navigate('/');
-  
   
   return (
     (<div className="p-3">
@@ -55,7 +62,11 @@ function CustomerProfile() {
           <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Venue</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartVenues.map(item => (
+          <CartVenue key={item.id} cartVenue={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/venue' id="exploretext"><b style={{fontWeight:"500"}}>Explore Venues</b></Link></button>
             </div>
           </div>
@@ -65,7 +76,10 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Caterer</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+                {cartItems.map(item => (
+          <CartItem key={item.id} cartItem={item} />
+          ))}</p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/caterer' id="exploretext"><b style={{fontWeight:"500"}}>Explore Caterers</b></Link></button>
             </div>
           </div>
@@ -77,7 +91,11 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Decorator</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartDecorators.map(item => (
+          <CartDecorator key={item.id} cartDecorator={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/decorator' id="exploretext"><b style={{fontWeight:"500"}}>Explore Decorators</b></Link></button>
             </div>
           </div>
