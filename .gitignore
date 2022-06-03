@@ -5,13 +5,13 @@
 /node_modules
 /.pnp
 .pnp.js
-
+/__pycache__
 # testing
 /coverage
 /venv
 # production
 /build
-
+/venv
 # misc
 .DS_Store
 .env.local
