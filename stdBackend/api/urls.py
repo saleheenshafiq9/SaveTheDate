@@ -3,7 +3,7 @@ from email.mime import base
 from django.urls import path
 from . import views
 from rest_framework_nested import routers
-from . import views
+from .views import *
 
 router=routers.DefaultRouter()
 router.register('customers', views.CustomerViewSet)
@@ -20,6 +20,7 @@ party_router.register('caterings', views.PartyCateringViewSet, basename='party-c
 party_router.register('foodcartitems', views.FoodCartItemViewset, basename='party-fooditems')
 party_router.register('venueslots', views.PartyVenueSlotViewSet, basename='party-venueslots')
 party_router.register('themeslots', views.PartyThemeSlotViewSet, basename='party-themeslots')
+party_router.register('contentmakerslots', views.PartyContentMakerSlotViewSet, basename='party-contentmakerslots')
 
 
 
@@ -52,6 +53,8 @@ theme_router.register('images', views.ThemeImageViewSet, basename='theme-images'
 contentmaker_router=routers.NestedDefaultRouter(router, 'contentmakers', lookup='contentmaker')
 contentmaker_router.register('reviews', views.ReviewContentMakerViewSet, basename='provider-reviews')
 contentmaker_router.register('images', views.ContentMakerImageViewSet, basename='contentmaker-images')
+contentmaker_router.register('slots', views.ContentMakerSlotViewSet, basename='contentmaker-slots')
+
 
 
 entertainer_router=routers.NestedDefaultRouter(router, 'entertainers', lookup='entertainer')
@@ -61,4 +64,4 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls
-urlpatterns+=[path('recommendation', views.recommendation)]
+urlpatterns+=[path('recommendation', recommendation)]
