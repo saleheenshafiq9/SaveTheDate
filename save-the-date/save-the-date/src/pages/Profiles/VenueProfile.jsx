@@ -59,24 +59,24 @@ function VenueProfile() {
                 </div>
                 <div className="col-6 text-center">
                     <p>
-                    <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+                    <a className="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
                     </p>
-                    <div class="row">
-          <div class="col">
-            <div class="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
-              <div class="card card-body">
+                    <div className="row">
+          <div className="col">
+            <div className="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>
           </div>
           </div>
           <p>
-          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+          <button className="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
           </p>
           <div className="row">
-          <div class="col">
-            <div class="collapse multi-collapse ml-5" id="multiCollapseExample2">
-              <div class="card card-body">
+          <div className="col">
+            <div className="collapse multi-collapse ml-5" id="multiCollapseExample2">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>

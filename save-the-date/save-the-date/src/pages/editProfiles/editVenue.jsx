@@ -5,9 +5,12 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-
+import axios from "axios";
 import PutReq from "../../helper/PutReq";
 import { UserContext } from "../../contexts/user-context";
+import { tokenUrl } from "../../constants/constants";
+import GetReq from "../../helper/getReq";
+import ReqWithHead from "../../helper/ReqWithHead";
 
 
 class EditVenue extends Component {
@@ -15,19 +18,28 @@ class EditVenue extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          success:false,
           location: "",
           capacity: "",
           title: "",
           description: "",
-          image: ""
+          image: "",
+          id:null
         };
 
+
+        this.handlefileChange=this.handlefileChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
+      componentDidMount(){
+        const {token}=this.context;
+        const header=`JWT ${token.access}`
+        ReqWithHead(tokenUrl,"/api/venues/me",header).then((res)=>this.setState({id:res.id}))
+
+      }
     
       handleInputChange(event) {
-
         const value = event.target.value;
         const name = event.target.name;
         this.setState({
@@ -35,19 +47,29 @@ class EditVenue extends Component {
         });
         
       };
-      
+
+      handlefileChange(e){
+        const files=e.target.files;        
+        this.setState({image:files[0]}) 
+        }
+
+        fileUpload(){
+            const formData=new FormData();
+            formData.append("image",this.state.image);
+            const data=axios.post(tokenUrl+`/api/venues/${this.state.id&&this.state.id}/images/`,formData).catch(e=>console.log(e))
+            return data
+        }
+        changeProfile(){
+            const {token}=this.context;
+            const header=`JWT ${token.access}`
+            const {image,id,success,...reqData}=this.state;
+            const data_key=`api/venues/me/`;
+            return PutReq(data_key,reqData,header);
+           
+        }
     handleSubmit(event) {
         event.preventDefault();
-        const {token}=this.context;
-        const header=`JWT ${token.access}`
-        console.log(header);
-
-        const {image,...reqData}=this.state
-        console.log(reqData);
-        
-        const data_key=`api/venues/me/`;
-        PutReq(data_key,reqData,header)
-
+        Promise.all([this.changeProfile(),this.fileUpload()]).then(res=>res&& this.setState({success:true}));
       };
 
     render() {
@@ -57,7 +79,8 @@ class EditVenue extends Component {
                     Edit Venue Information
                 </h4>
                 <div className="col-8 col-md-6 mt-5">
-                <Form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
+                
                 <FormGroup row>
                     <Label htmlFor="location" md={2}>
                         Location
@@ -114,16 +137,13 @@ class EditVenue extends Component {
                     />
                     </Col>
                 </FormGroup>
-                <Button className="btn btn-success" type="submit"
-                 onClick ={()=>this.handleSubmit} 
-                 id="saveprof">
+               
+                 <Button className="btn btn-success" type="submit" id="saveprof">
                      Save <MdOutlineSaveAlt style={{
                     marginLeft: "7px"
                 }}/></Button>
-                <Button className="btn btn-dark"><BiArrowBack style={{
-                    marginRight: "7px"
-                }}/><Link to="/providerProfile" id="plantext">Go Back</Link></Button>
-            </Form>
+            
+            </form>
             </div>
             <div className="col-4 text-center m-5">
                 <MdAddAPhoto style={{
@@ -131,12 +151,16 @@ class EditVenue extends Component {
                     height: "80px"
                 }}/><br/><br/>
                 <input type="file" id="myfile"
-                onChange={this.handleInputChange}
+                onChange={this.handlefileChange}
                  style={{
                     paddingLeft: "100px"
-                }} value={this.state.image}/>
+                }} />
+            </div>
+            <div className="text-success">
+            {this.state.success&& "Successful"}
             </div>
         </div>
+        
     )
     }
 }

@@ -61,7 +61,7 @@ export const UserProvider = ({children}) => {
     useEffect(()=>{
         currentUser &&  NavigateToProfile();
 
-    },[currentUser])
+    },[loggedIn])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     
