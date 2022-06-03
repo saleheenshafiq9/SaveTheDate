@@ -8,7 +8,7 @@ const PhotographyItem = (props) => {
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.photography.images[0].image}
+          src={props.photography.images[0]?.image}
           alt={props.photography.title}
           height="200px"
         />

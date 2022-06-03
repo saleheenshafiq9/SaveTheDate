@@ -8,7 +8,7 @@ const DecoratorItem = (props) => {
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.decorator.images[0].image}
+          src={props.decorator.images[0]?.image}
           alt={props.decorator.title}
           height="200px"
         />

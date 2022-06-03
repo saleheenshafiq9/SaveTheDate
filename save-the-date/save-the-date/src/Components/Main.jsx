@@ -44,12 +44,32 @@ const Main = (props) => {
           <Route path="/caterer" element={<Caterer />} />
           <Route path="/decorator" element={<Decorator />} />
           <Route path="/photography" element={<Photography />} />
+          
           {/* Edit Profiles */}
-          <Route path="/editvenue" element={<EditVenue />} />
-          <Route path="/editcaterer" element={<EditCaterer />} />
-          <Route path="/editdecorator" element={<EditDecorator />} />
-          <Route path="/editphotography" element={<EditPhotography />} />
-
+          <Route path="/editvenue" 
+            element={
+            <PrivateRoute>
+              <EditVenue />
+            </PrivateRoute>
+            } />
+            
+          <Route path="/editcaterer" 
+            element={
+            <PrivateRoute>
+              <EditCaterer />
+            </PrivateRoute>} />
+            
+          <Route path="/editdecorator"
+           element={
+            <PrivateRoute>
+                <EditDecorator />
+              </PrivateRoute>
+            } />
+          <Route path="/editphotography" element={
+            <PrivateRoute>
+              <EditPhotography />
+            </PrivateRoute>} />
+          
           {/* Private Profiles  */}
           <Route path="/customerProfile" 
             element={

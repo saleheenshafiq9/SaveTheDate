@@ -8,7 +8,7 @@ const VenueItem = (props) => {
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.venue.images[0].image}
+          src={props.venue.images[0]?.image}
           alt={props.venue.title}
           height="200px"
         />
