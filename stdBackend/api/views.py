@@ -1,5 +1,7 @@
 from asyncio.windows_events import NULL
+from cmath import sqrt
 import queue
+from unicodedata import decimal
 import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -580,15 +582,103 @@ def recommendation(request):
             else:
                 party.contentmaker_id=NULL
 
-
-
-            print(party.contentmaker_id)
+            party.distance=0
+            party.distance+=(party.totalCost-inputParty['budget'])*((party.totalCost-inputParty['budget']))
+            party.distance+=(party.locationLatitude-inputParty['locationLatitude'])*((party.locationLatitude-inputParty['locationLatitude']))
+            party.distance+=(party.locationLongitude-inputParty['locationLongitude'])*((party.locationLongitude-inputParty['locationLongitude']))
+            party.distance+=(party.guestCount-inputParty['guestCount'])*((party.guestCount-inputParty['guestCount']))
             
+            party.distance=sqrt(abs(party.distance))
+            party.distance=abs(party.distance)
 
-            
-        serializer=PartySerializer(partyset[0])
+            print(party.distance)
+
+
+        partyset=sorted(partyset, key=lambda x:x.distance)
+        serializer=PartySerializer(partyset, many=True)
+
+        k=10
+        returnableVenue=0
+        returnableVenueCount=0
+        returnableCatering=0
+        returnableCateringCount=0
+        returnableDecorator=0
+        returnableDecoratorCount=0
+        returnableContentMaker=0
+        returnableContentMakerCount=0
+        venueDictionary={}
+        cateringDictionary={}
+        decoratorDictionary={}
+        contentmakerDictionary={}
+        for i in range(0, min(k, len(partyset))):
+            party=partyset[i]
+            if party.venue_id!=NULL:
+                if party.venue_id in venueDictionary:
+                    venueDictionary[party.venue_id]+=1
+                else:
+                    venueDictionary[party.venue_id]=1
+                if venueDictionary[party.venue_id]>returnableVenueCount:
+                    returnableVenueCount=venueDictionary[party.venue_id]
+                    returnableVenue=party.venue_id
+
+            if party.catering_id!=NULL:
+                if party.catering_id in cateringDictionary:
+                    cateringDictionary[party.catering_id]+=1
+                else:
+                    cateringDictionary[party.catering_id]=1
+                if cateringDictionary[party.catering_id]>returnableCateringCount:
+                    returnableCateringCount=cateringDictionary[party.catering_id]
+                    returnableCatering=party.catering_id
+            if party.decorator_id!=NULL:
+                if party.decorator_id in decoratorDictionary:
+                    decoratorDictionary[party.decorator_id]+=1
+                else:
+                    decoratorDictionary[party.decorator_id]=1
+                if decoratorDictionary[party.decorator_id]>returnableDecoratorCount:
+                    returnableDecoratorCount=decoratorDictionary[party.decorator_id]
+                    returnableDecorator=party.decorator_id
+            if party.contentmaker_id!=NULL:
+                if party.contentmaker_id in contentmakerDictionary:
+                    contentmakerDictionary[party.contentmaker_id]+=1
+                else:
+                    contentmakerDictionary[party.contentmaker_id]=1
+                if contentmakerDictionary[party.contentmaker_id]>returnableContentMakerCount:
+                    returnableContentMakerCount=contentmakerDictionary[party.contentmaker_id]
+                    returnableContentMaker=party.contentmaker_id
+
+        venue=[]
+        catering=[]
+        decorator=[]
+        contentmaker=[]
+        if Venue.objects.filter(id=returnableVenue).exists():
+            venuequery=Venue.objects.get(pk=returnableVenue)
+            venueserializer=VenueSerializer(venuequery)
+            venue.append(venueserializer.data)
+
+        if Catering.objects.filter(id=returnableCatering).exists:
+            Cateringquery=Catering.objects.get(pk=returnableCatering)
+            Cateringserializer=CateringSerializer(Cateringquery)
+            catering.append(Cateringserializer.data)
+
+        if Decorator.objects.filter(id=returnableDecorator).exists():
+            Decoratorquery=Decorator.objects.get(pk=returnableDecorator)
+            Decoratorserializer=DecoratorSerializer(Decoratorquery)
+            decorator.append(Decoratorserializer.data)
+
+        if ContentMaker.objects.filter(id=returnableContentMaker).exists():
+            ContentMakerquery=ContentMaker.objects.get(pk=returnableContentMaker)
+            ContentMakerserializer=ContentMakerSerializer(ContentMakerquery)
+            contentmaker.append(ContentMakerserializer.data)
+
         
-        return Response(serializer.data)
+        return Response(
+            {
+                'venue': venue,
+                'catering': catering,
+                'decorator': decorator,
+                'contentmaker': contentmaker
+            }
+            )
 
 
 
