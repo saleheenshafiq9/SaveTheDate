@@ -6,8 +6,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyContentMakerSlotSerializer, AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSlotSerializer, UpdatePartySerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Payment, Progress, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
+from .serializers import AddPartyContentMakerSlotSerializer, AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSlotSerializer, UpdatePartySerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -375,7 +375,55 @@ class PartyViewSet(ModelViewSet):
             return Party.objects.filter(customer_id=customer_id)
 
         elif user.userType=="venue":
-            pass
+            partyset=Party.objects.all()
+            returnablePartySet=partyset.none()
+            for party in partyset:
+                if PartyVenueSlot.objects.filter(party_id=party.id).exists():
+                    partyvenue=PartyVenueSlot.objects.get(party_id=party.id)
+                    venueslot=VenueSlot.objects.get(id=partyvenue.venueslot_id)
+                    party.venue_id=Venue.objects.get(id=venueslot.venue_id).id
+                    returnablePartySet|=Party.objects.filter(pk=party.id)
+
+            return returnablePartySet
+
+        elif user.userType=='catering':
+            partyset=Party.objects.all()
+            returnablePartySet=partyset.none()
+            for party in partyset:
+                if FoodCartItem.objects.filter(party_id=party.id).exists():
+                    foodcartitem=FoodCartItem.objects.get(party_id=party.id)
+                    fooditem=FoodItem.objects.get(id=foodcartitem.fooditem_id)
+                    party.catering_id=Catering.objects.get(id=fooditem.catering_id).id
+                    returnablePartySet|=Party.objects.filter(pk=party.id)
+
+
+            return returnablePartySet
+
+        elif user.userType=='decorator':
+            partyset=Party.objects.all()
+            returnablePartySet=partyset.none()
+            for party in partyset:
+                if PartyThemeSlot.objects.filter(party_id=party.id).exists():
+                    partytheme=PartyThemeSlot.objects.get(party_id=party.id)
+                    theme=Theme.objects.get(id=partytheme.theme_id)
+                    party.decorator_id=Decorator.objects.get(id=theme.decorator_id).id
+                    returnablePartySet|=Party.objects.filter(pk=party.id)
+
+            return returnablePartySet
+
+        elif user.userType=='contentmaker':
+            partyset=Party.objects.all()
+            returnablePartySet=partyset.none()
+            for party in partyset:
+                if PartyContentMakerSlot.objects.filter(party_id=party.id).exists():
+                    partycontentmaker=PartyContentMakerSlot.objects.get(party_id=party.id)
+                    contentmakerslot=ContentMakerSlot.objects.get(id=partycontentmaker.contentmakerslot_id)
+                    party.contentmaker_id=ContentMaker.objects.get(id=contentmakerslot.contentmaker_id).id
+                    returnablePartySet|=Party.objects.filter(pk=party.id)
+
+            return returnablePartySet
+
+
 
     def get_permissions(self):
         if self.request.method=='POST':
@@ -561,6 +609,37 @@ class AcceptedAppointmentsVenueViewSet(ModelViewSet):
     def get_serializer_class(self):
         return AppointmentSerializer
 
+
+class PaymentViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Payment.objects.filter(party_id=self.kwargs['party_pk'])
+    
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return AddPaymentSerializer
+        return PaymentSerializer
+
+    def get_serializer_context(self):
+        return {
+            'party_id':self.kwargs['party_pk'],
+            'user_id':self.request.user.id
+        }
+
+class ProgressViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Progress.objects.filter(party_id=self.kwargs['party_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return AddProgressSerializer
+        return ProgressSerializer
+
+    def get_serializer_context(self):
+        return {
+            'party_id':self.kwargs['party_pk'],
+            'user_id':self.request.user.id,
+            'user_type':self.request.user.userType
+        }
 
 
 @api_view(['GET', 'POST'])

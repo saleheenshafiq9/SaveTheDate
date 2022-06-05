@@ -21,7 +21,8 @@ party_router.register('foodcartitems', views.FoodCartItemViewset, basename='part
 party_router.register('venueslots', views.PartyVenueSlotViewSet, basename='party-venueslots')
 party_router.register('themeslots', views.PartyThemeSlotViewSet, basename='party-themeslots')
 party_router.register('contentmakerslots', views.PartyContentMakerSlotViewSet, basename='party-contentmakerslots')
-
+party_router.register('payments', views.PaymentViewSet, basename='party-payments')
+party_router.register('progress', views.ProgressViewSet, basename='party-progress')
 
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')

@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Payment, Progress, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -400,13 +400,20 @@ class PartySerializer(serializers.ModelSerializer):
     totalCost=serializers.SerializerMethodField()
     partythemeslot=PartyThemeSlotSerializer(many=True, read_only=True)
     partycontentmakerslot=PartyContentMakerSlotSerializer(many=True, read_only=True)
+    payedPrice=serializers.SerializerMethodField()
+    pendingPrice=serializers.SerializerMethodField()
+    status=serializers.SerializerMethodField()
 
     class Meta:
         model=Party
-        fields=['id', 'totalCost',
+        fields=['id', 'totalCost', 'payedPrice', 'pendingPrice',
         'status', 'foodcartitem', 'partyvenueslot', 'partythemeslot', 'partycontentmakerslot',
         'guestCount', 'locationLatitude',
         'locationLongitude']
+
+    def get_payedPrice(self, party):
+        return sum([payment.amount for payment in party.payment.all()])
+
 
     def get_totalCost(self, party):
         try:
@@ -416,6 +423,14 @@ class PartySerializer(serializers.ModelSerializer):
             return totalCost
         except AttributeError:
             return 0
+
+    def get_pendingPrice(self, party):
+        return (self.get_totalCost(party)-self.get_payedPrice(party))
+
+    def get_status(self, party):
+        if(self.get_totalCost(party)<=self.get_payedPrice(party)):
+            return 'confirmed'
+        return 'pending'
 
 
 class UpdatePartySerializer(serializers.ModelSerializer):
@@ -463,3 +478,73 @@ class UpdateAppointmentSerializer(serializers.ModelSerializer):
         fields=['id', 'status']
         
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
+        fields=['id', 'paymentTime', 'amount']
+
+class AddPaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
+        fields=['id', 'amount']
+
+    def save(self):
+        party_id=self.context['party_id']
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        payment=Payment.objects.create(
+            customer=customer, 
+            party_id=party_id,
+            amount=self.validated_data['amount']
+            )
+        return payment
+
+
+class ServiceProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ServiceProvider
+        fields=['id', 'title']
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    serviceProvider=ServiceProviderSerializer(read_only=True)
+    class Meta:
+        model=Progress
+        fields=['id', 'description', 'serviceProvider']
+
+
+class AddProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Progress
+        fields=['id', 'description']
+
+    def save(self):
+        party_id=self.context['party_id']
+        userType=self.context['user_type']
+        if userType=='venue':
+            provider=Venue.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='catering':
+            provider=Catering.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='decorator':
+            provider=Decorator.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='contentmaker':
+            provider=ContentMaker.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        progress=Progress.objects.create(
+            serviceProvider=provider, 
+            party_id=party_id,
+            description=self.validated_data['description']
+            )
+        return progress

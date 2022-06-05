@@ -20,6 +20,7 @@ class ServiceProvider(models.Model):
         null=True,
     )
     location=models.CharField(max_length=255, null=True)
+    
 
 
 
@@ -111,7 +112,7 @@ class Payment(models.Model):
         decimal_places=2,
     )
     party=models.ForeignKey(
-        Party, on_delete=models.CASCADE)
+        Party, on_delete=models.CASCADE, related_name='payment')
     
 
     
@@ -213,4 +214,8 @@ class PartyContentMakerSlot(models.Model):
     contentmakerslot=models.ForeignKey(ContentMakerSlot, on_delete=models.CASCADE, null=True, related_name='partycontentmakerslot')
 
 
+class Progress(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='progress')
+    serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, related_name='progress')
+    description=models.TextField(null=True)
 
