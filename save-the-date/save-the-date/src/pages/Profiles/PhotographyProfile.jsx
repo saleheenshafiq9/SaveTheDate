@@ -4,10 +4,12 @@ import useFetch from "../../hooks/useFetch";
 import { tokenUrl } from "../../constants/constants";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt, FaPhotoVideo} from "react-icons/fa";
-import {MdModeEditOutline} from "react-icons/md";
+import {MdModeEditOutline, MdLocationPin} from "react-icons/md";
+import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+import GalleryPhoto from "./GalleryPhoto";
 
 
 function PhotographyProfile() {
@@ -18,19 +20,23 @@ function PhotographyProfile() {
         <div>
             <div className="row">
                 <div className="col-6">
-                <img src="/Photography/One.jpg" className="provider-img"/>
+                <img src={tokenUrl + photoData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
-                <img src="/Photography/Two.jpg" className="provider-img"/>
+                <img src={tokenUrl + photoData?.images[1]?.image} className="provider-img"/>
                 </div>
             </div>
             <br /><br />
             <div className="row">
                 <div className="col-6">
                     <h2>{photoData?photoData.title:"Title"}</h2>
-                    <p className="text-secondary">{photoData?photoData.location :"Location"}
+                    <br />
+                    <p className="text-secondary">
+                    <MdLocationPin />{photoData?photoData.location :"Location"}
                     <br/>
-                    <FaPhotoVideo /> Wedding, Birthday Photography &  HD Cinematography Service.</p>
+                    <FaPhotoVideo /> Wedding, Birthday Photography &  HD Cinematography Service.
+                    <br />
+                    <IoPricetags /> {photoData?photoData.price: "Price"} BDT </p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
@@ -47,20 +53,9 @@ function PhotographyProfile() {
                 </div>
             </div>
             <hr />
-            <div className="row"><br /><br />
-                <h4 className="text-center">Collection</h4>
-                <div className="col-3">
-                <img src="/Photography/One.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/Photography/Two.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/Photography/Three.jpg" className="gallery-img"/>
-                </div>
-                <div className="col-3">
-                <img src="/Photography/Four.jpg" className="gallery-img"/>
-                </div>
+            <div className="row"><br /><br /><br />
+                <h4 className="text-center">Collection</h4><br />
+                <GalleryPhoto />
             </div>
             <div className="row p-5">
                 <div className="col-6 text-secondary">
@@ -94,7 +89,7 @@ function PhotographyProfile() {
           </div>
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-5">
                 <div className="col-6">
                 <h4 className="text-dark">Add to Schedule</h4><br />
                 <ReactCalender />

@@ -52,10 +52,12 @@ function VenueProfile() {
                 </div>
             </div>
             <hr />
-            <div className="row"><br /><br />
-                <h4 className="text-center">Gallery</h4>
-                    <Gallery />
+            <div className="row"><br /><br /><br />
+                <h4 className="text-center">Gallery</h4><br />
+                    <Gallery /> 
             </div>
+            <br /><br />
+
             <div className="row p-5">
                 <div className="col-6 text-secondary">
                 <h4 className="text-dark">About Venue</h4><br />
@@ -88,7 +90,7 @@ function VenueProfile() {
           </div>
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-5">
                 <div className="col-6">
                 <h4 className="text-dark">Add to Schedule</h4><br />
                 <ReactCalender />

@@ -122,7 +122,7 @@ class EditVenue extends Component {
                 }}/></Button>
                 <Button className="btn btn-dark"><BiArrowBack style={{
                     marginRight: "7px"
-                }}/><Link to="/providerProfile" id="plantext">Go Back</Link></Button>
+                }}/><Link to="/venueProfile" id="plantext">Go Back</Link></Button>
             </Form>
             </div>
             <div className="col-4 text-center m-5">

@@ -5,10 +5,12 @@ import useFetch from "../../hooks/useFetch";
 import "./ProfileStyle.css";
 import { FaRegCalendarAlt} from "react-icons/fa";
 import {GiPartyFlags} from "react-icons/gi";
-import {MdModeEditOutline} from "react-icons/md";
+import {MdModeEditOutline, MdLocationPin} from "react-icons/md";
+import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+
 
 function DecoratorProfile() {
     const {token}= useContext(UserContext);
@@ -18,19 +20,23 @@ function DecoratorProfile() {
         <div>
             <div className="row">
                 <div className="col-6">
-                <img src="/Decorator/One.jpg" className="provider-img"/>
+                <img src={tokenUrl + decoratorData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
-                <img src="/Decorator/Two.jpg" className="provider-img"/>
+                <img src={tokenUrl + decoratorData?.images[1]?.image} className="provider-img"/>
                 </div>
             </div>
             <br /><br />
             <div className="row">
                 <div className="col-6">
                     <h2>{decoratorData?decoratorData.title:"Title"}</h2>
-                    <p className="text-secondary">{decoratorData?decoratorData.location :"Location"}
+                    <br />
+                    <p className="text-secondary">
+                    <MdLocationPin /> {decoratorData?decoratorData.location :"Location"}
                     <br/>
-                    <GiPartyFlags /> Modern, Classic, Traditional</p>
+                    <GiPartyFlags /> Modern, Classic, Traditional
+                    <br />
+                    <IoPricetags /> {decoratorData?decoratorData.price: "Price"} BDT </p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
@@ -47,16 +53,16 @@ function DecoratorProfile() {
                 </div>
             </div>
             <hr />
-            <div className="row"><br /><br />
-                <h4 className="text-center">Themes</h4>
+            <div className="row"><br /><br /><br />
+                <h4 className="text-center">Themes</h4><br />
                 <div className="col-3">
-                <img src="/Decorator/One.jpg" className="gallery-img"/>
+                <img src={tokenUrl + decoratorData?.images[1]?.image} className="gallery-img"/>
                 </div>
                 <div className="col-3">
-                <img src="/Decorator/Two.jpg" className="gallery-img"/>
+                <img src={tokenUrl + decoratorData?.images[2]?.image} className="gallery-img"/>
                 </div>
                 <div className="col-3">
-                <img src="/Decorator/Three.jpg" className="gallery-img"/>
+                <img src={tokenUrl + decoratorData?.images[3]?.image} className="gallery-img"/>
                 </div>
             </div>
             <div className="row p-5">
@@ -91,7 +97,7 @@ function DecoratorProfile() {
           </div>
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-5">
                 <div className="col-6">
                 <h4 className="text-dark">Add to Schedule</h4><br />
                 <ReactCalender />
