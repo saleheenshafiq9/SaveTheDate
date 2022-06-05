@@ -1,7 +1,7 @@
 from asyncio.windows_events import NULL
 from cmath import sqrt
 import queue
-from unicodedata import decimal
+from decimal import Decimal
 import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -697,10 +697,10 @@ def recommendation(request):
                 party.contentmaker_id=NULL
 
             party.distance=0
-            party.distance+=((party.totalCost-inputParty['budget'])/20000)*(((party.totalCost-inputParty['budget']))/20000)
-            party.distance+=((party.locationLatitude-inputParty['locationLatitude'])*200)*((party.locationLatitude-inputParty['locationLatitude'])*200)
-            party.distance+=((party.locationLongitude-inputParty['locationLongitude'])*200)*((party.locationLongitude-inputParty['locationLongitude'])*200)
-            party.distance+=((party.guestCount-inputParty['guestCount'])/10)*((party.guestCount-inputParty['guestCount'])/10)
+            party.distance+=((party.totalCost-inputParty['budget'])/Decimal(20000.0))*(((party.totalCost-inputParty['budget']))/Decimal(20000.0))
+            party.distance+=((party.locationLatitude-inputParty['locationLatitude'])*Decimal(2000.0))*((party.locationLatitude-inputParty['locationLatitude'])*Decimal(2000.0))
+            party.distance+=((party.locationLongitude-inputParty['locationLongitude'])*Decimal(2000.0))*((party.locationLongitude-inputParty['locationLongitude'])*Decimal(2000.0))
+            party.distance+=((party.guestCount-inputParty['guestCount'])/Decimal(10.0))*((party.guestCount-inputParty['guestCount'])/Decimal(10.0))
             
             party.distance=sqrt(abs(party.distance))
             party.distance=abs(party.distance)
