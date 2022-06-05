@@ -12,6 +12,7 @@ const PhotographyDetail = (props) => {
   const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
   const { addToCartItems } = useContext(CartContext);
+  const { cartPhotoAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -28,7 +29,10 @@ const PhotographyDetail = (props) => {
     }, 2000);
   }
 
-  const addServiceToCart = () => addToCartItems(props.photography);
+  const addServiceToCart = () => {
+    addToCartItems(props.photography);
+    cartPhotoAdded(props.photography);
+  }
 
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");

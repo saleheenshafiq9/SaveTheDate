@@ -17,8 +17,6 @@ class Photography extends Component {
   componentDidMount() {
     GetReq("/api/contentmakers").then((res) => {
       this.setState({newPhotographys: res});
-      console.log(res);
-      console.log(this.state.newPhotographys);
     })
   }
 

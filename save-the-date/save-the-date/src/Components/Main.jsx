@@ -13,10 +13,6 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 
 import RecommendationParameters from "../pages/Profiles/CustomerQuery";
-import Venue from "./Services/Venue/Venue";
-import Caterer from "./Services/Caterer/Caterer";
-import Decorator from "./Services/Decorator/Decorator";
-import Photography from "./Services/Photography/Photography";
 import EditVenue from "../pages/editProfiles/editVenue";
 import EditCaterer from "../pages/editProfiles/editCaterer";
 import VenueProfile from "../pages/Profiles/VenueProfile";
@@ -25,6 +21,10 @@ import EditDecorator from "../pages/editProfiles/editDecorator";
 import DecoratorProfile from "../pages/Profiles/DecoratorProfile";
 import EditPhotography from "../pages/editProfiles/editPhotography";
 import PhotographyProfile from "../pages/Profiles/PhotographyProfile";
+import VenueShow from "./Services/Venue/VenueShow";
+import CatererShow from "./Services/Caterer/CatererShow";
+import DecoratorShow from "./Services/Decorator/DecoratorShow";
+import PhotographyShow from "./Services/Photography/PhotographyShow";
 
 
 const Main = (props) => {
@@ -40,10 +40,10 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/venue" element={<Venue />} />
-          <Route path="/caterer" element={<Caterer />} />
-          <Route path="/decorator" element={<Decorator />} />
-          <Route path="/photography" element={<Photography />} />
+          <Route path="/venue" element={<VenueShow />} />
+          <Route path="/caterer" element={<CatererShow />} />
+          <Route path="/decorator" element={<DecoratorShow />} />
+          <Route path="/photography" element={<PhotographyShow />} />
           {/* Edit Profiles */}
           <Route path="/editvenue" element={<EditVenue />} />
           <Route path="/editcaterer" element={<EditCaterer />} />

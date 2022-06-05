@@ -11,6 +11,7 @@ const CatererDetail = (props) => {
   const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
   const { addToCartItems } = useContext(CartContext);
+  const { cartCatererAdded } = useContext(CartContext);
 
   const handleCartClick = () => {
     setcartText("Added");
@@ -26,8 +27,10 @@ const CatererDetail = (props) => {
       setAlert(null);
     }, 2000);
   }
-  const addServiceToCart = () => addToCartItems(props.caterer);
-
+  const addServiceToCart = () => {
+    addToCartItems(props.caterer);
+    cartCatererAdded(props.caterer);
+  }
   const cartAdded = () => {
     showAlert("Successfully Added to Cart!","success");
     props.onCatererSelect;
