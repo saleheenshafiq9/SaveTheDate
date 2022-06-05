@@ -544,6 +544,8 @@ class ContentMakerSlotViewSet(ModelViewSet):
         if self.request.method=='POST':
             return CreateContentMakerSlotSerializer
         return ContentMakerSlotSerializer
+
+
     def create(self, request, *args, **kargs):
         serializer=CreateContentMakerSlotSerializer(
             data=request.data,
@@ -695,10 +697,10 @@ def recommendation(request):
                 party.contentmaker_id=NULL
 
             party.distance=0
-            party.distance+=(party.totalCost-inputParty['budget'])*((party.totalCost-inputParty['budget']))
-            party.distance+=(party.locationLatitude-inputParty['locationLatitude'])*((party.locationLatitude-inputParty['locationLatitude']))
-            party.distance+=(party.locationLongitude-inputParty['locationLongitude'])*((party.locationLongitude-inputParty['locationLongitude']))
-            party.distance+=(party.guestCount-inputParty['guestCount'])*((party.guestCount-inputParty['guestCount']))
+            party.distance+=((party.totalCost-inputParty['budget'])/20000)*(((party.totalCost-inputParty['budget']))/20000)
+            party.distance+=((party.locationLatitude-inputParty['locationLatitude'])*200)*((party.locationLatitude-inputParty['locationLatitude'])*200)
+            party.distance+=((party.locationLongitude-inputParty['locationLongitude'])*200)*((party.locationLongitude-inputParty['locationLongitude'])*200)
+            party.distance+=((party.guestCount-inputParty['guestCount'])/10)*((party.guestCount-inputParty['guestCount'])/10)
             
             party.distance=sqrt(abs(party.distance))
             party.distance=abs(party.distance)
@@ -767,7 +769,7 @@ def recommendation(request):
             venueserializer=VenueSerializer(venuequery)
             venue.append(venueserializer.data)
 
-        if Catering.objects.filter(id=returnableCatering).exists:
+        if Catering.objects.filter(id=returnableCatering).exists():
             Cateringquery=Catering.objects.get(pk=returnableCatering)
             Cateringserializer=CateringSerializer(Cateringquery)
             catering.append(Cateringserializer.data)

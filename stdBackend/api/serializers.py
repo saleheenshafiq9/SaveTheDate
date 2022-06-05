@@ -416,16 +416,17 @@ class PartySerializer(serializers.ModelSerializer):
 
 
     def get_totalCost(self, party):
-        try:
-            totalCost=(sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
-            +sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()])
-            +sum([partythemeslot.theme.price  for partythemeslot in party.partythemeslot.all()]) )
-            return totalCost
-        except AttributeError:
-            return 0
+        totalCost=(sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+        +sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()])
+        +sum([partythemeslot.theme.price  for partythemeslot in party.partythemeslot.all()]) 
+        +sum([partycontentmakerslot.contentmakerslot.price for partycontentmakerslot in party.partycontentmakerslot.all()])
+        )
+        print(sum([partycontentmakerslot.contentmakerslot.price for partycontentmakerslot in party.partycontentmakerslot.all()]))
+        Party.objects.filter(pk=party.id).update(totalCost=totalCost)
+        return totalCost
 
     def get_pendingPrice(self, party):
-        return (self.get_totalCost(party)-self.get_payedPrice(party))
+        return max(0,(self.get_totalCost(party)-self.get_payedPrice(party)))
 
     def get_status(self, party):
         if(self.get_totalCost(party)<=self.get_payedPrice(party)):
