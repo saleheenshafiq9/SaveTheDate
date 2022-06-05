@@ -74,7 +74,7 @@ const VenueDetail = (props) => {
             Set Appointment
           </button>
           <Alert alert={alert}/>
-          { disable? <Button className="btn btn-dark text-center">
+          { disable? <button className="btn btn-dark text-center">
           {currentUser ? (
             <>
               { currentUser.userType=='customer'&& <Link to="/customerProfile " className="text-light text-decoration-none">Go to Profile</Link>}
@@ -87,7 +87,7 @@ const VenueDetail = (props) => {
              </Link>
            )}
 
-            </Button> : null }
+            </button> : null }
           { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />

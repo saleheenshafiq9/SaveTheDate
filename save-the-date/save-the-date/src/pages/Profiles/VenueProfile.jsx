@@ -2,7 +2,8 @@ import React, { useContext} from "react";
 import { UserContext } from "../../contexts/user-context";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
-import {MdModeEditOutline} from "react-icons/md";
+import {MdModeEditOutline, MdLocationPin} from "react-icons/md";
+import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
@@ -21,17 +22,20 @@ function VenueProfile() {
                 <img src={tokenUrl + venueData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
-                <img src="/venue/Two.jpg" className="provider-img"/>
+                <img src={tokenUrl + venueData?.images[1]?.image} className="provider-img"/>
                 </div>
             </div>
             <br /><br />
             <div className="row">
                 <div className="col-6">
                     <h2>{venueData?venueData.title:"Title"}</h2>
+                    <br />
                     <p className="text-secondary">
-                    {venueData?venueData.location :"Location"}
+                    <MdLocationPin /> {venueData?venueData.location :"Location"}
                     <br/>
-                    <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People</p>
+                    <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People
+                    <br />
+                    <IoPricetags /> {venueData?venueData.price: "Price"} BDT </p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
