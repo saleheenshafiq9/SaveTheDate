@@ -24,3 +24,9 @@
   top: 0;
   z-index: 1;
 }
+
+#proficon {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}
