@@ -18,7 +18,7 @@ function VenueProfile() {
         <div>
             <div className="row">
                 <div className="col-6">
-                <img src="/venue/One.jpg" className="provider-img"/>
+                <img src={tokenUrl + venueData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
                 <img src="/venue/Two.jpg" className="provider-img"/>
