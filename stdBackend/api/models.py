@@ -65,7 +65,9 @@ class Appointment(models.Model):
     Category=models.CharField(max_length=255)
     ScheduledAt=models.DateTimeField()
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-    serviceProvider=models.ManyToManyField(ServiceProvider)
+    serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, null=True)
+    status=models.CharField(max_length=255, default='pending')
+
 
 
 class Party(models.Model):

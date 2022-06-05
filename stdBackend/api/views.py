@@ -6,8 +6,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import ContentMakerSlot, FoodCartItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyContentMakerSlotSerializer, AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, ContentMakerSlotSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdatePartyContentMakerSlotSerializer, UpdatePartySerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
+from .serializers import AddPartyContentMakerSlotSerializer, AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSlotSerializer, UpdatePartySerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -125,7 +125,7 @@ class EntertainerViewSet(ModelViewSet):
 class ReviewVenueViewSet(ModelViewSet):
     permission_classes=[IsCustomerOrReadOnly]
     def get_queryset(self):
-        return Review.objects.filter(id=self.kwargs['venue_pk'])
+        return Review.objects.filter(serviceProvider_id=self.kwargs['venue_pk'])
     
 
     def get_serializer_class(self):
@@ -374,6 +374,9 @@ class PartyViewSet(ModelViewSet):
                 'id').get(user_id=user.id)
             return Party.objects.filter(customer_id=customer_id)
 
+        elif user.userType=="venue":
+            pass
+
     def get_permissions(self):
         if self.request.method=='POST':
             return [IsCustomerOrReadOnly()]
@@ -526,7 +529,37 @@ class PartyContentMakerSlotViewSet(ModelViewSet):
             .select_related('contentmakerslot')
 
 
+class PendingAppointmentsVenueViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Appointment.objects.filter(status='pending', serviceProvider_id=self.kwargs['venue_pk'])
 
+    def get_serializer_class(self):
+        if self.request.method=='POST':
+            return CreateAppointmentSerializer
+        elif self.request.method=='PUT':
+            return UpdateAppointmentSerializer
+        return AppointmentSerializer
+
+    def create(self, request, *args, **kargs):
+        serializer=CreateAppointmentSerializer(
+            data=request.data,
+            context={
+                'user_id':self.request.user.id,
+                'id':self.kwargs['venue_pk']
+                }
+        )
+        serializer.is_valid(raise_exception=True)
+        review=serializer.save()
+        serializer=CreateAppointmentSerializer(review)
+        return Response(serializer.data)
+
+
+class AcceptedAppointmentsVenueViewSet(ModelViewSet):
+    def get_queryset(self):
+        return Appointment.objects.filter(status='accepted', serviceProvider_id=self.kwargs['venue_pk'])
+
+    def get_serializer_class(self):
+        return AppointmentSerializer
 
 
 

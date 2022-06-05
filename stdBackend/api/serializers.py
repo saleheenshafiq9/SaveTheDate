@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -431,4 +431,35 @@ class RecommendationInputSerializer(serializers.Serializer):
     locationLatitude=serializers.DecimalField(max_digits=11, decimal_places=2)
     locationLongitude=serializers.DecimalField(max_digits=11, decimal_places=2)
 
+
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id','ScheduledAt','status']
+
+class CreateAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id','ScheduledAt']
+
+
+    def save(self):
+        serviceProvider_id=self.context['id']
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        appointment=Appointment.objects.create(
+            customer=customer,
+            serviceProvider_id=serviceProvider_id,
+            ScheduledAt=self.validated_data['ScheduledAt'],
+            )
+        return appointment
+
+class UpdateAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id', 'status']
+        
 

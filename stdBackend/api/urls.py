@@ -28,6 +28,8 @@ venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
 venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
 venue_router.register('images', views.VenueImageViewSet, basename='venue-images')
 venue_router.register('slots', views.VenueSlotViewSet, basename='venue-slots')
+venue_router.register('pendingappointments', views.PendingAppointmentsVenueViewSet, basename='venue-pendingappointments')
+venue_router.register('acceptedappointments', views.AcceptedAppointmentsVenueViewSet, basename='venue-acceptedappointments')
 
 
 
