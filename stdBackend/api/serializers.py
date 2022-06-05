@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import FoodCartItem, FoodItem, Party, PartyThemeSlot, PartyVenueSlot, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Payment, Progress, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -325,17 +325,95 @@ class PartyThemeSlotSerializer(serializers.ModelSerializer):
         return partythemeslot.theme.price
 
 
+class ContentMakerSlotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ContentMakerSlot
+        fields=['id', 'startTime', 'endTime', 'price']
+
+
+
+class CreateContentMakerSlotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ContentMakerSlot
+        fields=['id', 'startTime', 'endTime', 'price']
+        
+    
+    def save(self):
+        contentmaker_id=self.context['id']
+        contentmakerslot=ContentMakerSlot.objects.create(
+            contentmaker_id=contentmaker_id,
+            startTime=self.validated_data['startTime'],
+            endTime=self.validated_data['endTime'],
+            price=self.validated_data['price']
+            )
+        return contentmakerslot
+
+class UpdatePartyContentMakerSlotSerializer(serializers.ModelSerializer):
+    contentmakerslot_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenueSlot
+        fields=['id', 'contentmakerslot_id']
+
+    def validate_contentmakerslot_id(self, value):
+        if not ContentMakerSlot.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No contentmaker slot with the given ID was found.')
+        return value
+
+
+class AddPartyContentMakerSlotSerializer(serializers.ModelSerializer):
+    contentmakerslot_id=serializers.IntegerField()
+    class Meta:
+        model=PartyContentMakerSlot
+        fields=['id', 'contentmakerslot_id']
+
+    def validate_contentmakerslot_id(self, value):
+        if not ContentMakerSlot.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No contentmaker slot with the given ID was found.')
+        return value
+
+    def save(self, **kwargs):
+        party_id = self.context['party_id']
+        self.instance = PartyContentMakerSlot.objects.create(
+            party_id=party_id, **self.validated_data)
+
+        return self.instance
+
+
+class PartyContentMakerSlotSerializer(serializers.ModelSerializer):
+    contentmakekrslot=ContentMakerSlotSerializer(many=False, read_only=True)
+    price=serializers.SerializerMethodField()
+
+    class Meta:
+        model=PartyContentMakerSlot
+        fields=['id', 'contentmakekrslot', 'price']
+
+    def get_price(self, partycontentmakerslot):
+        return partycontentmakerslot.contentmakerslot.price
+
+
 
 class PartySerializer(serializers.ModelSerializer):
     foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
     partyvenueslot=PartyVenueSlotSerializer(many=True, read_only=True)
     totalCost=serializers.SerializerMethodField()
     partythemeslot=PartyThemeSlotSerializer(many=True, read_only=True)
+    partycontentmakerslot=PartyContentMakerSlotSerializer(many=True, read_only=True)
+    payedPrice=serializers.SerializerMethodField()
+    pendingPrice=serializers.SerializerMethodField()
+    status=serializers.SerializerMethodField()
 
     class Meta:
         model=Party
-        fields=['id', 'totalCost', 'pendingCost',
-        'status', 'foodcartitem', 'partyvenueslot', 'partythemeslot']
+        fields=['id', 'totalCost', 'payedPrice', 'pendingPrice',
+        'status', 'foodcartitem', 'partyvenueslot', 'partythemeslot', 'partycontentmakerslot',
+        'guestCount', 'locationLatitude',
+        'locationLongitude']
+
+    def get_payedPrice(self, party):
+        return sum([payment.amount for payment in party.payment.all()])
+
 
     def get_totalCost(self, party):
         try:
@@ -345,7 +423,128 @@ class PartySerializer(serializers.ModelSerializer):
             return totalCost
         except AttributeError:
             return 0
+
+    def get_pendingPrice(self, party):
+        return (self.get_totalCost(party)-self.get_payedPrice(party))
+
+    def get_status(self, party):
+        if(self.get_totalCost(party)<=self.get_payedPrice(party)):
+            return 'confirmed'
+        return 'pending'
+
+
+class UpdatePartySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Party
+        fields=['id', 'guestCount', 'locationLatitude', 'locationLongitude', 'totalCost']
+
+
+
+class RecommendationInputSerializer(serializers.Serializer):
+    budget=serializers.DecimalField(max_digits=11, decimal_places=2)
+    guestCount=serializers.IntegerField()
+    locationLatitude=serializers.DecimalField(max_digits=11, decimal_places=2)
+    locationLongitude=serializers.DecimalField(max_digits=11, decimal_places=2)
+
+
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id','ScheduledAt','status']
+
+class CreateAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id','ScheduledAt']
+
+
+    def save(self):
+        serviceProvider_id=self.context['id']
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        appointment=Appointment.objects.create(
+            customer=customer,
+            serviceProvider_id=serviceProvider_id,
+            ScheduledAt=self.validated_data['ScheduledAt'],
+            )
+        return appointment
+
+class UpdateAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Appointment
+        fields=['id', 'status']
         
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
+        fields=['id', 'paymentTime', 'amount']
+
+class AddPaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
+        fields=['id', 'amount']
+
+    def save(self):
+        party_id=self.context['party_id']
+        customer=Customer.objects.get(
+            user_id=self.context['user_id']
+        )
+        payment=Payment.objects.create(
+            customer=customer, 
+            party_id=party_id,
+            amount=self.validated_data['amount']
+            )
+        return payment
 
 
+class ServiceProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ServiceProvider
+        fields=['id', 'title']
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    serviceProvider=ServiceProviderSerializer(read_only=True)
+    class Meta:
+        model=Progress
+        fields=['id', 'description', 'serviceProvider']
+
+
+class AddProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Progress
+        fields=['id', 'description']
+
+    def save(self):
+        party_id=self.context['party_id']
+        userType=self.context['user_type']
+        if userType=='venue':
+            provider=Venue.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='catering':
+            provider=Catering.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='decorator':
+            provider=Decorator.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        elif userType=='contentmaker':
+            provider=ContentMaker.objects.get(
+                user_id=self.context['user_id']
+            )
+
+        progress=Progress.objects.create(
+            serviceProvider=provider, 
+            party_id=party_id,
+            description=self.validated_data['description']
+            )
+        return progress

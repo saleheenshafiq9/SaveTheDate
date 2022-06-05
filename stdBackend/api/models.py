@@ -20,6 +20,7 @@ class ServiceProvider(models.Model):
         null=True,
     )
     location=models.CharField(max_length=255, null=True)
+    
 
 
 
@@ -65,7 +66,9 @@ class Appointment(models.Model):
     Category=models.CharField(max_length=255)
     ScheduledAt=models.DateTimeField()
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-    serviceProvider=models.ManyToManyField(ServiceProvider)
+    serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, null=True)
+    status=models.CharField(max_length=255, default='pending')
+
 
 
 class Party(models.Model):
@@ -76,12 +79,10 @@ class Party(models.Model):
         decimal_places=2,
         default=0,
     )
-    pendingCost=models.DecimalField(
-        max_digits=11,
-        decimal_places=2,
-        default=0,
-    )
     status=models.CharField(max_length=255, default="unconfirmed")
+    locationLatitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    locationLongitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    guestCount=models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
     @property
     def get_totalCost(self, party):
@@ -111,7 +112,9 @@ class Payment(models.Model):
         decimal_places=2,
     )
     party=models.ForeignKey(
-        Party, on_delete=models.CASCADE)
+        Party, on_delete=models.CASCADE, related_name='payment')
+    
+
     
 
 class Review(models.Model):
@@ -186,6 +189,16 @@ class VenueSlot(models.Model):
         default=0,
     )
 
+class ContentMakerSlot(models.Model):
+    contentmaker=models.ForeignKey(ContentMaker, on_delete=models.CASCADE)
+    startTime=models.DateTimeField()
+    endTime=models.DateTimeField()
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+        default=0,
+    )
+
 class PartyVenueSlot(models.Model):
     party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partyvenueslot')
     venueslot=models.ForeignKey(VenueSlot, on_delete=models.CASCADE, null=True, related_name='partyvenueslot')
@@ -195,4 +208,14 @@ class PartyThemeSlot(models.Model):
     party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partythemeslot')
     theme=models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='theme')
 
+
+class PartyContentMakerSlot(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partycontentmakerslot')
+    contentmakerslot=models.ForeignKey(ContentMakerSlot, on_delete=models.CASCADE, null=True, related_name='partycontentmakerslot')
+
+
+class Progress(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='progress')
+    serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, related_name='progress')
+    description=models.TextField(null=True)
 
