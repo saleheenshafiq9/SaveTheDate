@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
 from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMaker, PartyContentMakerSlot, PartyDecorator, PartyThemeSlot, PartyVenue, PartyVenueSlot, Payment, Progress, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyContentMakerSerializer, AddPartyDecoratorSerializer, AddPartyVenueSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSerializer,  PartyDecoratorSerializer, PartyVenueSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSerializer,  UpdatePartyDecoratorSerializer, UpdatePartySerializer, UpdatePartyVenueSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .serializers import AddPartyContentMakerSerializer, AddPartyDecoratorSerializer, AddPartyVenueSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSerializer,  PartyDecoratorSerializer, PartyVenueSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdateFoodCartItemSerializer, UpdatePartyContentMakerSerializer,  UpdatePartyDecoratorSerializer, UpdatePartySerializer, UpdatePartyVenueSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -463,6 +463,8 @@ class FoodCartItemViewset(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return AddFoodCartItemSerializer
+        elif self.request.method=='PUT':
+            return UpdateFoodCartItemSerializer
         return FoodCartItemSerializer
 
     def get_serializer_context(self):

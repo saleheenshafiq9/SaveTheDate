@@ -169,21 +169,32 @@ class AddPartyCateringSerializer(serializers.ModelSerializer):
         fields=['id']
 
 
+class UpdateFoodCartItemSerializer(serializers.ModelSerializer):
+    fooditem_id=serializers.IntegerField()
+    catering_id=serializers.IntegerField()
+    class Meta:
+        model=FoodCartItem
+        fields=['id', 'quantity', 'fooditem_id', 'catering_id']
+
+
+
 class FoodCartItemSerializer(serializers.ModelSerializer):
     totalPrice = serializers.SerializerMethodField()
     fooditem=FoodItemSerializer(many=False, read_only=True)
+    catering=CateringSerializer(many=False, read_only=True)
 
     def get_totalPrice(self, cart_item: FoodCartItem):
         return cart_item.quantity * cart_item.fooditem.unitPrice
 
     class Meta:
         model=FoodCartItem
-        fields=['id', 'fooditem', 'quantity', 'totalPrice']
+        fields=['id', 'fooditem', 'quantity', 'totalPrice', 'catering']
 
 
 
 class AddFoodCartItemSerializer(serializers.ModelSerializer):
     fooditem_id=serializers.IntegerField()
+    catering_id=serializers.IntegerField()
 
     def validate_fooditem_id(self, value):
         if not FoodItem.objects.filter(pk=value).exists():
@@ -195,6 +206,7 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
         party_id = self.context['party_id']
         fooditem_id = self.validated_data['fooditem_id']
         quantity = self.validated_data['quantity']
+        catering_id=self.validated_data['catering_id']
 
         try:
             cart_item = FoodCartItem.objects.get(
@@ -204,14 +216,15 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
             self.instance = cart_item
         except FoodCartItem.DoesNotExist:
             self.instance = FoodCartItem.objects.create(
-                party_id=party_id, **self.validated_data)
+                party_id=party_id,
+                catering_id=catering_id, **self.validated_data)
 
         return self.instance
 
 
     class Meta:
         model = FoodCartItem
-        fields = ['id', 'fooditem_id', 'quantity']
+        fields = ['id', 'fooditem_id', 'quantity', 'catering_id']
 
 
 class VenueSlotSerializer(serializers.ModelSerializer):

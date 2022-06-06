@@ -180,6 +180,11 @@ class FoodCartItem(models.Model):
         on_delete=models.CASCADE, 
         )
 
+    catering=models.ForeignKey(
+        Catering, on_delete=models.CASCADE, null=True
+    )
+    
+
     quantity=models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)]
     )
