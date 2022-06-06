@@ -671,7 +671,7 @@ def recommendation(request):
     if request.method=='GET':
         partyset=Party.objects.all().prefetch_related('partyvenueslot')
 
-        return Response({'data':'hola'})
+        return Response({'data':'empty'})
     elif request.method=='POST':
         serializer=RecommendationInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
