@@ -25,6 +25,9 @@ import VenueShow from "./Services/Venue/VenueShow";
 import CatererShow from "./Services/Caterer/CatererShow";
 import DecoratorShow from "./Services/Decorator/DecoratorShow";
 import PhotographyShow from "./Services/Photography/PhotographyShow";
+import PartyType from "./Recommendation/PartyType";
+import PartyDate from "./Recommendation/PartyDate";
+import PartyLocate from "./Recommendation/PartyLocate";
 
 
 const Main = (props) => {
@@ -45,6 +48,9 @@ const Main = (props) => {
           <Route path="/caterer" element={<CatererShow />} />
           <Route path="/decorator" element={<DecoratorShow />} />
           <Route path="/photography" element={<PhotographyShow />} />
+          <Route path="/partytype" element={<PartyType />} />
+          <Route path="/partydate" element={<PartyDate />} />
+          <Route path="/partylocate" element={<PartyLocate />} />
           
 
           {/* Edit Profiles */}
