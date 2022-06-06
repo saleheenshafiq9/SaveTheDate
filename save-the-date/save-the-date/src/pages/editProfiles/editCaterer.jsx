@@ -5,7 +5,7 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/user-context";
-
+import { tokenUrl } from "../../constants/constants";
 class EditCaterer extends Component {
     static contextType=UserContext;
     constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react'
 
-function Map() {
-    const place="Dhanmondi"
+function Map({place="Dhanmondi"}) {
+    
   return (
     <div class="mapouter">
         <div class="gmap_canvas">

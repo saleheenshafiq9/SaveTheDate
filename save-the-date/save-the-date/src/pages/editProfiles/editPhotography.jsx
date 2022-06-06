@@ -53,7 +53,7 @@ class EditPhotography extends Component {
       profileChange(){
         const {token}=this.context;
         const header=`JWT ${token.access}`
-        const {image,id,success,...reqData}=this.state
+        const {image,id,success,...reqData}=this.state;
         const data_key=`api/contenmakers/me/`;
         return PutReq(data_key,reqData,header)
       }
