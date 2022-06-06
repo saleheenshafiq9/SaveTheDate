@@ -468,7 +468,9 @@ class PartySerializer(serializers.ModelSerializer):
         return max(0,(self.get_totalCost(party)-self.get_payedPrice(party)))
 
     def get_status(self, party):
-        if(self.get_totalCost(party)<=self.get_payedPrice(party)):
+        if self.get_totalCost(party)==0:
+            return 'empty'
+        elif(self.get_totalCost(party)<=self.get_payedPrice(party)):
             return 'confirmed'
         return 'pending'
 

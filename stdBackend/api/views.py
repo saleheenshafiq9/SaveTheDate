@@ -378,10 +378,10 @@ class PartyViewSet(ModelViewSet):
             partyset=Party.objects.all()
             returnablePartySet=partyset.none()
             for party in partyset:
-                if PartyVenueSlot.objects.filter(party_id=party.id).exists():
-                    partyvenue=PartyVenueSlot.objects.get(party_id=party.id)
-                    venueslot=VenueSlot.objects.get(id=partyvenue.venueslot_id)
-                    party.venue_id=Venue.objects.get(id=venueslot.venue_id).id
+                if PartyVenue.objects.filter(party_id=party.id).exists():
+                    partyvenue=PartyVenue.objects.get(party_id=party.id)
+                    venue=Venue.objects.get(id=partyvenue.venue_id)
+                    party.venue_id=Venue.objects.get(id=venue.id).id
                     returnablePartySet|=Party.objects.filter(pk=party.id)
 
             return returnablePartySet
@@ -403,10 +403,10 @@ class PartyViewSet(ModelViewSet):
             partyset=Party.objects.all()
             returnablePartySet=partyset.none()
             for party in partyset:
-                if PartyThemeSlot.objects.filter(party_id=party.id).exists():
-                    partytheme=PartyThemeSlot.objects.get(party_id=party.id)
-                    theme=Theme.objects.get(id=partytheme.theme_id)
-                    party.decorator_id=Decorator.objects.get(id=theme.decorator_id).id
+                if PartyDecorator.objects.filter(party_id=party.id).exists():
+                    partydecorator=PartyDecorator.objects.get(party_id=party.id)
+                    decorator=Decorator.objects.get(id=partydecorator.decorator_id)
+                    party.decorator_id=Decorator.objects.get(id=decorator.id).id
                     returnablePartySet|=Party.objects.filter(pk=party.id)
 
             return returnablePartySet
@@ -415,10 +415,10 @@ class PartyViewSet(ModelViewSet):
             partyset=Party.objects.all()
             returnablePartySet=partyset.none()
             for party in partyset:
-                if PartyContentMakerSlot.objects.filter(party_id=party.id).exists():
-                    partycontentmaker=PartyContentMakerSlot.objects.get(party_id=party.id)
-                    contentmakerslot=ContentMakerSlot.objects.get(id=partycontentmaker.contentmakerslot_id)
-                    party.contentmaker_id=ContentMaker.objects.get(id=contentmakerslot.contentmaker_id).id
+                if PartyContentMaker.objects.filter(party_id=party.id).exists():
+                    partycontentmaker=PartyContentMaker.objects.get(party_id=party.id)
+                    contentmaker=ContentMaker.objects.get(id=partycontentmaker.contentmaker_id)
+                    party.contentmaker_id=ContentMaker.objects.get(id=contentmaker.id).id
                     returnablePartySet|=Party.objects.filter(pk=party.id)
 
             return returnablePartySet

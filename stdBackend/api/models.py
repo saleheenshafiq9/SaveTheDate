@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -85,8 +86,8 @@ class Party(models.Model):
         default=0,
     )
     status=models.CharField(max_length=255, default="unconfirmed")
-    locationLatitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    locationLongitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    locationLatitude=models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(23.8103))
+    locationLongitude=models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(90.4125))
     guestCount=models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
     @property
