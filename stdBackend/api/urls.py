@@ -19,10 +19,11 @@ party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
 party_router.register('caterings', views.PartyCateringViewSet, basename='party-caterings')
 party_router.register('foodcartitems', views.FoodCartItemViewset, basename='party-fooditems')
 party_router.register('venueslots', views.PartyVenueSlotViewSet, basename='party-venueslots')
-party_router.register('themeslots', views.PartyThemeSlotViewSet, basename='party-themeslots')
-party_router.register('contentmakerslots', views.PartyContentMakerSlotViewSet, basename='party-contentmakerslots')
+party_router.register('partydecorators', views.PartyDecoratorViewSet, basename='party-decorator')
+party_router.register('partycontentmakers', views.PartyContentMakerViewSet, basename='party-contentmaker')
 party_router.register('payments', views.PaymentViewSet, basename='party-payments')
 party_router.register('progress', views.ProgressViewSet, basename='party-progress')
+party_router.register('partyvenues', views.PartyVenueViewSet, basename='party-venue')
 
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')

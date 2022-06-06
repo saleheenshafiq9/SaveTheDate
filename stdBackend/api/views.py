@@ -6,8 +6,8 @@ import django
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
-from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Payment, Progress, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyContentMakerSlotSerializer, AddPartyThemeSlotSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSlotSerializer, PartyThemeSlotSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSlotSerializer, UpdatePartySerializer, UpdatePartyThemeSlotSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMaker, PartyContentMakerSlot, PartyDecorator, PartyThemeSlot, PartyVenue, PartyVenueSlot, Payment, Progress, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
+from .serializers import AddPartyContentMakerSerializer, AddPartyDecoratorSerializer, AddPartyVenueSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSerializer,  PartyDecoratorSerializer, PartyVenueSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdatePartyContentMakerSerializer,  UpdatePartyDecoratorSerializer, UpdatePartySerializer, UpdatePartyVenueSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -515,24 +515,24 @@ class PartyVenueSlotViewSet(ModelViewSet):
             .select_related('venueslot')
 
 
-class PartyThemeSlotViewSet(ModelViewSet):
+class PartyDecoratorViewSet(ModelViewSet):
     http_method_names = ['get', 'put', 'patch', 'delete', 'post']
     
     def get_serializer_class(self):
         if self.request.method in ['PUT', 'PATCH']:
-            return UpdatePartyThemeSlotSerializer
+            return UpdatePartyDecoratorSerializer
         elif self.request.method in ['POST']:
-            return AddPartyThemeSlotSerializer
-        return PartyThemeSlotSerializer
+            return AddPartyDecoratorSerializer
+        return PartyDecoratorSerializer
 
     def get_serializer_context(self):
         return {'party_id': self.kwargs['party_pk']}
 
 
     def get_queryset(self):
-        return PartyThemeSlot.objects \
+        return PartyDecorator.objects \
             .filter(party_id=self.kwargs['party_pk']) \
-            .select_related('theme')
+            .select_related('decorator')
 
 
 
@@ -559,24 +559,24 @@ class ContentMakerSlotViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-class PartyContentMakerSlotViewSet(ModelViewSet):
+class PartyContentMakerViewSet(ModelViewSet):
     http_method_names = ['get', 'put', 'patch', 'delete', 'post']
     
     def get_serializer_class(self):
         if self.request.method in ['PUT', 'PATCH']:
-            return UpdatePartyContentMakerSlotSerializer
+            return UpdatePartyContentMakerSerializer
         elif self.request.method in ['POST']:
-            return AddPartyContentMakerSlotSerializer
-        return PartyContentMakerSlotSerializer
+            return AddPartyContentMakerSerializer
+        return PartyContentMakerSerializer
 
     def get_serializer_context(self):
         return {'party_id': self.kwargs['party_pk']}
 
 
     def get_queryset(self):
-        return PartyContentMakerSlot.objects \
+        return PartyContentMaker.objects \
             .filter(party_id=self.kwargs['party_pk']) \
-            .select_related('contentmakerslot')
+            .select_related('contentmaker')
 
 
 class PendingAppointmentsVenueViewSet(ModelViewSet):
@@ -644,6 +644,28 @@ class ProgressViewSet(ModelViewSet):
         }
 
 
+class PartyVenueViewSet(ModelViewSet):
+    http_method_names = ['get', 'put', 'patch', 'delete', 'post']
+    
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UpdatePartyVenueSerializer
+        elif self.request.method in ['POST']:
+            return AddPartyVenueSerializer
+        return PartyVenueSerializer
+
+    def get_serializer_context(self):
+        return {'party_id': self.kwargs['party_pk']}
+
+
+    def get_queryset(self):
+        return PartyVenue.objects \
+            .filter(party_id=self.kwargs['party_pk']) \
+            .select_related('venue')
+
+
+
+
 @api_view(['GET', 'POST'])
 def recommendation(request):
     if request.method=='GET':
@@ -662,10 +684,10 @@ def recommendation(request):
         partyset=Party.objects.all().prefetch_related('partyvenueslot')
 
         for party in partyset:
-            if PartyVenueSlot.objects.filter(party_id=party.id).exists():
-                partyvenue=PartyVenueSlot.objects.get(party_id=party.id)
-                venueslot=VenueSlot.objects.get(id=partyvenue.venueslot_id)
-                party.venue_id=Venue.objects.get(id=venueslot.venue_id).id
+            if PartyVenue.objects.filter(party_id=party.id).exists():
+                partyvenue=PartyVenue.objects.get(party_id=party.id)
+                venue=Venue.objects.get(id=partyvenue.venue_id)
+                party.venue_id=Venue.objects.get(id=venue.id).id
             else:
                 party.venue_id=NULL
             
@@ -680,19 +702,19 @@ def recommendation(request):
 
 
 
-            if PartyThemeSlot.objects.filter(party_id=party.id).exists():
-                partytheme=PartyThemeSlot.objects.get(party_id=party.id)
-                theme=Theme.objects.get(id=partytheme.theme_id)
-                party.decorator_id=Decorator.objects.get(id=theme.decorator_id).id
+            if PartyDecorator.objects.filter(party_id=party.id).exists():
+                partydecorator=PartyDecorator.objects.get(party_id=party.id)
+                decorator=Decorator.objects.get(id=partydecorator.decorator_id)
+                party.decorator_id=Decorator.objects.get(id=decorator.id).id
             else:
                 party.decorator_id=NULL
 
 
 
-            if PartyContentMakerSlot.objects.filter(party_id=party.id).exists():
-                partycontentmaker=PartyContentMakerSlot.objects.get(party_id=party.id)
-                contentmakerslot=ContentMakerSlot.objects.get(id=partycontentmaker.contentmakerslot_id)
-                party.contentmaker_id=ContentMaker.objects.get(id=contentmakerslot.contentmaker_id).id
+            if PartyContentMaker.objects.filter(party_id=party.id).exists():
+                partycontentmaker=PartyContentMaker.objects.get(party_id=party.id)
+                contentmaker=ContentMaker.objects.get(id=partycontentmaker.contentmaker_id)
+                party.contentmaker_id=ContentMaker.objects.get(id=contentmaker.id).id
             else:
                 party.contentmaker_id=NULL
 
