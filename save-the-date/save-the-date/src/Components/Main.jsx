@@ -40,18 +40,13 @@ const Main = (props) => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-<<<<<<< HEAD
+
           <Route path="/venue" element={<Venue />} />
           <Route path="/caterer" element={<Caterer />} />
           <Route path="/decorator" element={<Decorator />} />
           <Route path="/photography" element={<Photography />} />
           
-=======
-          <Route path="/venue" element={<VenueShow />} />
-          <Route path="/caterer" element={<CatererShow />} />
-          <Route path="/decorator" element={<DecoratorShow />} />
-          <Route path="/photography" element={<PhotographyShow />} />
->>>>>>> d531cdc46992862268294ea6d305835b90595bfd
+
           {/* Edit Profiles */}
           <Route path="/editvenue" 
             element={
