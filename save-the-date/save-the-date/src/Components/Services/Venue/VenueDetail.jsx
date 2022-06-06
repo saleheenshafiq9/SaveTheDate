@@ -1,12 +1,16 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { CartContext } from "../../../contexts/cart-context";
-import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, CardImg, CardBody, CardTitle, CardText, Button } from "reactstrap";
 import Alert from "../../Alert";
 import ScheduleCard from "../ScheduleCard";
-import CartVenue from "../../cart-item/cart-venue";
+import { UserContext } from "../../../contexts/user-context";
+
 
 const VenueDetail = (props) => {
+  const {currentUser} = useContext(UserContext);
+
   const [alert, setAlert] = useState(null);
   const [cartText, setcartText] = useState("Add to Cart");
   const [disable, setdisable] = useState(false);
@@ -70,6 +74,20 @@ const VenueDetail = (props) => {
             Set Appointment
           </button>
           <Alert alert={alert}/>
+          { disable? <button className="btn btn-dark text-center">
+          {currentUser ? (
+            <>
+              { currentUser.userType=='customer'&& <Link to="/customerProfile " className="text-light text-decoration-none">Go to Profile</Link>}
+              { currentUser.userType=='venue'&& <Link to="venueProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
+              { currentUser.userType=='catering'&& <Link to="cateringProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
+              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
+              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
+            </>
+             ) : (<Link to='/login' className="text-light text-decoration-none">Sign In
+             </Link>
+           )}
+
+            </button> : null }
           { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />

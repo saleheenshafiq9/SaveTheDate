@@ -142,8 +142,15 @@ class EditVenue extends Component {
                      Save <MdOutlineSaveAlt style={{
                     marginLeft: "7px"
                 }}/></Button>
+<<<<<<< HEAD
             
             </form>
+=======
+                <Button className="btn btn-dark"><BiArrowBack style={{
+                    marginRight: "7px"
+                }}/><Link to="/venueProfile" id="plantext">Go Back</Link></Button>
+            </Form>
+>>>>>>> d531cdc46992862268294ea6d305835b90595bfd
             </div>
             <div className="col-4 text-center m-5">
                 <MdAddAPhoto style={{

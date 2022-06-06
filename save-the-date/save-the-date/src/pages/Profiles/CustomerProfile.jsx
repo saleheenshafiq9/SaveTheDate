@@ -1,19 +1,29 @@
 import { UserContext } from "../../contexts/user-context";
 import { CartContext } from "../../contexts/cart-context";
-import React,{ useContext,useEffect } from "react";
+import React,{ useContext, useEffect, useState } from "react";
 import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
 import CartItem from "../../Components/cart-item/cart-item";
 import CartDecorator from "../../Components/cart-item/cart-decorator";
 import CartVenue from "../../Components/cart-item/cart-venue";
-
+import CartCaterer from "../../Components/cart-item/cart-caterer";
+import CartPhoto from "../../Components/cart-item/cart-photo";  
 function CustomerProfile() {
   
   const {currentUser} = useContext(UserContext);
-  const {cartItems} = useContext(CartContext);
   const {cartDecorators} = useContext(CartContext);
   const {cartVenues} = useContext(CartContext);
+  const {cartCaterers} = useContext(CartContext);
+  const {cartPhotos} = useContext(CartContext);
+  const {cartItems} = useContext(CartContext);
+  const [disable, setdisable] = useState(true);
+
+  useEffect(() => {
+    if(cartItems.length > 0) {
+      setdisable(false);
+    }
+  })
   // console.log(isDecorators);
   // currentUser===null  && navigate('/');
   
@@ -77,8 +87,8 @@ function CustomerProfile() {
             <div className="card-body">
               <h5 className="card-title">Caterer</h5>
               <p className="card-text">
-                {cartItems.map(item => (
-          <CartItem key={item.id} cartItem={item} />
+                {cartCaterers.map(item => (
+          <CartCaterer key={item.id} cartCaterer={item} />
           ))}</p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/caterer' id="exploretext"><b style={{fontWeight:"500"}}>Explore Caterers</b></Link></button>
             </div>
@@ -105,7 +115,11 @@ function CustomerProfile() {
           <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Photography</h5>
-              <p className="card-text">No bookings yet</p>
+              <p className="card-text">
+              {cartPhotos.map(item => (
+          <CartPhoto key={item.id} cartPhoto={item} />
+          ))}
+              </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/photography' id="exploretext"><b style={{fontWeight:"500"}}>Explore Photographers</b></Link></button>
             </div>
           </div>
@@ -113,7 +127,7 @@ function CustomerProfile() {
           </div>
           <div className="row">
             <div className="col text-center mt-3" id="starttext">
-              <button type="button" className="btn btn-success" disabled>Go to Checkout</button>
+              <button type="button" className="btn btn-success" disabled={disable}>Go to Checkout</button>
             </div>
           </div>
         </div>
