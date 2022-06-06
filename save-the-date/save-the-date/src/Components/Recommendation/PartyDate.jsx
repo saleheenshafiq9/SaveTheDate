@@ -26,7 +26,7 @@ const PartyDate = () => {
 
   return (
     <div>
-      <h2 className='text-center p-5 m-2'>When's the special day?</h2>
+      <h2 className='tagline text-center p-5 m-2'>When's the special day?</h2>
       <div className="container text-center">
           <img src='../../../Recommendation/lantern.png' alt="" id='img-party'/>
           <img src='../../../Recommendation/schedule.png' alt="" id='img-party' className='pl-5'/>
@@ -58,12 +58,15 @@ const PartyDate = () => {
           selected={myDay}
           renderDayContents={renderDayContents}
           onChange={(date) => setMyDay(date)}
+          minDate={new Date()}
         />
       </div>
       </div>
     </div>
     <div className='text-center'>
-        <Link to="/partylocate"><button className='btn btn-lg' id='btnParty'>Continue</button></Link>
+        <Link to="/partylocate"><button className='btn btn-lg' id='btnParty'><b style={{
+            fontWeight: "500"
+        }}>Continue</b></button></Link>
     </div>
     </div>
   )

@@ -7,7 +7,7 @@ const PartyType = () => {
     const [selected, setSelected] = useState(0);
   return (
     <div>
-      <h2 className='text-center p-5 m-5'>Let's get started! What type of party are you going to plan?</h2>
+      <h2 className='tagline text-center p-5 m-5'>Let's get started! What type of party are you going to plan?</h2>
         <div className="row text-center">
             <div className="col-2">
                 <div class="box red" onClick={() => setSelected(1)}>
@@ -65,7 +65,9 @@ const PartyType = () => {
             </div>
         </div>
         <div className='text-center'>
-        <Link to="/partydate"><button className='btn btn-lg' id='btnParty'>Continue</button></Link>
+        <Link to="/partydate"><button className='btn btn-lg' id='btnParty'><b style={{
+            fontWeight: "500"
+        }}>Continue</b></button></Link>
         </div>
     </div>
   )

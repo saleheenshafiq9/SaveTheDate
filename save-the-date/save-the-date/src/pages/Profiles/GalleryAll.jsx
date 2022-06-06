@@ -1,13 +1,34 @@
-import React, {useContext} from 'react'
-import { UserContext } from "../../contexts/user-context";
-import useFetch from "../../hooks/useFetch"
-import {tokenUrl} from "../../constants/constants"
+import React, {useContext} from "react";
 
-const GalleryAll = () => {
-    const {token}= useContext(UserContext);
-    const {data:venueData,error,loading}=useFetch(tokenUrl,"/api/venues/me");
-  return (
-    <div>
+const GalleryAll = (props) => {
+  console.log(props.id);
+
+    return (
+        <>
+<div className="row" id="gallery" data-toggle="modal" data-target="#exampleModal">
+  <div className="col-12 col-sm-6 col-lg-3">
+    <img className="w-100" src={props.id.images[0]?.image} alt="First slide" data-target="#carouselExample" data-slide-to="0" height="200px"/>
+  </div>
+  <div className="col-12 col-sm-6 col-lg-3">
+    <img className="w-100" src={props.id.images[1]?.image} alt="First slide" data-target="#carouselExample" data-slide-to="1" height="200px"/>
+  </div>
+  <div className="col-12 col-sm-6 col-lg-3">
+    <img className="w-100" src={props.id.images[2]?.image} alt="First slide" data-target="#carouselExample" data-slide-to="2" height="200px"/>
+  </div>
+  <div className="col-12 col-sm-6 col-lg-3">
+    <img className="w-100" src={props.id.images[3]?.image} alt="First slide" data-target="#carouselExample" data-slide-to="3" height="200px"/>
+  </div>
+</div>
+<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-hidden="true">
+  <div className="modal-dialog" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div className="modal-body">
+        <div id="carouselExample" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">
             <li data-target="#carouselExample" data-slide-to="0" className="active"></li>
             <li data-target="#carouselExample" data-slide-to="1"></li>
@@ -16,16 +37,16 @@ const GalleryAll = () => {
           </ol>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img className="d-block w-100" src={tokenUrl + venueData?.images[0]?.image} alt="First slide"/>
+              <img className="d-block w-100" src={props.id.images[0]?.image} alt="First slide"/>
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={tokenUrl + venueData?.images[1]?.image} alt="Second slide"/>
+              <img className="d-block w-100" src={props.id.images[1]?.image} alt="Second slide"/>
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={tokenUrl + venueData?.images[2]?.image} alt="Third slide"/>
+              <img className="d-block w-100" src={props.id.images[2]?.image} alt="Third slide"/>
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={tokenUrl + venueData?.images[3]?.image} alt="Fourth slide"/>
+              <img className="d-block w-100" src={props.id.images[3]?.image} alt="Fourth slide"/>
             </div>
           </div>
           <a className="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
@@ -37,7 +58,15 @@ const GalleryAll = () => {
             <span className="sr-only">Next</span>
           </a>
         </div>
-  )
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </>
+    )
 }
 
-export default GalleryAll
+export default GalleryAll;
