@@ -176,6 +176,18 @@ class UpdateFoodCartItemSerializer(serializers.ModelSerializer):
         model=FoodCartItem
         fields=['id', 'quantity', 'fooditem_id', 'catering_id']
 
+    def validate_fooditem_id(self, value):
+        if not FoodItem.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No food item with the given ID was found.')
+        return value
+
+    def validate_catering_id(self, value):
+        if not Catering.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No catering with the given ID was found.')
+        return value
+
 
 
 class FoodCartItemSerializer(serializers.ModelSerializer):
