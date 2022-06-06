@@ -5,22 +5,43 @@ import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/user-context";
-
+import { tokenUrl } from "../../constants/constants";
 class EditCaterer extends Component {
     static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {
-          capacity: "",
-          title: "",
-          description: "",
-          image: ""
+            id:null,
+            success:false,
+            image: "",
+            location: "",
+            capacity: "",
+            title: "",
+            description: ""
+            
         };
 
+        
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.fileChange=this.fileChange.bind(this);
       }
-    
+      componentDidMount(){
+        const {token}=this.context;
+        const header=`JWT ${token?.access}`
+        ReqWithHead(tokenUrl,"/api/venues/me",header).then((res)=>this.setState({id:res.id}))
+      }
+     fileChange(e){
+        const files=e.target.files;        
+        this.setState({image:files[0]}) 
+
+     }
+     fileUpload(){
+        const formData=new FormData();
+        formData.append("image",this.state.image);
+        const data=axios.post(tokenUrl+`/api/caterings/${this.state.id&&this.state.id}/images/`,formData).catch(e=>console.log(e))
+        return data
+     }
       handleInputChange = (event) => {
         const value = event.target.value;
         const name = event.target.name;
@@ -28,18 +49,17 @@ class EditCaterer extends Component {
           [name]: value,
         });
       };
-      
-    handleSubmit = (event) => {
-        event.preventDefault();
+      profileChange(){
         const {token}=this.context;
         const header=`JWT ${token.access}`
-        console.log(header);
-
-        const {image,...reqData}=this.state
-        console.log(reqData);
-        
+        const {image,id,success,...reqData}=this.state;
         const data_key=`api/caterings/me/`;
-        PutReq(data_key,reqData,header)
+        return PutReq(data_key,reqData,header)
+      }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        Promise.all([this.profileChange(),this.fileUpload()])
       };
 
     render() {
@@ -106,10 +126,10 @@ class EditCaterer extends Component {
                     height: "80px"
                 }}/><br/><br/>
                 <input type="file" id="myfile"
-                    onChange={this.handleInputChange}
+                    onChange={this.fileChange}
                     style={{
                         paddingLeft: "100px"}} 
-                    value={this.state.image}/>
+                    />
             </div>
         </div>
     )

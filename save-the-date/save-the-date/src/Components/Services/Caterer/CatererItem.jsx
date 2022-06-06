@@ -2,14 +2,14 @@ import React from "react";
 import "./Caterer.css";
 
 const CatererItem = (props) => {
-  //console.log(props);
+  console.log(props.caterer);
   return (
     <div>
       <div className="card w-75">
         <img
           className="card-img-top"
-          src={props.caterer.images[0].image}
-          alt={props.caterer.title}
+          src={props.caterer.images[0]?.image}
+          alt={props.caterer.title?props.caterer.title:" Alternate text of  Image"}
           height="200px"
         />
         <div className="card-body">

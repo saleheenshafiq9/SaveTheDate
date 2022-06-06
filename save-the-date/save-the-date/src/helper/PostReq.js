@@ -1,12 +1,13 @@
  import axios from 'axios';
+import { tokenUrl } from '../constants/constants';
 
- export default  function  PostReq(baseURL,key,data) {
+ export default  function  PostReq(key,data) {
 
-  
+  const baseURL=tokenUrl;
   const fetchedData=async()=> await axios.post(baseURL+key,data,{
         headers:{
-        Accept: "application/json",
-          'Content-Type':'application/json;charset=UTF-8'
+
+       
       }  
     }).then(res=>res.data);
    

@@ -49,11 +49,11 @@ const Header = () => {
             </Link>
             {currentUser ? (
             <>
-              { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink">CustomerProfile</Link>}
-              { currentUser.userType=='venue'&& <Link to="venueProfile " id="NavLink" >VenueProfile</Link> } 
-              { currentUser.userType=='catering'&& <Link to="cateringProfile " id="NavLink" >Caterer</Link> } 
-              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " id="NavLink" >Decorator</Link> } 
-              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " id="NavLink" >Photograper</Link> } 
+              { currentUser.userType=='customer'&& <Link to="customerProfile " id="NavLink"><img src="../../../Customer/user.png" id="proficon"/></Link>}
+              { currentUser.userType=='venue'&& <Link to="venueProfile " id="NavLink" ><img src="../../../Venue/one.jpg" id="proficon"/></Link> } 
+              { currentUser.userType=='catering'&& <Link to="cateringProfile " id="NavLink" ><img src="../../../Caterer/b.jpg" id="proficon"/></Link> } 
+              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " id="NavLink" ><img src="../../../Decorator/one.jpg" id="proficon"/></Link> } 
+              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " id="NavLink" ><img src="../../../Photography/one.jpg" id="proficon"/></Link> } 
               <Logout />
             </>
              ) : (<Link id="NavLink" to='/login'>Sign In

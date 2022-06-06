@@ -2,7 +2,8 @@ import React, { useContext} from "react";
 import { UserContext } from "../../contexts/user-context";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
-import {MdModeEditOutline} from "react-icons/md";
+import {MdModeEditOutline, MdLocationPin} from "react-icons/md";
+import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
@@ -18,20 +19,23 @@ function VenueProfile() {
         <div>
             <div className="row">
                 <div className="col-6">
-                <img src="/venue/One.jpg" className="provider-img"/>
+                <img src={tokenUrl + venueData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
-                <img src="/venue/Two.jpg" className="provider-img"/>
+                <img src={tokenUrl + venueData?.images[1]?.image} className="provider-img"/>
                 </div>
             </div>
             <br /><br />
             <div className="row">
                 <div className="col-6">
                     <h2>{venueData?venueData.title:"Title"}</h2>
+                    <br />
                     <p className="text-secondary">
-                    {venueData?venueData.location :"Location"}
+                    <MdLocationPin /> {venueData?venueData.location :"Location"}
                     <br/>
-                    <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People</p>
+                    <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People
+                    <br />
+                    <IoPricetags /> {venueData?venueData.price: "Price"} BDT </p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
@@ -48,10 +52,12 @@ function VenueProfile() {
                 </div>
             </div>
             <hr />
-            <div className="row"><br /><br />
-                <h4 className="text-center">Gallery</h4>
-                    <Gallery />
+            <div className="row"><br /><br /><br />
+                <h4 className="text-center">Gallery</h4><br />
+                    <Gallery /> 
             </div>
+            <br /><br />
+
             <div className="row p-5">
                 <div className="col-6 text-secondary">
                 <h4 className="text-dark">About Venue</h4><br />
@@ -59,24 +65,24 @@ function VenueProfile() {
                 </div>
                 <div className="col-6 text-center">
                     <p>
-                    <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+                    <a className="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
                     </p>
-                    <div class="row">
-          <div class="col">
-            <div class="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
-              <div class="card card-body">
+                    <div className="row">
+          <div className="col">
+            <div className="collapse multi-collapse ml-5 mb-3" id="multiCollapseExample1">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>
           </div>
           </div>
           <p>
-          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+          <button className="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
           </p>
           <div className="row">
-          <div class="col">
-            <div class="collapse multi-collapse ml-5" id="multiCollapseExample2">
-              <div class="card card-body">
+          <div className="col">
+            <div className="collapse multi-collapse ml-5" id="multiCollapseExample2">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>
@@ -84,7 +90,7 @@ function VenueProfile() {
           </div>
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-5">
                 <div className="col-6">
                 <h4 className="text-dark">Add to Schedule</h4><br />
                 <ReactCalender />
