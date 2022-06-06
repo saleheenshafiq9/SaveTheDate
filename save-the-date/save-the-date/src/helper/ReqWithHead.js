@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 function ReqWithHead(baseURL,key,accessToken) {
-  return (axios.get(baseURL+key, {
+  return (axios.get(baseURL+key,accessToken&& {
         headers: {
         'Authorization': accessToken,
         }

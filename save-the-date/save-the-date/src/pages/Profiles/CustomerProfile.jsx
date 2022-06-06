@@ -22,9 +22,10 @@ function CustomerProfile() {
     }
   })
   const bookSpot=()=>{
-    
-    
+
     console.log("heelo");
+
+
     return null
 
 
@@ -139,7 +140,7 @@ function CustomerProfile() {
         </div>
       </div>
       <div className="row m-5">
-      <p>
+        <p>
           <a className="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
           <button className="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
         </p>
