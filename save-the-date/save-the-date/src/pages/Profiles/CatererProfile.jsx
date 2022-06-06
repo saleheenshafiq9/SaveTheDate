@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import "./ProfileStyle.css";
 import {FaUserFriends, FaRegCalendarAlt} from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
-import {MdModeEditOutline} from "react-icons/md";
+import {MdModeEditOutline, MdLocationPin} from "react-icons/md";
+import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
@@ -19,20 +20,23 @@ function CatererProfile() {
         <div>
             <div className="row">
                 <div className="col-6">
-                <img src="/Caterer/One.jpg" className="provider-img"/>
+                <img src={tokenUrl + catererData?.images[0]?.image} className="provider-img"/>
                 </div>
                 <div className="col-6">
-                <img src="/Caterer/Two.jpg" className="provider-img"/>
+                <img src={tokenUrl + catererData?.images[1]?.image} className="provider-img"/>
                 </div>
             </div>
             <br /><br />
             <div className="row">
                 <div className="col-6">
                     <h2>{catererData?catererData.title:"Title"}</h2>
+                    <br />
                     <p className="text-secondary">
-                    {catererData?catererData.location :"Location"}
+                    <MdLocationPin /> {catererData?catererData.location :"Location"}
                     <br/>
-                    <FaUserFriends />{catererData?catererData.capacity: "Capacity No." } People</p>
+                    <FaUserFriends /> {catererData?catererData.capacity : "Capacity No." } People
+                    <br />
+                    <IoPricetags /> {catererData?catererData.price: "Price"} BDT </p>
                 </div>
                 <div className="col-3"></div>
                 <div className="col-3">
@@ -50,17 +54,18 @@ function CatererProfile() {
             </div>
             <hr />
             <div className="row"><br /><br />
-                <h4 className="text-center">Food Menu</h4>
+                <h4 className="text-center">Food Menu</h4><br />
                 <div className="col-3">
-                <img src={"/Caterer/One.jpg"} className="gallery-img"/>
+                <img src={tokenUrl + catererData?.images[1]?.image} className="gallery-img"/>
                 </div>
                 <div className="col-3">
-                <img src="/Caterer/Two.jpg" className="gallery-img"/>
+                <img src={tokenUrl + catererData?.images[2]?.image} className="gallery-img"/>
                 </div>
                 <div className="col-3">
-                <img src="/Caterer/Three.jpg" className="gallery-img"/>
+                <img src={tokenUrl + catererData?.images[3]?.image} className="gallery-img"/>
                 </div>
             </div>
+            <br /><br />
             <div className="row p-5">
                 <div className="col-6 text-secondary">
                 <h4 className="text-dark">About Caterers</h4><br />
@@ -93,7 +98,7 @@ function CatererProfile() {
           </div>
                 </div>
             </div>
-            <div className="row p-3">
+            <div className="row p-5">
                 <div className="col-6">
                 <h4 className="text-dark">Add to Schedule</h4><br />
                 <ReactCalender />

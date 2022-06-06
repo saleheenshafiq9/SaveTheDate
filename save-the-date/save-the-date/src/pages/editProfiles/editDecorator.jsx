@@ -3,23 +3,50 @@ import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import ReqWithHead from "../../helper/ReqWithHead";
+import PutReq from "../../helper/PutReq";
 import { UserContext } from "../../contexts/user-context";
+import { tokenUrl } from "../../constants/constants";
 
 class EditDecorator extends Component {
     static contextType=UserContext;
     constructor(props) {
         super(props);
         this.state = {
-          capacity: "",
-          title: "",
-          description: "",
-          image: ""
+            id:null,
+            success:false,
+            image: "",
+            location: "",
+            capacity: "",
+            title: "",
+            description: ""
+            
         };
-
+        this.fileChange=this.fileChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
+      profileChange(){
+        const {token}=this.context;
+        const header=`JWT ${token.access}`;
+        const {image,id,success,...reqData}=this.state;
+        const data_key=`api/decorators/me/`;
+        return PutReq(data_key,reqData,header)
+      }
+        fileChange(e){
+        const files=e.target.files;        
+        this.setState({image:files[0]}) 
+        }
+
+        fileUpload(){
+            const formData=new FormData();
+            formData.append("image",this.state.image);
+            const data=axios.post(tokenUrl+`/api/decorators/${this.state.id&&this.state.id}/images/`,formData).catch(e=>console.log(e))
+            return data
+        }
+
     
       handleInputChange = (event) => {
         const value = event.target.value;
@@ -30,17 +57,9 @@ class EditDecorator extends Component {
       };
       
     handleSubmit = (event) => {
-        console.log(this.state);
-        event.preventDefault();
-        const {token}=this.context;
-        const header=`JWT ${token.access}`
-        console.log(header);
-
-        const {image,...reqData}=this.state
-        console.log(reqData);
-        
-        const data_key=`api/decorators/me/`;
-        PutReq(data_key,reqData,header)
+       event.preventDefault();
+        Promise.all([this.profileChange,this.fileUpload()])
+       
       };
 
     render() {
@@ -92,9 +111,9 @@ class EditDecorator extends Component {
                     width: "200px",
                     height: "80px"
                 }}/><br/><br/>
-                <input type="file" id="myfile" style={{
+                <input type="file" id="myfile"  onChange={this.fileChange} style={{
                     paddingLeft: "100px"
-                }} value={this.state.image}/>
+                }} />
             </div>
         </div>
     )
