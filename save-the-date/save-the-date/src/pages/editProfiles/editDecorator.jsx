@@ -3,7 +3,10 @@ import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import ReqWithHead from "../../helper/ReqWithHead";
+import PutReq from "../../helper/PutReq";
 import { UserContext } from "../../contexts/user-context";
 import { tokenUrl } from "../../constants/constants";
 

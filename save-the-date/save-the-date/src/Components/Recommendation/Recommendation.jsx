@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../../contexts/cart-context'
 import {MdLocationCity, MdDateRange, MdPeopleAlt} from 'react-icons/md';
 import {RiMoneyDollarCircleFill} from 'react-icons/ri';
@@ -7,6 +7,7 @@ import axios from "axios";
 import { tokenUrl} from "../../constants/constants";
 
 function Recommendation() {
+  const [recom,setRecom]=useState(null)
   const recomm_key='/api/recommendation';
   const {type, city, area, budget, count} = useContext(CartContext);
   console.log(city);
@@ -17,13 +18,9 @@ function Recommendation() {
         "guestCount": count,
         "city": city
       }
-    const recommData= axios.post(tokenUrl+recomm_key,data,{
-      headers:{
-        Accept:"application/json;",
-        'Content-Type':'application/json;charset=UTF-8'
-      }
-    }).then(s=>s.data);
-    console.log(recommData);
+
+    const recommData= axios.post(tokenUrl+recomm_key,data).then(s=>s.data);
+    recommData.then(s=>setRecom(s));
   }
 
   return (
@@ -84,6 +81,7 @@ function Recommendation() {
     <div>
         <button className='btn btn-dark' onClick={handleSubmit}>Generate Plan</button>
       </div>
+      <p>{recom?.venue[0].location}</p>
     </div>
     </div>
   )

@@ -3,9 +3,11 @@ import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
+import ReqWithHead from "../../helper/ReqWithHead";
+import PutReq from "../../helper/PutReq";
 import { UserContext } from "../../contexts/user-context";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 class EditPhotography extends Component {
     static contextType=UserContext;
     constructor(props) {

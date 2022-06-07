@@ -3,6 +3,9 @@ import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import "./edit.css";
 import { MdAddAPhoto, MdOutlineSaveAlt} from "react-icons/md";
 import { BiArrowBack} from "react-icons/bi";
+import axios from "axios";
+import ReqWithHead from "../../helper/ReqWithHead";
+import PutReq from "../../helper/PutReq";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/user-context";
 import { tokenUrl } from "../../constants/constants";
@@ -14,7 +17,7 @@ class EditCaterer extends Component {
             id:null,
             success:false,
             image: "",
-            location: "",
+            location: "locat",
             capacity: "",
             title: "",
             description: ""
@@ -29,7 +32,7 @@ class EditCaterer extends Component {
       componentDidMount(){
         const {token}=this.context;
         const header=`JWT ${token?.access}`
-        ReqWithHead(tokenUrl,"/api/venues/me",header).then((res)=>this.setState({id:res.id}))
+        ReqWithHead(tokenUrl,"/api/caterings/me",header).then((res)=>this.setState({id:res.id}))
       }
      fileChange(e){
         const files=e.target.files;        
@@ -39,7 +42,8 @@ class EditCaterer extends Component {
      fileUpload(){
         const formData=new FormData();
         formData.append("image",this.state.image);
-        const data=axios.post(tokenUrl+`/api/caterings/${this.state.id&&this.state.id}/images/`,formData).catch(e=>console.log(e))
+        const postData=tokenUrl+`/api/caterings/${this.state.id&&this.state.id}/images/`
+        const data=axios.post(postData,formData).catch(e=>console.log(e))
         return data
      }
       handleInputChange = (event) => {
@@ -53,6 +57,7 @@ class EditCaterer extends Component {
         const {token}=this.context;
         const header=`JWT ${token.access}`
         const {image,id,success,...reqData}=this.state;
+        console.log(reqData);
         const data_key=`api/caterings/me/`;
         return PutReq(data_key,reqData,header)
       }
@@ -112,12 +117,13 @@ class EditCaterer extends Component {
                     />
                     </Col>
                 </FormGroup>
-                <Button className="btn btn-success" id="saveprof">Save<MdOutlineSaveAlt style={{
-                    marginLeft: "7px"
-                }}/></Button>
-                <Button className="btn btn-dark"><BiArrowBack style={{
+                <Button className="btn btn-dark" type="button"><BiArrowBack style={{
                     marginRight: "7px"
                 }}/><Link to="/catererProfile" id="plantext">Go Back</Link></Button>
+                <Button className="btn btn-success"  type="submit" id="saveprof">Save<MdOutlineSaveAlt style={{
+                    marginLeft: "7px"
+                }}/></Button>
+               
             </Form>
             </div>
             <div className="col-4 text-center m-5">
