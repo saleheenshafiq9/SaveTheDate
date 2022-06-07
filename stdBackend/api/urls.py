@@ -68,4 +68,7 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls
-urlpatterns+=[path('recommendation', recommendation)]
+urlpatterns+=[
+    path('recommendation', recommendation),
+    path('createparty', dummyparty)
+    ]

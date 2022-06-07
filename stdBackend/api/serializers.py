@@ -617,7 +617,14 @@ class AddProgressSerializer(serializers.ModelSerializer):
         return progress
 
 
-
+class AddDummyParty(serializers.Serializer):
+    guestCount=serializers.DecimalField(max_digits=11, decimal_places=2)
+    venue_id=serializers.IntegerField()
+    fooditem_id=serializers.IntegerField()
+    quantity=serializers.IntegerField()
+    catering_id=serializers.IntegerField()
+    decorator_id=serializers.IntegerField()
+    contentmaker_id=serializers.IntegerField()
 
 
 

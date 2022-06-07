@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .permissions import DenyAll, IsCateringOrReadOnly, IsCustomerOrReadOnly, IsDecoratorOrReadOnly
 from .models import Appointment, ContentMakerSlot, FoodCartItem, Party, PartyContentMaker, PartyContentMakerSlot, PartyDecorator, PartyThemeSlot, PartyVenue, PartyVenueSlot, Payment, Progress, ServiceProvider, Theme, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, Venue, ProviderImage, FoodImage, ThemeImage, FoodItem, VenueSlot
-from .serializers import AddPartyContentMakerSerializer, AddPartyDecoratorSerializer, AddPartyVenueSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSerializer,  PartyDecoratorSerializer, PartyVenueSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdateFoodCartItemSerializer, UpdatePartyContentMakerSerializer,  UpdatePartyDecoratorSerializer, UpdatePartySerializer, UpdatePartyVenueSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
+from .serializers import AddDummyParty, AddPartyContentMakerSerializer, AddPartyDecoratorSerializer, AddPartyVenueSerializer, AddPartyVenueSlotSerializer, AddPaymentSerializer, AddProgressSerializer, AppointmentSerializer, ContentMakerSlotSerializer, CreateAppointmentSerializer, CreateContentMakerSlotSerializer, PartyContentMakerSerializer,  PartyDecoratorSerializer, PartyVenueSerializer, PartyVenueSlotSerializer, AddFoodCartItemSerializer, AddPartyCateringSerializer, CateringSerializer, ContentMakerSerializer, CreatePartySerializer, CreateReviewSerializer, CreateVenueSlotSerializer, DecoratorSerializer, EntertainerSerializer, FoodCartItemSerializer, FoodItemSerializer, PartySerializer, PaymentSerializer, ProgressSerializer, RecommendationInputSerializer, ReviewSerializer, CustomerSerializer, UpdateAppointmentSerializer, UpdateFoodCartItemSerializer, UpdatePartyContentMakerSerializer,  UpdatePartyDecoratorSerializer, UpdatePartySerializer, UpdatePartyVenueSerializer, UpdatePartyVenueSlotSerializer, VenueSerializer, ProviderImageSerializer, FoodImageSerializer, ThemeSerializer, ThemeImageSerializer, VenueSlotSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
@@ -844,6 +844,23 @@ def recommendation(request):
             }
             )
 
-
-
-
+@api_view(['POST', 'GET'])
+def dummyparty(request):
+    if request.method=='POST':
+        serializer=AddDummyParty(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        customer=Customer.objects.get(
+            user_id=request.user.id
+        )
+        party=Party.objects.create(guestCount=serializer.validated_data['guestCount'], customer=customer)
+        PartyVenue.objects.create(party_id=party.id, venue_id=serializer.validated_data['venue_id'])
+        FoodCartItem.objects.create(
+            party_id=party.id,
+            fooditem_id=serializer.validated_data['fooditem_id'],
+            catering_id=serializer.validated_data['catering_id'],
+            quantity=serializer.validated_data['quantity']
+            )
+        PartyDecorator.objects.create(party_id=party.id, decorator_id=serializer.validated_data['decorator_id'])
+        PartyContentMaker.objects.create(party_id=party.id, contentmaker_id=serializer.validated_data['contentmaker_id'])
+    
+    return Response({'data':'ok'})
