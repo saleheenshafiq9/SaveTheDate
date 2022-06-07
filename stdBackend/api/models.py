@@ -78,7 +78,7 @@ class Appointment(models.Model):
 
 
 class Party(models.Model):
-    customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
+    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
     catering=models.ManyToManyField(Catering)
     totalCost=models.DecimalField(
         max_digits=11,

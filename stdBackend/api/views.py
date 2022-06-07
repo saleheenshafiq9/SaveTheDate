@@ -854,8 +854,8 @@ def dummyparty(request):
         )
         party=Party.objects.create(
             guestCount=serializer.validated_data['guestCount'], customer=customer,
-            locationLatitude=Decimal(24.37),
-            locationLongitude=Decimal(88.6042)
+            locationLatitude=Decimal(23.81),
+            locationLongitude=Decimal(90.41)
             )
         PartyVenue.objects.create(party_id=party.id, venue_id=serializer.validated_data['venue_id'])
         FoodCartItem.objects.create(
