@@ -7,8 +7,8 @@ import useFetch from '../../hooks/useFetch'
 const Payment = () => {
   const {party,setParty}= useContext(CartContext);
   const {token}=useContext(UserContext);
-  const head=`JWT ${token.access}`
-  const url=`/api/partys/${party.id}/`
+  const head=`JWT ${token.access}`;
+  const url=`/api/partys/${party?.id}/`
   const {data,loading,error}=useFetch(tokenUrl,url,head)
   console.log(data);
   return (

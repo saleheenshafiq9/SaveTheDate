@@ -24,7 +24,7 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
-  const getPartys=async(cartItems,Vendortype)=>{
+  const getPartys=async(cartItems,Vendortype,apiVenueId)=>{
 
     const venueId=cartItems[0]?.id;
     const partyData={"guestCount":cartItems[0]?.capacity};
@@ -44,9 +44,7 @@ function CustomerProfile() {
       const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
       console.log(KeyApiParty);
       //create new partyslot
-      const apiVenueId={
-        venue_id: venueId
-    };
+      
       parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
 
     }
@@ -54,8 +52,10 @@ function CustomerProfile() {
   }
 
   const bookSpot=()=>{
-
-    getPartys(cartVenues,"partyvenues");
+    const apiVenueId={
+      venue_id: venueId
+  };
+    getPartys(cartVenues,"partyvenues",apiVenueId);
 
     return null
 
