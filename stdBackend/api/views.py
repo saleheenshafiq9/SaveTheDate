@@ -679,6 +679,31 @@ def recommendation(request):
         serializer.is_valid(raise_exception=True)
         inputParty={}
         inputParty['budget']=serializer.validated_data['budget']
+        if serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Chitagong':
+            inputParty['locationLatitude']=Decimal(22.3569)
+            inputParty['locationLongitude']=Decimal(91.7832)
+        elif serializer.validated_data['city']=='Sylhet':
+            inputParty['locationLatitude']=Decimal(24.8949)
+            inputParty['locationLongitude']=Decimal(91.8687)
+        elif serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Dhaka':
+            inputParty['locationLatitude']=Decimal(23.8103)
+            inputParty['locationLongitude']=Decimal(90.4125)
+
         inputParty['locationLatitude']=serializer.validated_data['locationLatitude']
         inputParty['locationLongitude']=serializer.validated_data['locationLongitude']
         inputParty['guestCount']=serializer.validated_data['guestCount']
@@ -817,8 +842,6 @@ def recommendation(request):
                 'contentmaker': contentmaker
             }
             )
-
-
 
 
 
