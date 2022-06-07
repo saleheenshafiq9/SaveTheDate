@@ -1,11 +1,13 @@
 import React from "react";
+import { IoPricetags } from "react-icons/io5";
+import { MdLocationPin } from "react-icons/md";
 import "./Decorator.css";
 
 const DecoratorItem = (props) => {
   //console.log(props);
   return (
     <div>
-      <div className="card w-75">
+      <div className="card w-75" id="cardStyle">
         <img
           className="card-img-top"
           src={props.decorator.images[0]?.image}
@@ -21,11 +23,11 @@ const DecoratorItem = (props) => {
           <span class="badge badge-warning text-dark">Regular</span>
         </div>
         <div className="card-footer">
-          <b>Themes: </b>
-          {props.decorator.menuItem}
+          <IoPricetags className="mr-2" />
+          {props.decorator.price} BDT
           <br />
           <br />
-          <b>Location: </b>
+          <MdLocationPin className="mr-2"/>
           {props.decorator.location}
         </div>
       </div>

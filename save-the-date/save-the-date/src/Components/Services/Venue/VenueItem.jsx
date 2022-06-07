@@ -1,5 +1,7 @@
 import React from "react";
 import "./Venue.css";
+import { IoPricetags } from "react-icons/io5";
+import { MdLocationPin } from "react-icons/md";
 
 const VenueItem = (props) => {
   //console.log(props);
@@ -21,11 +23,11 @@ const VenueItem = (props) => {
           <span className="badge badge-warning text-dark">Regular</span>
         </div>
         <div className="card-footer">
-          <b>Price: </b>
-          {props.venue.price}
+          <IoPricetags className="mr-2"/>
+          {props.venue.price} BDT
           <br />
           <br />
-          <b>Location: </b>
+          <MdLocationPin className="mr-2"/>
           {props.venue.location}
         </div>
       </div>
