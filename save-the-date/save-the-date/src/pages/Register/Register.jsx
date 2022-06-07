@@ -28,7 +28,7 @@ function Register() {
 
   useEffect(() => {
     currentUser?.userType=="cusotmer"&& navigate("../customerProfile");
-    currentUser?.userType=="venue"&& navigate("../providerProfile");
+    currentUser?.userType=="venue"&& navigate("../venueProfile");
     currentUser?.userType=="catering"&& navigate("../catererProfile");
     currentUser?.userType=="decorator"&& navigate("../decoratorProfile");
     currentUser?.userType=="photography"&& navigate("../photographyProfile");

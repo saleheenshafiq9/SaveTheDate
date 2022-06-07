@@ -82,8 +82,12 @@ function Recommendation() {
     }}>
     <div>
         <button className='btn btn-dark' onClick={handleSubmit}>Generate Plan</button>
-      </div>
+    </div>
+    <div className="box red">
+      <h4>{recom?.venue[0].title}</h4>
       <p>{recom?.venue[0].location}</p>
+      <p>{recom?.venue[0].price}</p>
+    </div>
     </div>
     </div>
   )
