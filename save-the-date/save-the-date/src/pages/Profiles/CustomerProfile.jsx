@@ -24,9 +24,10 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
-  const getPartys=async()=>{
-    const venueId=cartVenues[0]?.id;
-    const partyData={"guestCount":cartVenues[0]?.capacity};
+  const getPartys=async(cartItems,Vendortype)=>{
+
+    const venueId=cartItems[0]?.id;
+    const partyData={"guestCount":cartItems[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
     
 
@@ -37,13 +38,12 @@ function CustomerProfile() {
       //get the last party
       const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
       
-      const KeyApiParty= parties &&`/api/partys/${partyId}/partyvenues/`
+      const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
       console.log(KeyApiParty);
       //create new partyslot
       const apiVenueId={
         venue_id: venueId
     };
-      console.log(apiVenueId);
       parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
 
     }
@@ -53,7 +53,7 @@ function CustomerProfile() {
 
   const bookSpot=()=>{
 
-    getPartys();
+    getPartys(cartVenues,"partyvenues");
 
 
     return null
