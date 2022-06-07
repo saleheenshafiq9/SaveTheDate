@@ -761,7 +761,7 @@ def recommendation(request):
         partyset=sorted(partyset, key=lambda x:x.distance)
         serializer=PartySerializer(partyset, many=True)
 
-        k=10
+        k=2
         returnableVenue=0
         returnableVenueCount=0
         returnableCatering=0
