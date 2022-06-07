@@ -688,6 +688,9 @@ def recommendation(request):
         elif serializer.validated_data['city']=='Sylhet':
             inputParty['locationLatitude']=Decimal(24.8949)
             inputParty['locationLongitude']=Decimal(91.8687)
+        elif serializer.validated_data['city']=='Rajshahi':
+            inputParty['locationLatitude']=Decimal(24.3745)
+            inputParty['locationLongitude']=Decimal(88.6042)
         elif serializer.validated_data['city']=='Dhaka':
             inputParty['locationLatitude']=Decimal(23.8103)
             inputParty['locationLongitude']=Decimal(90.4125)
@@ -700,7 +703,7 @@ def recommendation(request):
         elif serializer.validated_data['city']=='Dhaka':
             inputParty['locationLatitude']=Decimal(23.8103)
             inputParty['locationLongitude']=Decimal(90.4125)
-        elif serializer.validated_data['city']=='Dhaka':
+        else:
             inputParty['locationLatitude']=Decimal(23.8103)
             inputParty['locationLongitude']=Decimal(90.4125)
 
