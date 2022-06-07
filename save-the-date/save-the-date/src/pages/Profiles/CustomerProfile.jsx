@@ -2,6 +2,7 @@ import { UserContext } from "../../contexts/user-context";
 import { CartContext } from "../../contexts/cart-context";
 import React,{ useContext, useEffect, useState } from "react";
 import { Navigate, NavigationType,  } from "react-router";
+import {useNavigate} from "react-router-dom";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
 import ReqWithHead from "../../helper/ReqWithHead"
@@ -9,7 +10,8 @@ import CartItem from "../../Components/cart-item/cart-item";
 import PostReq from "../../helper/PostReq";
 
 function CustomerProfile() {
-  const party_key="/api/partys/"
+  const party_key="/api/partys/";
+  const navigate=useNavigate();
   
   const {currentUser,token} = useContext(UserContext);
 
@@ -41,11 +43,11 @@ function CustomerProfile() {
       }
         )
       
-      const KeyApiParty= party &&`/api/partys/${party.id}/${Vendortype}/`
+      const KeyApiParty= `/api/partys/${window.partyId}/${Vendortype}/`
       console.log(KeyApiParty);
       //create new partyslot
 
-      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
+      return PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).then(()=>navigate("/payment"))
     }  
   }
 

@@ -6,11 +6,17 @@ import useFetch from '../../hooks/useFetch';
 
 const Payment = () => {
   const {party,setParty}= useContext(CartContext);
-
+  const {token}=useContext(UserContext);
+  const head=token.access;
+  console.log(head);
+  const url=`/api/partys/${party?.id}`
+  
+  const {data,loading,error}=useFetch(tokenUrl,url,head)
+  
   
   return (
     <div>
-      {party.totalCost}
+      {data?.totalCost}
 
     </div>
   )
