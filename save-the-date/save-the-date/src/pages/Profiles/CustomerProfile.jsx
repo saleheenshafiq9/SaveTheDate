@@ -12,7 +12,7 @@ function CustomerProfile() {
   const party_key="/api/partys/"
   
   const {currentUser,token} = useContext(UserContext);
-  const {cartDecorators,party,setParty} = useContext(CartContext);
+  const {cartDecorators} = useContext(CartContext);
   const {cartVenues} = useContext(CartContext);
   const {cartCaterers} = useContext(CartContext);
   const {cartPhotos} = useContext(CartContext);
@@ -33,11 +33,7 @@ function CustomerProfile() {
     
     if (created){
       //get the last party
-      const parties=await ReqWithHead(party_key,tokenHeader)
-      .then(res=>{
-        window.partyId=res[res.length-1].id;
-        setParty(res[res.length-1]);
-      })
+      const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
       
       const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
       console.log(KeyApiParty);
