@@ -694,9 +694,9 @@ def recommendation(request):
         elif serializer.validated_data['city']=='Khulna':
             inputParty['locationLatitude']=Decimal(22.8456)
             inputParty['locationLongitude']=Decimal(89.5403)
-        elif serializer.validated_data['city']=='Dhaka':
-            inputParty['locationLatitude']=Decimal(23.8103)
-            inputParty['locationLongitude']=Decimal(90.4125)
+        elif serializer.validated_data['city']=='Barisal':
+            inputParty['locationLatitude']=Decimal(22.7010)
+            inputParty['locationLongitude']=Decimal(90.3535)
         elif serializer.validated_data['city']=='Dhaka':
             inputParty['locationLatitude']=Decimal(23.8103)
             inputParty['locationLongitude']=Decimal(90.4125)
