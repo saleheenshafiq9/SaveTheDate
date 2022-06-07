@@ -6,12 +6,13 @@ import useFetch from '../../hooks/useFetch'
 const Payment = () => {
   const {token}=useContext(UserContext);
   const head=`JWT ${token.access}`
-  const url=`/api/partys/${partyId}/`
+  const url=`/api/partys/${window.partyId}/`
   const {data,loading,error}=useFetch(tokenUrl,url,head)
   console.log(data);
+  console.log(window.partyId); 
   return (
-    <div>
-      {data&& data.totalCost}
+    <div className='payment'>
+      <h2>{data&& data.totalCost}</h2>
     </div>
   )
 }
