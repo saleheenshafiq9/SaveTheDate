@@ -37,6 +37,7 @@ export const UserProvider = ({children}) => {
                 return resp
         })
         loading&& setLoading(false);
+        NavigateToProfile();
         
     },[token,navigate,loading])
 
@@ -58,10 +59,7 @@ export const UserProvider = ({children}) => {
         !loggedIn && token && updateToken()
     },[loggedIn])
 
-    useEffect(()=>{
-        currentUser &&  NavigateToProfile();
-
-    },[loggedIn])
+    
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     

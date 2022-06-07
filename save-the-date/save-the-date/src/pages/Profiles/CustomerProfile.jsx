@@ -22,9 +22,9 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
+
   const getPartys=async(cart_Items,Vendortype,apiVenueId)=>{
 
-    
     const partyData={"guestCount":cart_Items[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
     
@@ -44,14 +44,13 @@ function CustomerProfile() {
       const KeyApiParty= party &&`/api/partys/${party.id}/${Vendortype}/`
       console.log(KeyApiParty);
       //create new partyslot
-      
-      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
 
-    }
-    
+      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
+    }  
   }
 
   const bookSpot=()=>{
+
     const venueId=cartVenues[0]?.id;
     const apiVenueId={
       venue_id: venueId
@@ -61,8 +60,13 @@ function CustomerProfile() {
     return null
 
 
+
   }
 
+
+  // console.log(isDecorators);
+  // currentUser===null  && navigate('/');
+  
   return (
     (<div className="p-3">
       <div className="row">

@@ -6,10 +6,12 @@ import useFetch from '../../hooks/useFetch';
 
 const Payment = () => {
   const {party,setParty}= useContext(CartContext);
+
   
   return (
     <div>
       {party.totalCost}
+
     </div>
   )
 }
