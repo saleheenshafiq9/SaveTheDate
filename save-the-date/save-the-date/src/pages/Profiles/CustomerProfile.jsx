@@ -4,14 +4,14 @@ import React,{ useContext, useEffect, useState } from "react";
 import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
+import ReqWithHead from "../../helper/ReqWithHead"
 import CartItem from "../../Components/cart-item/cart-item";
-import CartDecorator from "../../Components/cart-item/cart-decorator";
-import CartVenue from "../../Components/cart-item/cart-venue";
-import CartCaterer from "../../Components/cart-item/cart-caterer";
-import CartPhoto from "../../Components/cart-item/cart-photo";  
+import PostReq from "../../helper/PostReq";
+
 function CustomerProfile() {
+  const party_key="/api/partys/"
   
-  const {currentUser} = useContext(UserContext);
+  const {currentUser,token} = useContext(UserContext);
   const {cartDecorators} = useContext(CartContext);
   const {cartVenues} = useContext(CartContext);
   const {cartCaterers} = useContext(CartContext);
@@ -24,6 +24,41 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
+  const getPartys=async(cartItems,Vendortype,apiVenueId)=>{
+
+    const partyData={"guestCount":cartItems[0]?.capacity};
+    const tokenHeader=`JWT ${token?.access}`;
+    
+
+    // adding a new party to parties 
+    const created=PostReq(party_key,partyData,tokenHeader).then(res=>console.log(res))
+    
+    if (created){
+      //get the last party
+      const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
+      
+      const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
+      console.log(KeyApiParty);
+      //create new partyslot
+      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
+
+    }
+    
+    
+  }
+
+  const bookSpot=()=>{
+    const venueId=cartItems[0]?.id;
+    getPartys(cartVenues,"partyvenues",{
+      venue_id: venueId
+  });
+
+
+    return null
+
+
+  }
+
   // console.log(isDecorators);
   // currentUser===null  && navigate('/');
   
@@ -73,9 +108,9 @@ function CustomerProfile() {
             <div className="card-body">
               <h5 className="card-title">Venue</h5>
               <p className="card-text">
-              {cartVenues.map(item => (
-          <CartVenue key={item.id} cartVenue={item} />
-          ))}
+                {cartVenues.map(item => (
+                <CartItem key={item.id} cartItem={item} />
+                ))}
               </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/venue' id="exploretext"><b style={{fontWeight:"500"}}>Explore Venues</b></Link></button>
             </div>
@@ -86,10 +121,11 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Caterer</h5>
-              <p className="card-text">
-                {cartCaterers.map(item => (
-          <CartCaterer key={item.id} cartCaterer={item} />
-          ))}</p>
+                  <p className="card-text">
+                    {cartCaterers.map(item => (
+                    <CartItem key={item.id} cartItem={item} />
+                    ))}
+                  </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/caterer' id="exploretext"><b style={{fontWeight:"500"}}>Explore Caterers</b></Link></button>
             </div>
           </div>
@@ -102,9 +138,9 @@ function CustomerProfile() {
             <div className="card-body">
               <h5 className="card-title">Decorator</h5>
               <p className="card-text">
-              {cartDecorators.map(item => (
-          <CartDecorator key={item.id} cartDecorator={item} />
-          ))}
+                {cartDecorators.map(item => (
+                <CartItem key={item.id} cartItem={item} />
+                ))}
               </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/decorator' id="exploretext"><b style={{fontWeight:"500"}}>Explore Decorators</b></Link></button>
             </div>
@@ -117,7 +153,7 @@ function CustomerProfile() {
               <h5 className="card-title">Photography</h5>
               <p className="card-text">
               {cartPhotos.map(item => (
-          <CartPhoto key={item.id} cartPhoto={item} />
+          <CartItem key={item.id} cartItem={item} />
           ))}
               </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/photography' id="exploretext"><b style={{fontWeight:"500"}}>Explore Photographers</b></Link></button>
@@ -127,27 +163,27 @@ function CustomerProfile() {
           </div>
           <div className="row">
             <div className="col text-center mt-3" id="starttext">
-              <button type="button" className="btn btn-success" disabled={disable}>Go to Checkout</button>
+              <button type="button" className="btn btn-success" onClick={bookSpot} disabled={disable}>Go to Checkout</button>
             </div>
           </div>
         </div>
       </div>
       <div className="row m-5">
-      <p>
-          <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
-          <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
+        <p>
+          <a className="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Past Bookings</a>
+          <button className="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Upcoming Appointments</button>
         </p>
-        <div class="row">
-          <div class="col">
-            <div class="collapse multi-collapse" id="multiCollapseExample1">
-              <div class="card card-body">
+        <div className="row">
+          <div className="col">
+            <div className="collapse multi-collapse" id="multiCollapseExample1">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="collapse multi-collapse" id="multiCollapseExample2">
-              <div class="card card-body">
+          <div className="col">
+            <div className="collapse multi-collapse" id="multiCollapseExample2">
+              <div className="card card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
               </div>
             </div>
