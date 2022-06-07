@@ -29,7 +29,6 @@ function CustomerProfile() {
     const venueId=cartItems[0]?.id;
     const partyData={"guestCount":cartItems[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
-    
 
     // adding a new party to parties 
     const created=PostReq(party_key,partyData,tokenHeader).then(res=>console.log(res))
@@ -55,7 +54,7 @@ function CustomerProfile() {
   }
 
   const bookSpot=()=>{
-    
+
     getPartys(cartVenues,"partyvenues");
 
     return null
