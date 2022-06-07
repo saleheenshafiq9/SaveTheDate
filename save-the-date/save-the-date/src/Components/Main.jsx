@@ -30,6 +30,7 @@ import PartyDate from "./Recommendation/PartyDate";
 import PartyLocate from "./Recommendation/PartyLocate";
 import Checkout from "./checkout/checkout";
 import Recommendation from "./Recommendation/Recommendation";
+import Payment from "../pages/Payment/Payment";
 
 
 const Main = (props) => {
@@ -55,7 +56,7 @@ const Main = (props) => {
           <Route path="/partylocate" element={<PartyLocate />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/recomm" element={<Recommendation />} />
-          
+          <Route path="/payment" element={<Payment />} />
 
           {/* Edit Profiles */}
           <Route path="/editvenue" 

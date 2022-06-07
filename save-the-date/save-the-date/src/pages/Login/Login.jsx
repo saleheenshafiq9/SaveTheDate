@@ -10,7 +10,8 @@ import axios from "axios";
 import { UserContext } from "../../contexts/user-context";
 import PostReq from "../../helper/PostReq";
 import ReqWithHead from "../../helper/ReqWithHead";
-const tokenurl="http://127.0.0.1:8000";
+import { tokenUrl} from "../../constants/constants";
+
 const login_key='/auth/jwt/create/';
 const refresh_key='/auth/jwt/refresh';
 const data_key='/auth/users/me';
@@ -45,7 +46,7 @@ const Login = () => {
     const passInput=e.target.password.value;
     
     const data={"username":nameInput,"password":passInput};
-    let token=await axios.post(tokenurl+login_key,data)
+    let token=await axios.post(tokenUrl+login_key,data)
     .then(res=>res.data).then(res=>
       {localStorage.setItem("stdBackend",JSON.stringify(res));
         setToken(res);

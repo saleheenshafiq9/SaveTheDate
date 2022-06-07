@@ -57,7 +57,7 @@ const PartyLocate = () => {
                     required >
                     <option id="option" value="Select City" className="text-secondary">Select City</option>
                     <option id="option" value="Dhaka">Dhaka</option>
-                    <option id="option" value="Chittagong">Chittagong</option>
+                    <option id="option" value="Chitagong">Chittagong</option>
                     <option id="option" value="Rajshahi">Rajshahi</option>
                     <option id="option" value="Khulna">Khulna</option>
                     <option id="option" value="Sylhet">Sylhet</option>
