@@ -7,19 +7,15 @@ import axios from "axios";
 import { tokenUrl} from "../../constants/constants";
 
 function Recommendation() {
-  const recomm_key='/api/recommendation/';
+  const recomm_key='/api/recommendation';
   const {type, city, area, budget, count} = useContext(CartContext);
+  console.log(city);
 
-  const handleSubmit= (e)=> {
-      e.preventDefault();
-      const budget= e.target.budget;
-      const guestCount= e.target.count;
-      const city= e.target.city;
-
+  const handleSubmit= ()=> {
       const data={
-        "budget":budget,
-        "guestCount":guestCount,
-        "city":city
+        "budget": budget,
+        "guestCount": count,
+        "city": city
       }
     const recommData= axios.post(tokenUrl+recomm_key,data,{
       headers:{

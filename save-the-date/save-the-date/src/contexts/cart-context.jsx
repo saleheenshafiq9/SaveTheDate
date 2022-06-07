@@ -92,7 +92,7 @@ export const CartsProvider = ({children}) => {
     const [city, setCity] = useState("");
     const [area, setArea] = useState("");
     const [count, setCount] = useState(0);
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState(0.00);
 
     const addType = (newType) => {
         setType(newType);

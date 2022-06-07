@@ -87,6 +87,7 @@ const PartyLocate = () => {
                     className="form-control w-50 mt-3"
                     name="budget"
                     value={budget}
+                    step="any"
                     onChange={handleChangeBudget}
                     required >
                 </input>
