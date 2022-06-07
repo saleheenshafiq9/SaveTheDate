@@ -5,10 +5,11 @@ import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
 import CartItem from "../../Components/cart-item/cart-item";
-
+import PostReq from "../../helper/PostReq";
 function CustomerProfile() {
+  const party_key="/api/partys/"
   
-  const {currentUser} = useContext(UserContext);
+  const {currentUser,token} = useContext(UserContext);
   const {cartDecorators} = useContext(CartContext);
   const {cartVenues} = useContext(CartContext);
   const {cartCaterers} = useContext(CartContext);
@@ -21,9 +22,17 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
+  const getPartys=()=>{
+    const partyData={"Guestcount":cartVenues[0]?.capacity};
+    // console.log();
+    const tokenHeader=`JWT ${token?.access}`;
+    console.log(partyData,tokenHeader);
+    tokenHeader&& partyData.Guestcount && PostReq(party_key,partyData,tokenHeader)
+  }
+
   const bookSpot=()=>{
 
-    console.log("heelo");
+    getPartys();
 
 
     return null
