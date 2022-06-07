@@ -1,11 +1,11 @@
 import React from "react";
+import { MdFastfood, MdLocationPin } from "react-icons/md";
 import "./Caterer.css";
 
 const CatererItem = (props) => {
-  console.log(props.caterer);
   return (
     <div>
-      <div className="card w-75">
+      <div className="card w-75" id="cardStyle">
         <img
           className="card-img-top"
           src={props.caterer.images[0]?.image}
@@ -21,11 +21,11 @@ const CatererItem = (props) => {
           <span class="badge badge-warning text-dark">Regular</span>
         </div>
         <div className="card-footer">
-          <b>Food Menu: </b>
-          {props.caterer.menuItem}
+          <MdFastfood className="mr-2" />
+          Traditional, Chinese, Buffet
           <br />
           <br />
-          <b>Location: </b>
+          <MdLocationPin className="mr-2" />
           {props.caterer.location}
         </div>
       </div>
