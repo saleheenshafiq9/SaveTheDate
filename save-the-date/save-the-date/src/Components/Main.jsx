@@ -28,6 +28,7 @@ import PhotographyShow from "./Services/Photography/PhotographyShow";
 import PartyType from "./Recommendation/PartyType";
 import PartyDate from "./Recommendation/PartyDate";
 import PartyLocate from "./Recommendation/PartyLocate";
+import Checkout from "./checkout/checkout";
 
 
 const Main = (props) => {
@@ -51,6 +52,7 @@ const Main = (props) => {
           <Route path="/partytype" element={<PartyType />} />
           <Route path="/partydate" element={<PartyDate />} />
           <Route path="/partylocate" element={<PartyLocate />} />
+          <Route path="/checkout" element={<Checkout />} />
           
 
           {/* Edit Profiles */}
