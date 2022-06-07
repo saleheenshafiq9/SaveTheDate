@@ -1,10 +1,39 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Recommendation.css';
 import {MdOutlineDoneOutline} from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../../contexts/cart-context';
 
 const PartyType = () => {
     const [selected, setSelected] = useState(0);
+    const {addType} = useContext(CartContext);
+
+    const selectType = () => {
+        if(selected===1) {
+            addType("Wedding");
+        }
+
+        else if(selected===2) {
+            addType("Birthday Party");
+        }
+
+        else if(selected===3) {
+            addType("Success Party");
+        }
+
+        else if(selected===4) {
+            addType("Gaaye Holud");
+        }
+
+        else if(selected===5) {
+            addType("Workshop");
+        }
+
+        else if(selected==6) {
+            addType("Others");
+        }
+    }
+
   return (
     <div>
       <h2 className='tagline text-center p-5 m-5'>Let's get started! What type of party are you going to plan?</h2>
@@ -67,7 +96,7 @@ const PartyType = () => {
         <div className='text-center'>
         <Link to="/partydate"><button className='btn btn-lg' id='btnParty'><b style={{
             fontWeight: "500"
-        }}>Continue</b></button></Link>
+        }} onClick={selectType}>Continue</b></button></Link>
         </div>
     </div>
   )

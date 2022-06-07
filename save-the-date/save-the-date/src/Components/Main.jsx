@@ -29,6 +29,7 @@ import PartyType from "./Recommendation/PartyType";
 import PartyDate from "./Recommendation/PartyDate";
 import PartyLocate from "./Recommendation/PartyLocate";
 import Checkout from "./checkout/checkout";
+import Recommendation from "./Recommendation/Recommendation";
 
 
 const Main = (props) => {
@@ -53,6 +54,7 @@ const Main = (props) => {
           <Route path="/partydate" element={<PartyDate />} />
           <Route path="/partylocate" element={<PartyLocate />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/recomm" element={<Recommendation />} />
           
 
           {/* Edit Profiles */}
