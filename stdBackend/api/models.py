@@ -33,7 +33,7 @@ class Venue(ServiceProvider):
     price=models.DecimalField(
         max_digits=11,
         decimal_places=2,
-        null=True
+        default=0
     )
 
     
@@ -50,7 +50,7 @@ class Decorator(ServiceProvider):
     price=models.DecimalField(
         max_digits=11,
         decimal_places=2,
-        null=True
+        default=0
     )
 
 class ContentMaker(ServiceProvider):
@@ -60,7 +60,7 @@ class ContentMaker(ServiceProvider):
     price=models.DecimalField(
         max_digits=11,
         decimal_places=2,
-        null=True
+        default=0
     )
 
 class Entertainer(ServiceProvider):
