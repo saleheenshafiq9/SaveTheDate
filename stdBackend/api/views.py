@@ -707,8 +707,6 @@ def recommendation(request):
             inputParty['locationLatitude']=Decimal(23.8103)
             inputParty['locationLongitude']=Decimal(90.4125)
 
-        inputParty['locationLatitude']=serializer.validated_data['locationLatitude']
-        inputParty['locationLongitude']=serializer.validated_data['locationLongitude']
         inputParty['guestCount']=serializer.validated_data['guestCount']
 
         partyset=Party.objects.all().prefetch_related('partyvenueslot')
