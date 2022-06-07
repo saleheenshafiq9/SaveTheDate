@@ -23,6 +23,7 @@ function Recommendation() {
         'Content-Type':'application/json;charset=UTF-8'
       }
     }).then(s=>s.data);
+    console.log(recommData);
   }
 
   return (
