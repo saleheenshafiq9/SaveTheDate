@@ -10,8 +10,9 @@ import axios from "axios";
 import { UserContext } from "../../contexts/user-context";
 import PostReq from "../../helper/PostReq";
 import ReqWithHead from "../../helper/ReqWithHead";
-import { tokenUrl,login_key,refresh_key,login_key } from "../../constants/constants";
+import { tokenUrl} from "../../constants/constants";
 
+const login_key='/auth/jwt/create/';
 const refresh_key='/auth/jwt/refresh';
 const data_key='/auth/users/me';
 
