@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts/user-context';
 import useFetch from '../../hooks/useFetch';
 
 const Payment = () => {
-  const {party,setParty}= useContext(CartContext);
+  const {party,setParty,cartItems}= useContext(CartContext);
   const {token}=useContext(UserContext);
   const head=token.access;
   console.log(head);
@@ -16,8 +16,7 @@ const Payment = () => {
   
   return (
     <div>
-      {data?.totalCost}
-
+      {cartItems}
     </div>
   )
 }

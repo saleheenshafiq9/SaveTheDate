@@ -47,7 +47,7 @@ const Header = () => {
             <Link to="/blogs" id="NavLink">
               Blogs
             </Link>
-            <Link to="/providerProfile" id="NavLink">
+            <Link to="/contact" id="NavLink">
               Contact Us
             </Link>
             {currentUser ? (
