@@ -11,7 +11,7 @@ __pycache__/
 /venv
 # production
 /build
-/venv
+venv/
 # misc
 .DS_Store
 .env.local

@@ -7,6 +7,7 @@ import { IoPricetags } from "react-icons/io5";
 import ReactCalender from "./Calender";
 import ScheduleAppoint from "./Schedule";
 import { Link } from "react-router-dom";
+import Map from "../../Components/map/Map";
 import Gallery from "./Gallery";
 import useFetch from "../../hooks/useFetch"
 import {tokenUrl} from "../../constants/constants"
@@ -27,7 +28,7 @@ function VenueProfile() {
             </div>
             <br /><br />
             <div className="row">
-                <div className="col-6">
+                <div className="col-2">
                     <h2>{venueData?venueData.title:"Title"}</h2>
                     <br />
                     <p className="text-secondary">
@@ -36,9 +37,12 @@ function VenueProfile() {
                     <FaUserFriends /> {venueData?venueData.capacity: "Capacity No." } People
                     <br />
                     <IoPricetags /> {venueData?venueData.price: "Price"} BDT </p>
+                    
                 </div>
-                <div className="col-3"></div>
-                <div className="col-3">
+                <div className="col-6">
+                <Map location={venueData?.location}/>
+                </div>
+                <div className="col-4">
                     <button className="btn btn-dark">
                         <Link to='/editvenue' id="plantext">Edit Profile<MdModeEditOutline style={{
                     marginLeft: "7px"
@@ -57,6 +61,7 @@ function VenueProfile() {
                     <Gallery /> 
             </div>
             <br /><br />
+            
 
             <div className="row p-5">
                 <div className="col-6 text-secondary">

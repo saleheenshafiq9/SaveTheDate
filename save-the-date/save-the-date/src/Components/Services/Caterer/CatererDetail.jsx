@@ -30,20 +30,22 @@ const CatererDetail = (props) => {
   }
 
   return (
+
     <div className="bg-light">
       <Card style={{ marginTop: "10px" }} className="w-100">
       <div className="row">
         <div className="col-6">
-        <CardImg top src={props.caterer.images[0].image} alt={props.caterer.title} height="400px"/>
+        <CardImg top src={props.caterer.images[0]?.image} alt={props.caterer.title} height="400px"/>
         </div>
         <div className="col-6">
-        <CardImg top src={props.caterer.images[1].image} alt={props.caterer.title} height="400px"/>
+        <CardImg top src={props.caterer.images[1]?.image} alt={props.caterer.title} height="400px"/>
         </div>
         </div>
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
             <h4>
               {props.caterer.title}
+
               <span className="badge badge-warning text-dark">
                 Regular
               </span>

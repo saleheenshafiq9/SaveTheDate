@@ -25,7 +25,6 @@ function CustomerProfile() {
     }
   })
   const getPartys=async(cartItems,Vendortype,apiVenueId)=>{
-
     const partyData={"guestCount":cartItems[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
     
@@ -41,10 +40,7 @@ function CustomerProfile() {
       console.log(KeyApiParty);
       //create new partyslot
       parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
-
-    }
-    
-    
+    }  
   }
 
   const bookSpot=()=>{
@@ -52,12 +48,9 @@ function CustomerProfile() {
     getPartys(cartVenues,"partyvenues",{
       venue_id: venueId
   });
-
-
-    return null
-
-
+  return null
   }
+
 
   // console.log(isDecorators);
   // currentUser===null  && navigate('/');

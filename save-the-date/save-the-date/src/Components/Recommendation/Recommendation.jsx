@@ -7,7 +7,7 @@ import axios from "axios";
 import { tokenUrl} from "../../constants/constants";
 
 function Recommendation() {
-  const [recom, setRecom] = useState(null);
+  const [recom,setRecom]=useState(null)
   const recomm_key='/api/recommendation';
   const {type, city, area, budget, count} = useContext(CartContext);
   console.log(city);
@@ -18,12 +18,8 @@ function Recommendation() {
         "guestCount": count,
         "city": city
       }
-    const recommData= axios.post(tokenUrl+recomm_key,data,{
-      headers:{
-        Accept:"application/json;",
-        'Content-Type':'application/json;charset=UTF-8'
-      }
-    }).then(s=>s.data);
+
+    const recommData= axios.post(tokenUrl+recomm_key,data).then(s=>s.data);
     recommData.then(s=>setRecom(s));
   }
 

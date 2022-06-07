@@ -31,7 +31,7 @@ export const UserProvider = ({children}) => {
         return resp});
         const access_tok = `JWT ${token?.access}`;
         console.log(token);   
-        const fetchedData=await ReqWithHead(tokenUrl,data_key,access_tok)
+        const fetchedData=await ReqWithHead(data_key,access_tok)
         .then(resp=>{
                 setCurrentUser(resp);
                 return resp

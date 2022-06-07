@@ -25,10 +25,13 @@ const Header = () => {
           height: "100px",
         }}
       >
-        <NavbarBrand href="/" className="mr-auto ml-md-5 mb-4 Brand">
-          <img src={Logo} alt="Logo" width="40px" />
-          SaveTheDate
-        </NavbarBrand>
+        <Link to="/" id="NavLink"  className="mr-auto ml-md-5 mb-5 Brand">
+          
+            <img src={Logo} alt="Logo" width="40px" />
+              SaveTheDate
+          
+        </Link>
+        
         <Nav className="mr-md-5 px-5">
           <NavItem
             style={{
