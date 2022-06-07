@@ -18,8 +18,11 @@ function Recommendation() {
         "guestCount": count,
         "city": city
       }
+
     const recommData= axios.post(tokenUrl+recomm_key,data).then(s=>s.data);
-    recommData.then(s=>setRecom(s));
+    recommData.then(s=>{console.log(s);setRecom(s)}
+    );
+    console.log(recom);
   }
 
   return (
@@ -80,6 +83,7 @@ function Recommendation() {
     <div>
         <button className='btn btn-dark' onClick={handleSubmit}>Generate Plan</button>
       </div>
+      <p>{recom?.venue[0].location}</p>
     </div>
     </div>
   )
