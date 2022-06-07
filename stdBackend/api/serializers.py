@@ -229,7 +229,7 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
         except FoodCartItem.DoesNotExist:
             self.instance = FoodCartItem.objects.create(
                 party_id=party_id,
-                catering_id=catering_id, **self.validated_data)
+                **self.validated_data)
 
         return self.instance
 
