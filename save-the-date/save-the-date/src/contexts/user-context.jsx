@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import ReqWithHead from "../helper/ReqWithHead";
 import getToken from "../helper/getToken";
 import setltoken from "../helper/setToken";
-import {refresh_key,data_key,tokenUrl} from "../constants/constants.js"
+import { refresh_key,data_key } from "../constants/constants";
 
 export const UserContext = createContext(
     null)
@@ -23,7 +23,7 @@ export const UserProvider = ({children}) => {
         console.log(getToken("stdBackend"));
         let stToken=getToken('stdBackend');
         stToken&& setToken(getToken("stdBackend"));
-        axios.post(tokenUrl+refresh_key,{'refresh':token?.refresh})
+        axios.post(tokenurl+refresh_key,{'refresh':token?.refresh})
         .then(res=>res.data)
         .then((resp)=>{
             setToken(tok=>({...tok,'access':resp.access}))
@@ -31,37 +31,32 @@ export const UserProvider = ({children}) => {
         return resp});
         const access_tok = `JWT ${token?.access}`;
         console.log(token);   
-        const fetchedData=await ReqWithHead(data_key,access_tok)
+        const fetchedData=await ReqWithHead(tokenurl,data_key,access_tok)
         .then(resp=>{
                 setCurrentUser(resp);
                 return resp
         })
         loading&& setLoading(false);
+        currentUser && setLoggedIn(true)
         
     },[token,navigate,loading])
 
-    const NavigateToProfile=()=>{
-        currentUser?.userType=="customer" && navigate('../customerProfile')
-        currentUser?.userType=="venue" &&  navigate('../venueProfile')
-        currentUser?.userType=="catering" &&  navigate('../catererProfile')
-        currentUser?.userType=="contentmaker" &&  navigate('../photographyProfile')
-        currentUser?.userType=="decorator" &&  navigate('../decoratorProfile')
-
-    }
     
+    //
+    // 
     useEffect(()=>{
        currentUser && setLoggedIn(true)
-       !currentUser && setLoggedIn(false)
     },[currentUser])
 
     useEffect(()=>{
-        !loggedIn && token && updateToken()
-    },[loggedIn])
-
+        !loggedIn && updateToken()
+    },[loggedIn,updateToken])
+    
     useEffect(()=>{
-        currentUser &&  NavigateToProfile();
-
-    },[loggedIn])
+        currentUser?.userType=="Customer" && navigate('../customerProfile')
+        currentUser?.userType=="Provider" &&  navigate('../providerProfile')
+        
+    },[loading,currentUser])
 
     const value = { currentUser,token,setCurrentUser,updateToken,setToken,setLoading};
     

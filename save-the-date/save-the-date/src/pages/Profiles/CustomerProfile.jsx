@@ -12,7 +12,7 @@ function CustomerProfile() {
   const party_key="/api/partys/"
   
   const {currentUser,token} = useContext(UserContext);
-  const {cartDecorators} = useContext(CartContext);
+  const {cartDecorators,party,setParty} = useContext(CartContext);
   const {cartVenues} = useContext(CartContext);
   const {cartCaterers} = useContext(CartContext);
   const {cartPhotos} = useContext(CartContext);
@@ -27,14 +27,17 @@ function CustomerProfile() {
   const getPartys=async(cartItems,Vendortype,apiVenueId)=>{
     const partyData={"guestCount":cartItems[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
-    
 
     // adding a new party to parties 
     const created=PostReq(party_key,partyData,tokenHeader).then(res=>console.log(res))
     
     if (created){
       //get the last party
-      const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
+      const parties=await ReqWithHead(party_key,tokenHeader)
+      .then(res=>{
+        window.partyId=res[res.length-1].id;
+        setParty(res[res.length-1]);
+      })
       
       const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
       console.log(KeyApiParty);
