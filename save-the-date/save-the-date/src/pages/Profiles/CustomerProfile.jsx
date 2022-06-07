@@ -4,8 +4,10 @@ import React,{ useContext, useEffect, useState } from "react";
 import { Navigate,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
+import ReqWithHead from "../../helper/ReqWithHead"
 import CartItem from "../../Components/cart-item/cart-item";
 import PostReq from "../../helper/PostReq";
+
 function CustomerProfile() {
   const party_key="/api/partys/"
   
@@ -22,12 +24,28 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
-  const getPartys=()=>{
-    const partyData={"Guestcount":cartVenues[0]?.capacity};
-    // console.log();
+  const getPartys=async()=>{
+    const venueId=cartVenues[0]?.id;
+    const partyData={"guestCount":cartVenues[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
-    console.log(partyData,tokenHeader);
-    tokenHeader&& partyData.Guestcount && PostReq(party_key,partyData,tokenHeader)
+    
+
+    // adding a new party to parties 
+    const created=PostReq(party_key,partyData,tokenHeader).then(res=>console.log(res))
+    
+    if (created){
+      //get the last party
+      const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
+      
+      const KeyApiParty= parties &&`/api/partys/${partyId}/partyvenues`
+      console.log(KeyApiParty);
+      //create new partyslot
+      let apiVenueId={"venue_id":venueId}
+      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res))
+
+    }
+    
+    
   }
 
   const bookSpot=()=>{
@@ -89,9 +107,9 @@ function CustomerProfile() {
             <div className="card-body">
               <h5 className="card-title">Venue</h5>
               <p className="card-text">
-              {cartVenues.map(item => (
-          <CartItem key={item.id} cartItem={item} />
-          ))}
+                {cartVenues.map(item => (
+                <CartItem key={item.id} cartItem={item} />
+                ))}
               </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/venue' id="exploretext"><b style={{fontWeight:"500"}}>Explore Venues</b></Link></button>
             </div>
@@ -102,10 +120,11 @@ function CustomerProfile() {
         <div className="card text-center" id="booking-card">
             <div className="card-body">
               <h5 className="card-title">Caterer</h5>
-              <p className="card-text">
-                {cartCaterers.map(item => (
-          <CartItem key={item.id} cartItem={item} />
-          ))}</p>
+                  <p className="card-text">
+                    {cartCaterers.map(item => (
+                    <CartItem key={item.id} cartItem={item} />
+                    ))}
+                  </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/caterer' id="exploretext"><b style={{fontWeight:"500"}}>Explore Caterers</b></Link></button>
             </div>
           </div>
@@ -118,9 +137,9 @@ function CustomerProfile() {
             <div className="card-body">
               <h5 className="card-title">Decorator</h5>
               <p className="card-text">
-              {cartDecorators.map(item => (
-          <CartItem key={item.id} cartItem={item} />
-          ))}
+                {cartDecorators.map(item => (
+                <CartItem key={item.id} cartItem={item} />
+                ))}
               </p>
               <button className="btn" style={{backgroundColor:"#FDCA40"}}><Link to='/decorator' id="exploretext"><b style={{fontWeight:"500"}}>Explore Decorators</b></Link></button>
             </div>
