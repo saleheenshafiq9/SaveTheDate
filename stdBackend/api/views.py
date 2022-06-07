@@ -761,7 +761,7 @@ def recommendation(request):
         partyset=sorted(partyset, key=lambda x:x.distance)
         serializer=PartySerializer(partyset, many=True)
 
-        k=1
+        k=5
         returnableVenue=0
         returnableVenueCount=0
         returnableCatering=0
@@ -852,7 +852,11 @@ def dummyparty(request):
         customer=Customer.objects.get(
             user_id=request.user.id
         )
-        party=Party.objects.create(guestCount=serializer.validated_data['guestCount'], customer=customer)
+        party=Party.objects.create(
+            guestCount=serializer.validated_data['guestCount'], customer=customer,
+            locationLatitude=Decimal(24.37),
+            locationLongitude=Decimal(88.6042)
+            )
         PartyVenue.objects.create(party_id=party.id, venue_id=serializer.validated_data['venue_id'])
         FoodCartItem.objects.create(
             party_id=party.id,
