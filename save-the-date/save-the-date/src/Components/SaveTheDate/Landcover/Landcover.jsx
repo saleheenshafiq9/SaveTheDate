@@ -69,7 +69,7 @@ const Landcover = (props) => {
               <h3 className="tagline">MAKE EACH OCCASION A FESTIVAL</h3>
               <br />
               <br />
-              <Link to="/login">
+              <Link to="/partytype">
                 <button type="button" className="btn btn-dark btn-lg">
                   Start Planning
                 </button>

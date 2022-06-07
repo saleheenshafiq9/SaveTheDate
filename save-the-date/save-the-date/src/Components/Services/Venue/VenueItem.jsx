@@ -5,7 +5,7 @@ const VenueItem = (props) => {
   //console.log(props);
   return (
     <div>
-      <div className="card w-75">
+      <div className="card w-75" id="cardStyle">
         <img
           className="card-img-top"
           src={props.venue.images[0]?.image}

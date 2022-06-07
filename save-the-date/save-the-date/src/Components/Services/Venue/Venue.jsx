@@ -46,8 +46,8 @@ class Venue extends Component {
     return (
       <div className="container">
         <CardColumns>{finalvenue}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} >
-          <ModalBody>{venueDetail}</ModalBody>
+        <Modal isOpen={this.state.modalOpen} className="modal-xl">
+          <ModalBody className="modal-xl">{venueDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose
               className="close"
