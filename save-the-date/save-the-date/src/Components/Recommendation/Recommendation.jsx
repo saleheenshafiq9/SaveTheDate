@@ -5,6 +5,7 @@ import {RiMoneyDollarCircleFill} from 'react-icons/ri';
 import {GiPartyHat} from 'react-icons/gi';
 import axios from "axios";
 import { tokenUrl} from "../../constants/constants";
+import { Link } from 'react-router-dom';
 
 function Recommendation() {
   const [recom,setRecom]=useState(null)
@@ -78,15 +79,34 @@ function Recommendation() {
       </div>
     </div>
     <div className="col-6 text-center" style={{
-      marginTop: "180px"
+      marginTop: "80px"
     }}>
     <div>
         <button className='btn btn-dark' onClick={handleSubmit}>Generate Plan</button>
     </div>
-    <div className="box red">
-      <h4>{recom?.venue[0].title}</h4>
+    <div className="row my-5 ml-3">
+    <div className="col-5 box cyan ml-4"><Link to="/venue" id='fontfix'>
+      <h6>{recom?.venue[0].title}</h6>
       <p>{recom?.venue[0].location}</p>
       <p>{recom?.venue[0].price}</p>
+      </Link></div>
+    <div className="col-5 box teal ml-4"><Link to="/caterer" id='fontfix'>
+      <h6>{recom?.catering[0].title}</h6>
+      <p>{recom?.catering[0].location}</p>
+      <p>{recom?.catering[0].price}</p>
+      </Link></div>
+    </div>
+    <div className="row my-5 ml-3">
+    <div className="col-5 box cyan ml-4"><Link to="/decorator" id='fontfix'>
+      <h6>{recom?.decorator[0].title}</h6>
+      <p>{recom?.decorator[0].location}</p>
+      <p>{recom?.decorator[0].price}</p>
+      </Link></div>
+    <div className="col-5 box teal ml-4"><Link to="/photography" id='fontfix'>
+      <h6>{recom?.contentmaker[0].title}</h6>
+      <p>{recom?.contentmaker[0].location}</p>
+      <p>{recom?.contentmaker[0].price}</p>
+      </Link></div>
     </div>
     </div>
     </div>

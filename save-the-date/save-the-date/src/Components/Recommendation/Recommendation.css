@@ -63,3 +63,8 @@ box p {
 #option:hover {
     background-color: #FDCA40!important;
 }
+
+#fontfix {
+    text-decoration: none;
+    color: black;
+}
