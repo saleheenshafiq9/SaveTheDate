@@ -4,7 +4,7 @@ from pyexpat import model
 from statistics import mode
 from wsgiref import validate
 from rest_framework import serializers
-from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMakerSlot, PartyThemeSlot, PartyVenueSlot, Payment, Progress, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
+from .models import Appointment, ContentMakerSlot, FoodCartItem, FoodItem, Party, PartyContentMaker, PartyContentMakerSlot, PartyDecorator, PartyThemeSlot, PartyVenue, PartyVenueSlot, Payment, Progress, Review, Catering, ContentMaker, Customer, Decorator, Entertainer, ServiceProvider, Theme, ThemeImage, Venue, ProviderImage, FoodImage, VenueSlot
 
 class CustomerSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
@@ -103,7 +103,7 @@ class DecoratorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Decorator
         fields=['id', 'user_id', 'title', 'description',
-        'images', 'themes', 'location']
+        'images', 'themes', 'location', 'price']
 
 
 
@@ -152,7 +152,7 @@ class CreateReviewSerializer(serializers.ModelSerializer):
 class CreatePartySerializer(serializers.ModelSerializer):
     class Meta:
         model=Party
-        fields=['id']
+        fields=['id', 'guestCount']
 
     def save(self):
         customer=Customer.objects.get(
@@ -169,21 +169,44 @@ class AddPartyCateringSerializer(serializers.ModelSerializer):
         fields=['id']
 
 
+class UpdateFoodCartItemSerializer(serializers.ModelSerializer):
+    fooditem_id=serializers.IntegerField()
+    catering_id=serializers.IntegerField()
+    class Meta:
+        model=FoodCartItem
+        fields=['id', 'quantity', 'fooditem_id', 'catering_id']
+
+    def validate_fooditem_id(self, value):
+        if not FoodItem.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No food item with the given ID was found.')
+        return value
+
+    def validate_catering_id(self, value):
+        if not Catering.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No catering with the given ID was found.')
+        return value
+
+
+
 class FoodCartItemSerializer(serializers.ModelSerializer):
     totalPrice = serializers.SerializerMethodField()
     fooditem=FoodItemSerializer(many=False, read_only=True)
+    catering=CateringSerializer(many=False, read_only=True)
 
     def get_totalPrice(self, cart_item: FoodCartItem):
         return cart_item.quantity * cart_item.fooditem.unitPrice
 
     class Meta:
         model=FoodCartItem
-        fields=['id', 'fooditem', 'quantity', 'totalPrice']
+        fields=['id', 'fooditem', 'quantity', 'totalPrice', 'catering']
 
 
 
 class AddFoodCartItemSerializer(serializers.ModelSerializer):
     fooditem_id=serializers.IntegerField()
+    catering_id=serializers.IntegerField()
 
     def validate_fooditem_id(self, value):
         if not FoodItem.objects.filter(pk=value).exists():
@@ -195,6 +218,7 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
         party_id = self.context['party_id']
         fooditem_id = self.validated_data['fooditem_id']
         quantity = self.validated_data['quantity']
+        catering_id=self.validated_data['catering_id']
 
         try:
             cart_item = FoodCartItem.objects.get(
@@ -204,14 +228,15 @@ class AddFoodCartItemSerializer(serializers.ModelSerializer):
             self.instance = cart_item
         except FoodCartItem.DoesNotExist:
             self.instance = FoodCartItem.objects.create(
-                party_id=party_id, **self.validated_data)
+                party_id=party_id,
+                catering_id=catering_id, **self.validated_data)
 
         return self.instance
 
 
     class Meta:
         model = FoodCartItem
-        fields = ['id', 'fooditem_id', 'quantity']
+        fields = ['id', 'fooditem_id', 'quantity', 'catering_id']
 
 
 class VenueSlotSerializer(serializers.ModelSerializer):
@@ -280,49 +305,46 @@ class PartyVenueSlotSerializer(serializers.ModelSerializer):
         return partyvenueslot.venueslot.price
 
 
-class UpdatePartyThemeSlotSerializer(serializers.ModelSerializer):
-    theme_id=serializers.IntegerField()
+class UpdatePartyDecoratorSerializer(serializers.ModelSerializer):
+    decorator_id=serializers.IntegerField()
     class Meta:
-        model=PartyThemeSlot
-        fields=['id', 'theme_id']
+        model=PartyDecorator
+        fields=['id', 'decorator_id']
 
-    def validate_theme_id(self, value):
-        if not Theme.objects.filter(pk=value).exists():
+    def validate_decorator_id(self, value):
+        if not Decorator.objects.filter(pk=value).exists():
             raise serializers.ValidationError(
-                'No theme with the given ID was found.')
+                'No decorator with the given ID was found.')
         return value
 
 
-class AddPartyThemeSlotSerializer(serializers.ModelSerializer):
-    theme_id=serializers.IntegerField()
+class AddPartyDecoratorSerializer(serializers.ModelSerializer):
+    decorator_id=serializers.IntegerField()
     class Meta:
-        model=PartyThemeSlot
-        fields=['id', 'theme_id']
+        model=PartyDecorator
+        fields=['id', 'decorator_id']
 
-    def validate_theme_id(self, value):
-        if not Theme.objects.filter(pk=value).exists():
+    def validate_decorator_id(self, value):
+        if not Decorator.objects.filter(pk=value).exists():
             raise serializers.ValidationError(
-                'No theme with the given ID was found.')
+                'No decorator with the given ID was found.')
         return value
 
     def save(self, **kwargs):
         party_id = self.context['party_id']
-        self.instance = PartyThemeSlot.objects.create(
+        self.instance = PartyDecorator.objects.create(
             party_id=party_id, **self.validated_data)
 
         return self.instance
 
 
-class PartyThemeSlotSerializer(serializers.ModelSerializer):
-    theme=ThemeSerializer(many=False, read_only=True)
-    price=serializers.SerializerMethodField()
+class PartyDecoratorSerializer(serializers.ModelSerializer):
+    decorator=DecoratorSerializer(many=False, read_only=True)
 
     class Meta:
-        model=PartyThemeSlot
-        fields=['id', 'theme', 'price']
+        model=PartyDecorator
+        fields=['id', 'decorator']
 
-    def get_price(self, partythemeslot):
-        return partythemeslot.theme.price
 
 
 class ContentMakerSlotSerializer(serializers.ModelSerializer):
@@ -348,58 +370,100 @@ class CreateContentMakerSlotSerializer(serializers.ModelSerializer):
             )
         return contentmakerslot
 
-class UpdatePartyContentMakerSlotSerializer(serializers.ModelSerializer):
-    contentmakerslot_id=serializers.IntegerField()
-    class Meta:
-        model=PartyVenueSlot
-        fields=['id', 'contentmakerslot_id']
 
-    def validate_contentmakerslot_id(self, value):
-        if not ContentMakerSlot.objects.filter(pk=value).exists():
+class UpdatePartyContentMakerSerializer(serializers.ModelSerializer):
+    contentmaker_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenue
+        fields=['id', 'contentmaker_id']
+
+    def validate_contentmaker_id(self, value):
+        if not ContentMaker.objects.filter(pk=value).exists():
             raise serializers.ValidationError(
-                'No contentmaker slot with the given ID was found.')
+                'No contentmaker  with the given ID was found.')
         return value
 
 
-class AddPartyContentMakerSlotSerializer(serializers.ModelSerializer):
-    contentmakerslot_id=serializers.IntegerField()
+class AddPartyContentMakerSerializer(serializers.ModelSerializer):
+    contentmaker_id=serializers.IntegerField()
     class Meta:
-        model=PartyContentMakerSlot
-        fields=['id', 'contentmakerslot_id']
+        model=PartyContentMaker
+        fields=['id', 'contentmaker_id']
 
-    def validate_contentmakerslot_id(self, value):
-        if not ContentMakerSlot.objects.filter(pk=value).exists():
+    def validate_contentmaker_id(self, value):
+        if not ContentMaker.objects.filter(pk=value).exists():
             raise serializers.ValidationError(
-                'No contentmaker slot with the given ID was found.')
+                'No contentmaker  with the given ID was found.')
         return value
 
     def save(self, **kwargs):
         party_id = self.context['party_id']
-        self.instance = PartyContentMakerSlot.objects.create(
+        self.instance = PartyContentMaker.objects.create(
             party_id=party_id, **self.validated_data)
 
         return self.instance
 
 
-class PartyContentMakerSlotSerializer(serializers.ModelSerializer):
-    contentmakekrslot=ContentMakerSlotSerializer(many=False, read_only=True)
+class PartyContentMakerSerializer(serializers.ModelSerializer):
+    contentmaker=ContentMakerSerializer(many=False, read_only=True)
     price=serializers.SerializerMethodField()
 
     class Meta:
-        model=PartyContentMakerSlot
-        fields=['id', 'contentmakekrslot', 'price']
+        model=PartyContentMaker
+        fields=['id', 'contentmaker', 'price']
 
-    def get_price(self, partycontentmakerslot):
-        return partycontentmakerslot.contentmakerslot.price
+    def get_price(self, partycontentmaker):
+        return partycontentmaker.contentmaker.price
+
+
+
+class UpdatePartyVenueSerializer(serializers.ModelSerializer):
+    venue_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenue
+        fields=['id', 'venue_id']
+
+    def validate_venue_id(self, value):
+        if not Venue.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No venue with the given ID was found.')
+        return value
+
+
+class AddPartyVenueSerializer(serializers.ModelSerializer):
+    venue_id=serializers.IntegerField()
+    class Meta:
+        model=PartyVenue
+        fields=['id', 'venue_id']
+
+    def validate_venue_id(self, value):
+        if not Venue.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No venue with the given ID was found.')
+        return value
+
+    def save(self, **kwargs):
+        party_id = self.context['party_id']
+        self.instance = PartyVenue.objects.create(
+            party_id=party_id, **self.validated_data)
+
+        return self.instance
+
+
+class PartyVenueSerializer(serializers.ModelSerializer):
+    venue=VenueSerializer(many=False, read_only=True)
+    class Meta:
+        model=PartyVenue
+        fields=['id', 'venue']
 
 
 
 class PartySerializer(serializers.ModelSerializer):
     foodcartitem=FoodCartItemSerializer(many=True, read_only=True)
-    partyvenueslot=PartyVenueSlotSerializer(many=True, read_only=True)
+    partyvenue=PartyVenueSerializer(many=True, read_only=True)
     totalCost=serializers.SerializerMethodField()
-    partythemeslot=PartyThemeSlotSerializer(many=True, read_only=True)
-    partycontentmakerslot=PartyContentMakerSlotSerializer(many=True, read_only=True)
+    partydecorator=PartyDecoratorSerializer(many=True, read_only=True)
+    partycontentmaker=PartyContentMakerSerializer(many=True, read_only=True)
     payedPrice=serializers.SerializerMethodField()
     pendingPrice=serializers.SerializerMethodField()
     status=serializers.SerializerMethodField()
@@ -407,7 +471,7 @@ class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model=Party
         fields=['id', 'totalCost', 'payedPrice', 'pendingPrice',
-        'status', 'foodcartitem', 'partyvenueslot', 'partythemeslot', 'partycontentmakerslot',
+        'status', 'foodcartitem', 'partyvenue', 'partydecorator', 'partycontentmaker',
         'guestCount', 'locationLatitude',
         'locationLongitude']
 
@@ -416,12 +480,12 @@ class PartySerializer(serializers.ModelSerializer):
 
 
     def get_totalCost(self, party):
-        totalCost=(sum([partyvenueslot.venueslot.price  for partyvenueslot in party.partyvenueslot.all()])
+        totalCost=(sum([partyvenue.venue.price  for partyvenue in party.partyvenue.all()])
         +sum([cartitem.fooditem.unitPrice*cartitem.quantity  for cartitem in party.foodcartitem.all()])
-        +sum([partythemeslot.theme.price  for partythemeslot in party.partythemeslot.all()]) 
-        +sum([partycontentmakerslot.contentmakerslot.price for partycontentmakerslot in party.partycontentmakerslot.all()])
+        +sum([partydecorator.decorator.price  for partydecorator in party.partydecorator.all()]) 
+        +sum([partycontentmaker.contentmaker.price for partycontentmaker in party.partycontentmaker.all()])
         )
-        print(sum([partycontentmakerslot.contentmakerslot.price for partycontentmakerslot in party.partycontentmakerslot.all()]))
+        
         Party.objects.filter(pk=party.id).update(totalCost=totalCost)
         return totalCost
 
@@ -429,7 +493,9 @@ class PartySerializer(serializers.ModelSerializer):
         return max(0,(self.get_totalCost(party)-self.get_payedPrice(party)))
 
     def get_status(self, party):
-        if(self.get_totalCost(party)<=self.get_payedPrice(party)):
+        if self.get_totalCost(party)==0:
+            return 'empty'
+        elif(self.get_totalCost(party)<=self.get_payedPrice(party)):
             return 'confirmed'
         return 'pending'
 
@@ -444,8 +510,7 @@ class UpdatePartySerializer(serializers.ModelSerializer):
 class RecommendationInputSerializer(serializers.Serializer):
     budget=serializers.DecimalField(max_digits=11, decimal_places=2)
     guestCount=serializers.IntegerField()
-    locationLatitude=serializers.DecimalField(max_digits=11, decimal_places=2)
-    locationLongitude=serializers.DecimalField(max_digits=11, decimal_places=2)
+    city=serializers.CharField(max_length=255)
 
 
 
@@ -549,3 +614,11 @@ class AddProgressSerializer(serializers.ModelSerializer):
             description=self.validated_data['description']
             )
         return progress
+
+
+
+
+
+
+
+

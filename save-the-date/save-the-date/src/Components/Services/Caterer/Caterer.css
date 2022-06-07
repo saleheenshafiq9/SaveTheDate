@@ -17,3 +17,33 @@
   .close:hover {
     color: #ce6c47;
   }
+
+  .food-container {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+  }
+    .food-header {
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid darkgrey;
+    }
+      .header-block {
+        text-transform: capitalize;
+        width: 23%;
+      }
+  
+    .total {
+      margin-top: 20px;
+      margin-left: auto;
+      font-size: 15px;
+    }
+    .remove-button {
+      cursor: pointer;
+    }
+
+    

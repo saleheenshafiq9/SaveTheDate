@@ -46,7 +46,7 @@ class Photography extends Component {
     return (
       <div className="container">
         <CardColumns>{finalphotography}</CardColumns>
-        <Modal isOpen={this.state.modalOpen}>
+        <Modal isOpen={this.state.modalOpen} className="modal-xl">
           <ModalBody>{photographyDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

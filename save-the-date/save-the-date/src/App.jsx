@@ -13,7 +13,6 @@ function App() {
       <UserProvider>
         <CartsProvider>
           <Main />
-          <Footer />
         </CartsProvider>
       </UserProvider>
       </BrowserRouter>

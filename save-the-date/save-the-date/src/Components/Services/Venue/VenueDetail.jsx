@@ -1,38 +1,18 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-
 import { CartContext } from "../../../contexts/cart-context";
 import { Card, CardImg, CardBody, CardTitle, CardText, Button } from "reactstrap";
-import Alert from "../../Alert";
+import {FaUserFriends} from "react-icons/fa";
+import {MdContactPage, MdLocationPin, MdSettingsPhone} from "react-icons/md";
+import {RiAuctionFill} from "react-icons/ri";
+import { IoPricetags } from "react-icons/io5";
 import ScheduleCard from "../ScheduleCard";
-import { UserContext } from "../../../contexts/user-context";
-
+import GalleryAll from "../../../pages/Profiles/GalleryAll";
 
 const VenueDetail = (props) => {
-  const {currentUser} = useContext(UserContext);
-
-  const [alert, setAlert] = useState(null);
-  const [cartText, setcartText] = useState("Add to Cart");
-  const [disable, setdisable] = useState(false);
   const [scheduleCard, setscheduleCard] = useState(false);
 
   const { addToCartItems } = useContext(CartContext);
   const { cartVenueAdded } = useContext(CartContext);
-
-  const handleCartClick = () => {
-    setcartText("Added");
-    setdisable(true);
-  }
-
-  const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type
-    })
-    setTimeout(() => {
-      setAlert(null);
-    }, 2000);
-  }
 
   const addServiceToCart = () => {
     addToCartItems(props.venue);
@@ -40,69 +20,65 @@ const VenueDetail = (props) => {
   }
 
   const cartAdded = () => {
-    showAlert("Successfully Added to Cart!","success");
     props.onVenueSelect;
-    handleCartClick();
     addServiceToCart();
-  }
-
-  const scheduleAdded = () => {
     setscheduleCard(!scheduleCard);
   }
 
+  const scheduleAdded = () => {
+  
+  }
+
   return (
-    <div>
-      <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.venue.images[0].image} alt={props.venue.title} />
+    <div className="bg-light">
+      <Card style={{ marginTop: "10px"}} className="w-100">
+        <div className="row">
+        <div className="col-6">
+        <CardImg top src={props.venue.images[0].image} alt={props.venue.title} height="400px"/>
+        </div>
+        <div className="col-6">
+        <CardImg top src={props.venue.images[1].image} alt={props.venue.title} height="400px"/>
+        </div>
+        </div>
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
-            <h5>
+            <h4>
               {props.venue.title}
               <span className="badge badge-warning text-dark">
                 Regular
               </span>
-            </h5>
+            </h4>
           </CardTitle>
-          <CardText>{props.venue.description}</CardText>
-          <button className="btn btn-dark" onClick={props.onVenueSelect}>
-            <a href="mailto:venue@std.com" id="mailto">Contact</a>
-          </button>
-          <button className="btn btn-success" onClick={cartAdded} disabled={disable}>
-            {cartText}
-          </button>
-          <button className="btn btn-danger" onClick={scheduleAdded}>
-            Set Appointment
-          </button>
-          <Alert alert={alert}/>
-          { disable? <button className="btn btn-dark text-center">
-          {currentUser ? (
-            <>
-              { currentUser.userType=='customer'&& <Link to="/customerProfile " className="text-light text-decoration-none">Go to Profile</Link>}
-              { currentUser.userType=='venue'&& <Link to="venueProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
-              { currentUser.userType=='catering'&& <Link to="cateringProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
-              { currentUser.userType=='decorator'&& <Link to="decoratorProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
-              { currentUser.userType=='contentmaker'&& <Link to="photographyProfile " className="text-light text-decoration-none">Go to Profile</Link> } 
-            </>
-             ) : (<Link to='/login' className="text-light text-decoration-none">Sign In
-             </Link>
-           )}
-
-            </button> : null }
+          <div className="card-footer">
+            <div className="row">
+              <div className="col-6">
+              <p className="text-secondary">
+                    <MdLocationPin /> {props.venue.location}
+                    <br/>
+                    <FaUserFriends /> {props.venue.capacity} People
+                    <br />
+                    <IoPricetags /> {props.venue.price} BDT </p>
+              </div>
+              <div className="col-6 justify-right">
+                <button className="btn btn-dark" onClick={props.onVenueSelect}>
+                 <a href="mailto:venue@std.com" id="mailto"><MdContactPage className="mr-2"/>Contact</a>
+                </button>
+                <button className="btn btn-success" onClick={cartAdded}>
+                 <RiAuctionFill className="mr-2"/>Book Now
+                </button>
+                <button className="btn btn-danger" onClick={scheduleAdded}>
+                  <MdSettingsPhone className="mr-2"/>Set Appointment
+                </button>
+              </div>
+            </div>
+          </div>
           { scheduleCard? <ScheduleCard /> : null }
           <br />
           <br />
-          <div className="card-footer">
-            <b>Price: </b>
-            {props.venue.price}
-            <br />
-            <br />
-            <b>Address: </b>
-            {props.venue.location}
-            <br />
-            <br />
-            <b>Capacity: </b>
-            {props.venue.capacity}
-          </div>
+          <h4 className="text-center my-4 mb-5">Gallery</h4>
+          <GalleryAll id={props.venue}/>
+          <h4 className="text-center mt-5">About Venue</h4>
+          <CardText className="p-4">{props.venue.description}</CardText>
         </CardBody>
       </Card>
     </div>

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -46,6 +47,11 @@ class Decorator(ServiceProvider):
     user=models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
+    price=models.DecimalField(
+        max_digits=11,
+        decimal_places=2,
+        null=True
+    )
 
 class ContentMaker(ServiceProvider):
     user=models.OneToOneField(
@@ -80,8 +86,8 @@ class Party(models.Model):
         default=0,
     )
     status=models.CharField(max_length=255, default="unconfirmed")
-    locationLatitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    locationLongitude=models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    locationLatitude=models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(23.8103))
+    locationLongitude=models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(90.4125))
     guestCount=models.IntegerField(default=0,validators=[MinValueValidator(0)])
 
     @property
@@ -174,6 +180,11 @@ class FoodCartItem(models.Model):
         on_delete=models.CASCADE, 
         )
 
+    catering=models.ForeignKey(
+        Catering, on_delete=models.CASCADE, null=True
+    )
+    
+
     quantity=models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1)]
     )
@@ -218,4 +229,19 @@ class Progress(models.Model):
     party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='progress')
     serviceProvider=models.ForeignKey(ServiceProvider, on_delete=models.CASCADE, related_name='progress')
     description=models.TextField(null=True)
+
+
+class PartyVenue(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partyvenue')
+    venue=models.ForeignKey(Venue, on_delete=models.CASCADE, related_name='partyvenue')
+
+class PartyDecorator(models.Model):
+    party=models.ForeignKey(Party, on_delete=models.CASCADE, related_name='partydecorator')
+    decorator=models.ForeignKey(Decorator, on_delete=models.CASCADE, related_name='partydecorator', null=True)
+
+
+class PartyContentMaker(models.Model):
+    party=models.ForeignKey(Party,on_delete=models.CASCADE, related_name='partycontentmaker')
+    contentmaker=models.ForeignKey(ContentMaker, on_delete=models.CASCADE, related_name='partycontentmaker')
+
 
