@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import DatePicker from "react-datepicker";
 import './Recommendation.css'
 import { Link } from 'react-router-dom';
+import { CartContext } from '../../contexts/cart-context';
 
 const PartyDate = () => {
     const currentDate = new Date();
+    const {addDate} = useContext(CartContext);
 
     const [myMonth, setMyMonth] = useState(currentDate);
     const [myYear, setMyYear] = useState(currentDate);
@@ -23,6 +25,10 @@ const PartyDate = () => {
       }
       return <span>{date.getDate()}</span>;
     };
+
+    const selectDate = () => {
+      addDate(myDay); 
+    }
 
   return (
     <div>
@@ -66,7 +72,7 @@ const PartyDate = () => {
     <div className='text-center'>
         <Link to="/partylocate"><button className='btn btn-lg' id='btnParty'><b style={{
             fontWeight: "500"
-        }}>Continue</b></button></Link>
+        }} onClick={selectDate}>Continue</b></button></Link>
     </div>
     </div>
   )
