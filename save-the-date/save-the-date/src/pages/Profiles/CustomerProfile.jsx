@@ -1,7 +1,7 @@
 import { UserContext } from "../../contexts/user-context";
 import { CartContext } from "../../contexts/cart-context";
 import React,{ useContext, useEffect, useState } from "react";
-import { Navigate,  } from "react-router";
+import { Navigate, NavigationType,  } from "react-router";
 import "./ProfileStyle.css";
 import { Link } from "react-router-dom";
 import ReqWithHead from "../../helper/ReqWithHead"
@@ -12,11 +12,9 @@ function CustomerProfile() {
   const party_key="/api/partys/"
   
   const {currentUser,token} = useContext(UserContext);
-  const {cartDecorators,party,setParty} = useContext(CartContext);
-  const {cartVenues} = useContext(CartContext);
-  const {cartCaterers} = useContext(CartContext);
-  const {cartPhotos} = useContext(CartContext);
-  const {cartItems} = useContext(CartContext);
+
+  const {cartPhotos,cartDecorators,cartVenues,cartCaterers,cartItems,party,setParty} = useContext(CartContext);
+  
   const [disable, setdisable] = useState(true);
 
   useEffect(() => {
@@ -24,11 +22,12 @@ function CustomerProfile() {
       setdisable(false);
     }
   })
-  const getPartys=async(cartItems,Vendortype,apiVenueId)=>{
+  const getPartys=async(cart_Items,Vendortype,apiVenueId)=>{
 
-    const venueId=cartItems[0]?.id;
-    const partyData={"guestCount":cartItems[0]?.capacity};
+    
+    const partyData={"guestCount":cart_Items[0]?.capacity};
     const tokenHeader=`JWT ${token?.access}`;
+    
 
     // adding a new party to parties 
     const created=PostReq(party_key,partyData,tokenHeader).then(res=>console.log(res))
@@ -39,9 +38,10 @@ function CustomerProfile() {
       .then(res=>{
         window.partyId=res[res.length-1].id;
         setParty(res[res.length-1]);
-      })
+      }
+        )
       
-      const KeyApiParty= parties &&`/api/partys/${partyId}/${Vendortype}/`
+      const KeyApiParty= party &&`/api/partys/${party.id}/${Vendortype}/`
       console.log(KeyApiParty);
       //create new partyslot
       
@@ -52,12 +52,14 @@ function CustomerProfile() {
   }
 
   const bookSpot=()=>{
+    const venueId=cartVenues[0]?.id;
     const apiVenueId={
       venue_id: venueId
   };
     getPartys(cartVenues,"partyvenues",apiVenueId);
-
+    NavigationType
     return null
+
 
   }
 
