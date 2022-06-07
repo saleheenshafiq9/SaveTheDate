@@ -10,7 +10,7 @@ function Recommendation() {
   const recomm_key='/api/recommendation/';
   const {type, city, area, budget, count} = useContext(CartContext);
 
-  const handleSubmit= async (e)=> {
+  const handleSubmit= (e)=> {
       e.preventDefault();
       const budget= e.target.budget;
       const guestCount= e.target.count;
@@ -21,7 +21,7 @@ function Recommendation() {
         "guestCount":guestCount,
         "city":city
       }
-    const recommData=await axios.post(tokenUrl+recomm_key,data,{
+    const recommData= axios.post(tokenUrl+recomm_key,data,{
       headers:{
         Accept:"application/json;",
         'Content-Type':'application/json;charset=UTF-8'
@@ -30,22 +30,64 @@ function Recommendation() {
   }
 
   return (
-    <div className='text-center m-5 p-5'>
-      <div className="box orange w-50">
-        <h5><GiPartyHat className='mr-5'/>Occasion: {type}</h5>
+    <div className="row">
+      <div className="col-6">
+      <div className='text-center mt-5 pt-5'>
+      <div className="box orange">
+        <div className="row my-5">
+          <div className="col-4">
+          <GiPartyHat className='mr-5'/>
+          </div>
+          <div className="col-4">
+          <h6>Occasion</h6>
+          </div>
+          <div className="col-4">
+            <p>{type}</p>
+          </div>
+        </div>
+        <div className="row my-5">
+          <div className="col-4">
+          <MdLocationCity className='mr-5'/>
+          </div>
+          <div className="col-4">
+          <h6>Location</h6>
+          </div>
+          <div className="col-4">
+            <p>{area}, {city}</p>
+          </div>
+        </div>
+        <div className="row my-5">
+          <div className="col-4">
+          <RiMoneyDollarCircleFill className='mr-5' />
+          </div>
+          <div className="col-4">
+          <h6>Guest Count</h6>
+          </div>
+          <div className="col-4">
+            <p>{count} People</p>
+          </div>
+        </div>
+        <div className="row my-5">
+          <div className="col-4">
+          <MdPeopleAlt className='mr-5' />
+          </div>
+          <div className="col-4">
+          <h6>Budget</h6>
+          </div>
+          <div className="col-4">
+            <p>{budget} BDT</p>
+          </div>
+        </div>
       </div>
-      <div className="box red w-50">
-        <h5><MdLocationCity className='mr-5'/>Location: {area}, {city}</h5>
       </div>
-      <div className="box blue w-50">
-        <h5><RiMoneyDollarCircleFill className='mr-5' />Approx. Budget: {budget} BDT</h5>
+    </div>
+    <div className="col-6 text-center" style={{
+      marginTop: "180px"
+    }}>
+    <div>
+        <button className='btn btn-dark' onClick={handleSubmit}>Generate Plan</button>
       </div>
-      <div className="box teal w-50">
-        <h5><MdPeopleAlt className='mr-5' />Approx. Guest Count: {count} People</h5>
-      </div>
-      <div>
-        <button className='btn' onClick={handleSubmit}>Generate Plan</button>
-      </div>
+    </div>
     </div>
   )
 }
