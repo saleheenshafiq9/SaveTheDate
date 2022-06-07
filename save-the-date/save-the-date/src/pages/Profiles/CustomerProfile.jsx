@@ -37,11 +37,14 @@ function CustomerProfile() {
       //get the last party
       const parties=await ReqWithHead(party_key,tokenHeader).then(res=>window.partyId=res[res.length-1].id)
       
-      const KeyApiParty= parties &&`/api/partys/${partyId}/partyvenues`
+      const KeyApiParty= parties &&`/api/partys/${partyId}/partyvenues/`
       console.log(KeyApiParty);
       //create new partyslot
-      let apiVenueId={"venue_id":venueId}
-      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res))
+      const apiVenueId={
+        venue_id: venueId
+    };
+      console.log(apiVenueId);
+      parties && PostReq(KeyApiParty,apiVenueId,tokenHeader).then(res=>console.log(res)).catch(e=>console.log(e.message))
 
     }
     
