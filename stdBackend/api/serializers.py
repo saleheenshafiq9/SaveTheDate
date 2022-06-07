@@ -510,8 +510,6 @@ class UpdatePartySerializer(serializers.ModelSerializer):
 class RecommendationInputSerializer(serializers.Serializer):
     budget=serializers.DecimalField(max_digits=11, decimal_places=2)
     guestCount=serializers.IntegerField()
-    locationLatitude=serializers.DecimalField(max_digits=11, decimal_places=2)
-    locationLongitude=serializers.DecimalField(max_digits=11, decimal_places=2)
     city=serializers.CharField(max_length=255)
 
 
