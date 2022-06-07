@@ -159,7 +159,8 @@ class CreatePartySerializer(serializers.ModelSerializer):
             user_id=self.context['user_id']
         )
         party=Party.objects.create(
-            customer=customer
+            customer=customer,
+            guestCount=self.validated_data['guestCount']
         )
         return party
 
