@@ -20,7 +20,6 @@ function Recommendation() {
       }
     const recommData= axios.post(tokenUrl+recomm_key,data).then(s=>s.data);
     recommData.then(s=>setRecom(s));
-    
   }
 
   return (
