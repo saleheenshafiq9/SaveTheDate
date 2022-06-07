@@ -4,15 +4,10 @@ import { MdRemoveCircle } from 'react-icons/md';
 
 const FoodList = (props) => {
     const [quantity, setQuantity] = useState(0);
-    const [price, setPrice] = useState(0);
 
     const handleInputChange = (e) => {
         setQuantity(e.target.value);
     }
-
-    const handleSubmit= (e) => {
-        e.preventDefault();
-      }
 
     const FoodShow = props.foods.map((food) => {
         console.log(food.title);

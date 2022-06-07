@@ -48,7 +48,6 @@ function CustomerProfile() {
 
     }
     
-    
   }
 
   const bookSpot=()=>{
@@ -61,9 +60,6 @@ function CustomerProfile() {
 
   }
 
-  // console.log(isDecorators);
-  // currentUser===null  && navigate('/');
-  
   return (
     (<div className="p-3">
       <div className="row">

@@ -67,6 +67,18 @@ export const CartContext = createContext({
     cartDecoratorAdded: () => {},
     cartPhotos: [],
     cartPhotoAdded: () => {},
+    type: "",
+    addType: () => {},
+    date: [],
+    addDate: () => {},
+    city: null,
+    addCity: () => {},
+    area: null,
+    addArea: () => {},
+    count: null,
+    addCount: () => {},
+    budget: null,
+    addBudget: () => {}
 });
 
 export const CartsProvider = ({children}) => {
@@ -75,6 +87,37 @@ export const CartsProvider = ({children}) => {
     const [cartCaterers, setcartCaterers] = useState([]);
     const [cartDecorators, setcartDecorators] = useState([]);
     const [cartPhotos, setcartPhotos] = useState([]);
+    const [type, setType] = useState("");
+    const [date, setDate] = useState([]);
+    const [city, setCity] = useState("");
+    const [area, setArea] = useState("");
+    const [count, setCount] = useState(0);
+    const [budget, setBudget] = useState(0.00);
+
+    const addType = (newType) => {
+        setType(newType);
+    }
+
+    const addDate = (newDate) => {
+        setDate(newDate);
+    }
+
+    const addCity = (newCity) => {
+        setCity(newCity);
+    }
+
+    const addArea = (newArea) => {
+        setArea(newArea);
+    }
+
+    const addCount = (newCount) => {
+        setCount(newCount);
+    }
+
+    const addBudget = (newBudget) => {
+        setBudget(newBudget);
+    }
+
 
     const addToCartItems = (serviceToAdd) => {
         setCartItems(addCartItem(cartItems, serviceToAdd));
@@ -96,7 +139,9 @@ export const CartsProvider = ({children}) => {
         setcartPhotos(addPhoto(cartPhotos, photoToAdd));
     }
 
-    const value = {addToCartItems, cartItems, cartVenueAdded, cartVenues, cartCatererAdded, cartCaterers, cartDecoratorAdded, cartDecorators, cartPhotoAdded, cartPhotos};
+    const value = {addToCartItems, cartItems, cartVenueAdded, cartVenues, cartCatererAdded, 
+        cartCaterers, cartDecoratorAdded, cartDecorators, cartPhotoAdded, cartPhotos,
+        type, addType, date, addDate, city, addCity, area, addArea, count, addCount, budget, addBudget};
     return (
         <CartContext.Provider value={value}>{children}</CartContext.Provider>
     )
