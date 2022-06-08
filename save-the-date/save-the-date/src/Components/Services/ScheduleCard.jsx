@@ -88,14 +88,6 @@ export default function ScheduleCard() {
             </div>
         </div>
         <div className='text-center mt-4'>
-        <select
-                className='text-center'
-                required >
-                <option value="visit">Visit</option>
-                <option value="phone call">Phone Call</option>
-        </select>
-        </div>
-        <div className='text-center mt-4'>
             <button className='btn btn-success' onClick={cartAdded} disabled={disable}>{cartText}</button>
             <Alert alert={alert}/>
             { disable? <button className="btn btn-dark text-center">

@@ -31,6 +31,7 @@ import PartyLocate from "./Recommendation/PartyLocate";
 import Checkout from "./checkout/checkout";
 import Recommendation from "./Recommendation/Recommendation";
 import Payment from "../pages/Payment/Payment";
+import Pay from "../pages/Payment/Pay";
 
 
 const Main = (props) => {
@@ -57,6 +58,7 @@ const Main = (props) => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/recomm" element={<Recommendation />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/pay" element={<Pay />} />
 
           {/* Edit Profiles */}
           <Route path="/editvenue" 
