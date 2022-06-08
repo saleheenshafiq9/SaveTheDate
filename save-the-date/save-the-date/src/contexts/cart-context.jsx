@@ -78,7 +78,9 @@ export const CartContext = createContext({
     count: null,
     addCount: () => {},
     budget: null,
-    addBudget: () => {}
+    addBudget: () => {},
+    appointment: null,
+    addAppoint: () => {}
 });
 
 export const CartsProvider = ({children}) => {
@@ -94,6 +96,7 @@ export const CartsProvider = ({children}) => {
     const [area, setArea] = useState("");
     const [count, setCount] = useState(0);
     const [budget, setBudget] = useState(0.00);
+    const [appointment, setAppointment] = useState("");
 
     const addType = (newType) => {
         setType(newType);
@@ -119,6 +122,10 @@ export const CartsProvider = ({children}) => {
         setBudget(newBudget);
     }
 
+    const addAppoint = (newAppoint) => {
+        setAppointment(newAppoint);
+    }
+
 
     const addToCartItems = (serviceToAdd) => {
         setCartItems(addCartItem(cartItems, serviceToAdd));
@@ -142,7 +149,7 @@ export const CartsProvider = ({children}) => {
 
     const value = {addToCartItems, cartItems, cartVenueAdded, cartVenues, cartCatererAdded, 
         cartCaterers, cartDecoratorAdded, cartDecorators, cartPhotoAdded, cartPhotos,party,setParty,
-        type, addType, date, addDate, city, addCity, area, addArea, count, addCount, budget, addBudget};
+        type, addType, date, addDate, city, addCity, area, addArea, count, addCount, budget, addBudget, appointment, addAppoint};
     return (
         <CartContext.Provider value={value}>{children}</CartContext.Provider>
     )

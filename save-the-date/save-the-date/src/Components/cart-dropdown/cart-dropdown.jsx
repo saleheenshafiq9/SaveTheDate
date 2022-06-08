@@ -12,7 +12,7 @@ const CartDropdown = () => {
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
-    navigate('/checkout')
+    navigate('/payment')
   }
   return (
     <div className="cart-dropdown-container">

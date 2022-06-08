@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import ReqWithHead from "../../helper/ReqWithHead"
 import CartItem from "../../Components/cart-item/cart-item";
 import PostReq from "../../helper/PostReq";
+import UpcomingAppoint from "./BookingInfo/UpcomingAppoint";
 
 function CustomerProfile() {
   const party_key="/api/partys/";
@@ -194,7 +195,7 @@ function CustomerProfile() {
           <div className="col">
             <div className="collapse multi-collapse" id="multiCollapseExample2">
               <div className="card card-body">
-                No Appointments yet
+              < UpcomingAppoint />
               </div>
             </div>
           </div>

@@ -156,8 +156,6 @@ const Login = () => {
                   Don't have an account?{" "}
                   <Link to="/register">Register Here</Link>.
                 </p>
-                <button className="btn btn-dark" onClick={logGoogleUser}><FcGoogle className="mx-2"/> Sign in with Google</button>
-
               </form>
             </div>
       </div>

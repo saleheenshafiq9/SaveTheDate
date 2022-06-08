@@ -8,13 +8,29 @@ import { IoPricetags } from "react-icons/io5";
 import ScheduleCard from "../ScheduleCard";
 import GalleryAll from "../../../pages/Profiles/GalleryAll";
 import FoodItem from "./FoodItem";
-
+import Alert from "../../Alert";
+import ReactCalender from "../../../pages/Profiles/Calender";
 
 const CatererDetail = (props) => {
+  const [alert, setAlert] = useState(null);
   const [scheduleCard, setscheduleCard] = useState(false);
   const [timeTable, setTimeTable] = useState(false);
   const { addToCartItems } = useContext(CartContext);
   const { cartCatererAdded } = useContext(CartContext);
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+}
+
+const timeAdded = () => {
+    showAlert("Schedule Appointment Confirmed!","success");
+}
 
   const addServiceToCart = () => {
     addToCartItems(props.caterer);
@@ -79,7 +95,8 @@ const CatererDetail = (props) => {
           { scheduleCard? <ScheduleCard /> : null }
           <div className="text-center mt-5">
             { timeTable? <ReactCalender /> : null}
-            { timeTable? <button className="btn btn-success">Confirm</button> : null}
+            { timeTable? <button className="btn btn-success" onClick={timeAdded}>Confirm</button> : null}
+            <Alert alert={alert} />
           </div>
           <br />
           <br />
