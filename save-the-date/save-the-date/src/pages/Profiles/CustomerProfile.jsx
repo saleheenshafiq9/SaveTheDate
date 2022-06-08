@@ -187,14 +187,14 @@ function CustomerProfile() {
           <div className="col">
             <div className="collapse multi-collapse" id="multiCollapseExample1">
               <div className="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                No Bookings yet
               </div>
             </div>
           </div>
           <div className="col">
             <div className="collapse multi-collapse" id="multiCollapseExample2">
               <div className="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                No Appointments yet
               </div>
             </div>
           </div>
