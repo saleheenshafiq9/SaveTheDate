@@ -12,6 +12,7 @@ import FoodItem from "./FoodItem";
 
 const CatererDetail = (props) => {
   const [scheduleCard, setscheduleCard] = useState(false);
+  const [timeTable, setTimeTable] = useState(false);
   const { addToCartItems } = useContext(CartContext);
   const { cartCatererAdded } = useContext(CartContext);
 
@@ -27,6 +28,7 @@ const CatererDetail = (props) => {
   }
 
   const scheduleAdded = () => {
+    setTimeTable(timeTable);
   }
 
   return (
@@ -75,6 +77,10 @@ const CatererDetail = (props) => {
             </div>
           </div>
           { scheduleCard? <ScheduleCard /> : null }
+          <div className="text-center mt-5">
+            { timeTable? <ReactCalender /> : null}
+            { timeTable? <button className="btn btn-success">Confirm</button> : null}
+          </div>
           <br />
           <br />
           <FoodItem items={props.caterer.items} />

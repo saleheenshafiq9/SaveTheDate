@@ -17,6 +17,7 @@ function CustomerProfile() {
   const {cartPhotos,cartDecorators,cartVenues,cartCaterers,cartItems,party,setParty} = useContext(CartContext);
   
   const [disable, setdisable] = useState(true);
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     if(cartItems.length > 0) {
@@ -52,7 +53,7 @@ function CustomerProfile() {
   }
 
   const bookSpot=()=>{
-
+    setSpinner(true);
     const venueId=cartVenues[0]?.id;
     const apiVenueId={
       venue_id: venueId
@@ -60,9 +61,6 @@ function CustomerProfile() {
     getPartys(cartVenues,"partyvenues",apiVenueId);
     NavigationType
     return null
-
-
-
   }
 
 
@@ -171,6 +169,11 @@ function CustomerProfile() {
           <div className="row">
             <div className="col text-center mt-3" id="starttext">
               <button type="button" className="btn btn-success" onClick={bookSpot} disabled={disable}>Go to Checkout</button>
+              {spinner && <div class="d-flex justify-content-center">
+              <div class="spinner-border spinner-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>}
             </div>
           </div>
         </div>

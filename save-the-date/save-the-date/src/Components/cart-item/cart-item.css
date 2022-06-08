@@ -8,6 +8,11 @@
 #cartimg {
       width: 30%;
 }
+
+#payimg {
+  width: 10%;
+  height: 100px;
+}
   
 .item-details {
       width: 70%;

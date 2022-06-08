@@ -7,9 +7,11 @@ import {RiAuctionFill} from "react-icons/ri";
 import { IoPricetags } from "react-icons/io5";
 import ScheduleCard from "../ScheduleCard";
 import GalleryAll from "../../../pages/Profiles/GalleryAll";
+import ReactCalender from "../../Calender";
 
 const VenueDetail = (props) => {
   const [scheduleCard, setscheduleCard] = useState(false);
+  const [timeTable, setTimeTable] = useState(false);
 
   const { addToCartItems } = useContext(CartContext);
   const { cartVenueAdded } = useContext(CartContext);
@@ -26,7 +28,7 @@ const VenueDetail = (props) => {
   }
 
   const scheduleAdded = () => {
-  
+    setTimeTable(!timeTable);
   }
 
   return (
@@ -73,6 +75,10 @@ const VenueDetail = (props) => {
             </div>
           </div>
           { scheduleCard? <ScheduleCard /> : null }
+          <div className="text-center mt-5">
+            { timeTable? <ReactCalender /> : null}
+            { timeTable? <button className="btn btn-success">Confirm</button> : null}
+          </div>
           <br />
           <br />
           <h4 className="text-center my-4 mb-5">Gallery</h4>

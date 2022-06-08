@@ -12,6 +12,7 @@ import GalleryAll from "../../../pages/Profiles/GalleryAll";
 const PhotographyDetail = (props) => {
   
   const [scheduleCard, setscheduleCard] = useState(false);
+  const [timeTable, setTimeTable] = useState(false);
   const { addToCartItems } = useContext(CartContext);
   const { cartPhotoAdded } = useContext(CartContext);
 
@@ -27,6 +28,7 @@ const PhotographyDetail = (props) => {
   }
 
   const scheduleAdded = () => {
+    setTimeTable(!timeTable);
   }
 
   return (
@@ -73,6 +75,10 @@ const PhotographyDetail = (props) => {
             </div>
           </div>
           { scheduleCard? <ScheduleCard /> : null }
+          <div className="text-center mt-5">
+            { timeTable? <ReactCalender /> : null}
+            { timeTable? <button className="btn btn-success">Confirm</button> : null}
+          </div>
           <br />
           <br />
           <h4 className="text-center my-4 mb-5">Gallery</h4>
