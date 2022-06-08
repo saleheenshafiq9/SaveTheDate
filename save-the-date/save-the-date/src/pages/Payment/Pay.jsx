@@ -22,7 +22,7 @@ function Pay(props) {
     <div>
       <div className="row mt-3">
           <div className="col-6">
-          <h5>Select Payment Method</h5><MdPayment className='mb-1 text-secondary'/>
+          <h6>Select Payment Method</h6><MdPayment className='mb-1 text-secondary'/>
                 <select
                     className="form-control w-50 mt-3"
                     name="location"

@@ -23,22 +23,49 @@ const Payment = () => {
   
   // const {data,loading,error}=useFetch(tokenUrl,url,head);
   console.log(cartVenues[0]?.price);
+
+  if(cartVenues[0]?.price!=null) {
+    var carV = cartVenues[0]?.price;
+  }
+
+  else {
+    carV = 0;
+  }
+
+  if(cartDecorators[0]?.price!=null) {
+    var carD = cartDecorators[0]?.price;
+  }
+
+  else {
+    carD = 0;
+  }
   
+  if(cartPhotos[0]?.price!=null) {
+    var carP = cartPhotos[0]?.price;
+  }
+
+  else {
+    carP = 0;
+  }
+
+  console.log(carV);
   return (
+    <>
     <div className='row m-5'>
-      <div className="col-10">
+      <div className="col-8">
       {cartItems.map(item => (
                 <CartPayment key={item.id} cartItem={item} />
                 ))}
       </div>
-      <div className='col-2'>
+      <div className='col-4'>
         <button className='btn btn-dark m-5' onClick={handlePay}>Proceed To Payment</button>
-      </div>
-      <div className='mt-5'>
-      <h5>Total Cost: {cartVenues[0]?.price + cartDecorators[0]?.price + cartPhotos[0]?.price}</h5>
+        <div className='mt-5'>
+      <h5>Total Cost: {carV + carD + carP}</h5>
       {show ? <Pay amount={total} /> : null}
       </div>
+      </div>
     </div>
+    </>
   )
 }
 
