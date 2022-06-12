@@ -11,6 +11,7 @@ import Map from "../../Components/map/Map";
 import Gallery from "./Gallery";
 import useFetch from "../../hooks/useFetch"
 import {tokenUrl} from "../../constants/constants"
+import UpcomingAppoint from "./BookingInfo/UpcomingAppoint";
 
 function VenueProfile() {
     const {token}= useContext(UserContext);
@@ -88,7 +89,7 @@ function VenueProfile() {
           <div className="col">
             <div className="collapse multi-collapse ml-5" id="multiCollapseExample2">
               <div className="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                <UpcomingAppoint />
               </div>
             </div>
           </div>

@@ -64,6 +64,9 @@ function DecoratorProfile() {
                 <div className="col-3">
                 <img src={tokenUrl + decoratorData?.images[3]?.image} className="gallery-img"/>
                 </div>
+                <div className="col-3">
+                <img src={tokenUrl + decoratorData?.images[0]?.image} className="gallery-img"/>
+                </div>
             </div>
             <div className="row p-5">
                 <div className="col-6 text-secondary">

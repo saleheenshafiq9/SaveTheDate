@@ -6,7 +6,7 @@ const UpcomingAppoint = () => {
   console.log(appointment);
   return (
     <div>
-      <p>{appointment}</p>
+      <b>{appointment}</b>
     </div>
   )
 }

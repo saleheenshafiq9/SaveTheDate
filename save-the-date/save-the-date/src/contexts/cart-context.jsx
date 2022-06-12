@@ -79,7 +79,7 @@ export const CartContext = createContext({
     addCount: () => {},
     budget: null,
     addBudget: () => {},
-    appointment: null,
+    appointment: "",
     addAppoint: () => {}
 });
 

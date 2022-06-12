@@ -15,7 +15,7 @@ function CustomerProfile() {
   const navigate=useNavigate();
   
   const {currentUser,token} = useContext(UserContext);
-  const {cartPhotos,cartDecorators,cartVenues,cartCaterers,cartItems,party,setParty} = useContext(CartContext);
+  const {cartPhotos,cartDecorators,cartVenues,cartCaterers,cartItems,party,setParty, appointment} = useContext(CartContext);
   
   const [disable, setdisable] = useState(true);
   const [spinner, setSpinner] = useState(false);
@@ -188,14 +188,16 @@ function CustomerProfile() {
           <div className="col">
             <div className="collapse multi-collapse" id="multiCollapseExample1">
               <div className="card card-body">
-                No Bookings yet
+              {cartItems.map(item => (
+                <CartItem key={item.id} cartItem={item} />
+                ))}
               </div>
             </div>
           </div>
           <div className="col">
             <div className="collapse multi-collapse" id="multiCollapseExample2">
-              <div className="card card-body">
-              < UpcomingAppoint />
+              <div className="box red">
+                <UpcomingAppoint />
               </div>
             </div>
           </div>

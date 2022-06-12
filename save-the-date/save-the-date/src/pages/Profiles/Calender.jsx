@@ -9,10 +9,13 @@ import UpcomingAppoint from "./BookingInfo/UpcomingAppoint";
 const ReactCalender = () => {
     const [date, setDate] = useState(null);
     const {addAppoint} = useContext(CartContext);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+    ];
     const onChange = date => {
         setDate(date);
         addAppoint(date);
-        console.log(date.getMonth());
+        console.log(monthNames[date.getMonth()]);
     }
     
     return (

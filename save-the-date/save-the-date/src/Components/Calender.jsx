@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { CartContext } from "../contexts/cart-context";
+
 
 const ReactCalender = () => {
     const [date, setDate] = useState(null);
+    const {addAppoint} = useContext(CartContext);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+      ];
+      const weekNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+      "Saturday"
+        ];
     const onChange = date => {
         setDate(date);
-        console.log(date);
+        const finalDate = weekNames[date.getDay()] + ", " + date.getDate() + " " + monthNames[date.getMonth()];
+        addAppoint(finalDate);
     }
     return (
         <div>
