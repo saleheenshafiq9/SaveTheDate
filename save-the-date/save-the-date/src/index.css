@@ -6,7 +6,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.mapouter{
+  position:relative;
+  height:500px;
+  width:690px;
+}
+.gmap_canvas {
+  overflow:hidden;
+  background:none!important;
+  margin-left:4rem;
+  }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

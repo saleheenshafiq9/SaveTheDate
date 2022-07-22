@@ -1,15 +1,12 @@
 import { useContext } from "react";
 
-import { CartContext } from "../../contexts/cart";
+import { CartContext } from "../../contexts/cart-context";
 import Venue from "../Services/Venue/Venue";
 
 const AddCart = () => {
-    const {carts} = useContext(CartContext);
     return (
         <div>
-            {carts.map(({cart}) => (
-                <Venue />
-            ))}
+            
         </div>
     )
 }

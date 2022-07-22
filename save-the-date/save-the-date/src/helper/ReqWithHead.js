@@ -1,7 +1,9 @@
 
 import axios from 'axios';
-function ReqWithHead(baseURL,key,accessToken) {
-  return (axios.get(baseURL+key, {
+import { tokenUrl } from '../constants/constants';
+function ReqWithHead(key,accessToken) {
+  const baseURL=tokenUrl;
+  return (axios.get(baseURL+key,accessToken&& {
         headers: {
         'Authorization': accessToken,
         }

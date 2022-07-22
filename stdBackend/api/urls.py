@@ -1,8 +1,9 @@
 from cgitb import lookup
 from email.mime import base
+from django.urls import path
 from . import views
 from rest_framework_nested import routers
-from . import views
+from .views import *
 
 router=routers.DefaultRouter()
 router.register('customers', views.CustomerViewSet)
@@ -16,17 +17,21 @@ router.register('partys', views.PartyViewSet, basename='party')
 
 party_router=routers.NestedDefaultRouter(router, 'partys', lookup='party')
 party_router.register('caterings', views.PartyCateringViewSet, basename='party-caterings')
-party_router.register('foodcarts', views.PartyFoodCartViewSet, basename='party-foodcarts')
+party_router.register('foodcartitems', views.FoodCartItemViewset, basename='party-fooditems')
 party_router.register('venueslots', views.PartyVenueSlotViewSet, basename='party-venueslots')
-
-foodcart_router=routers.NestedDefaultRouter(party_router, 'foodcarts', lookup='foodcart')
-foodcart_router.register('items', views.FoodCartItemViewset, basename='cart-items')
+party_router.register('partydecorators', views.PartyDecoratorViewSet, basename='party-decorator')
+party_router.register('partycontentmakers', views.PartyContentMakerViewSet, basename='party-contentmaker')
+party_router.register('payments', views.PaymentViewSet, basename='party-payments')
+party_router.register('progress', views.ProgressViewSet, basename='party-progress')
+party_router.register('partyvenues', views.PartyVenueViewSet, basename='party-venue')
 
 
 venue_router=routers.NestedDefaultRouter(router, 'venues', lookup='venue')
 venue_router.register('reviews', views.ReviewVenueViewSet, basename='provider-reviews')
 venue_router.register('images', views.VenueImageViewSet, basename='venue-images')
 venue_router.register('slots', views.VenueSlotViewSet, basename='venue-slots')
+venue_router.register('pendingappointments', views.PendingAppointmentsVenueViewSet, basename='venue-pendingappointments')
+venue_router.register('acceptedappointments', views.AcceptedAppointmentsVenueViewSet, basename='venue-acceptedappointments')
 
 
 
@@ -52,6 +57,8 @@ theme_router.register('images', views.ThemeImageViewSet, basename='theme-images'
 contentmaker_router=routers.NestedDefaultRouter(router, 'contentmakers', lookup='contentmaker')
 contentmaker_router.register('reviews', views.ReviewContentMakerViewSet, basename='provider-reviews')
 contentmaker_router.register('images', views.ContentMakerImageViewSet, basename='contentmaker-images')
+contentmaker_router.register('slots', views.ContentMakerSlotViewSet, basename='contentmaker-slots')
+
 
 
 entertainer_router=routers.NestedDefaultRouter(router, 'entertainers', lookup='entertainer')
@@ -60,4 +67,8 @@ entertainer_router.register('images', views.EntertainerImageViewSet, basename='e
 
 
 
-urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls+foodcart_router.urls
+urlpatterns=router.urls+venue_router.urls+catering_router.urls+decorator_router.urls+contentmaker_router.urls+entertainer_router.urls+fooditem_router.urls+theme_router.urls+party_router.urls
+urlpatterns+=[
+    path('recommendation', recommendation),
+    path('createparty', dummyparty)
+    ]

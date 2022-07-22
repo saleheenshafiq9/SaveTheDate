@@ -1,55 +1,25 @@
 import React, {useContext, useState,useEffect} from "react";
 
-import { Formik } from "formik";
+
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import Register from "./Register";
+import Register from "../Register/Register";
 import { signInWithGooglePopup, createUserDocumentFromAuth } from '../../firebase/firebase';
 import {FcGoogle} from "react-icons/fc";
 import axios from "axios";
 import { UserContext } from "../../contexts/user-context";
 import PostReq from "../../helper/PostReq";
 import ReqWithHead from "../../helper/ReqWithHead";
-const tokenurl="http://127.0.0.1:8000";
+import { tokenUrl} from "../../constants/constants";
+
 const login_key='/auth/jwt/create/';
 const refresh_key='/auth/jwt/refresh';
 const data_key='/auth/users/me';
 
 
-// const Login = () => {
-
-
-{/* <Formik
-initialValues={{ username: "", password: "" }}
-onSubmit={(values) => {
-  console.log(values);
-}}
-validate={(values) => {
-  const errors = {};
-  if (!values.username) {
-    errors.username = "Required";
-  }
-
-  if (!values.password) {
-    errors.password = "Required";
-  } else if (values.password.length < 4) {
-    errors.password = "Must be atleast 4 characters!";
-  }
-  //console.log(errors);
-  return errors;
-}}
->
-{({ values, handleChange, handleSubmit, errors }) => ( */}
-
-//   return (
-    
-//   );
-// }
-
-// export default Login;
 
 const Login = () => {
-  // const [error, setError]=useState(false);
+  
   const navigate = useNavigate();
   const {currentUser,updateToken,setCurrentUser,setToken} = useContext(UserContext);
   const logGoogleUser = async() => { 
@@ -76,7 +46,7 @@ const Login = () => {
     const passInput=e.target.password.value;
     
     const data={"username":nameInput,"password":passInput};
-    let token=await axios.post(tokenurl+login_key,data)
+    let token=await axios.post(tokenUrl+login_key,data)
     .then(res=>res.data).then(res=>
       {localStorage.setItem("stdBackend",JSON.stringify(res));
         setToken(res);
@@ -186,8 +156,6 @@ const Login = () => {
                   Don't have an account?{" "}
                   <Link to="/register">Register Here</Link>.
                 </p>
-                <button className="btn btn-dark" onClick={logGoogleUser}><FcGoogle className="mx-2"/> Sign in with Google</button>
-
               </form>
             </div>
       </div>

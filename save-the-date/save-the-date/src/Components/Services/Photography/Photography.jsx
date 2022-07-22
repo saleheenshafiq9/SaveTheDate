@@ -4,13 +4,21 @@ import PhotographyDetail from "./PhotographyDetail";
 import PhotographyItem from "./PhotographyItem";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { FaWindowClose } from "react-icons/fa";
+import GetReq from "../../../helper/getReq";
 
 class Photography extends Component {
   state = {
     photographys: PhotographyData,
     selectedVenue: null,
     modalOpen: false,
+    newPhotographys: []
   };
+
+  componentDidMount() {
+    GetReq("/api/contentmakers").then((res) => {
+      this.setState({newPhotographys: res});
+    })
+  }
 
   onPhotographySelect = (photography) => {
     //console.log(venue);
@@ -22,7 +30,7 @@ class Photography extends Component {
   };
 
   render() {
-    const finalphotography = this.state.photographys.map((item) => {
+    const finalphotography = this.state.newPhotographys.map((item) => {
       return (
         <PhotographyItem
           photography={item}
@@ -38,7 +46,7 @@ class Photography extends Component {
     return (
       <div className="container">
         <CardColumns>{finalphotography}</CardColumns>
-        <Modal isOpen={this.state.modalOpen} onClick={this.toggleModal}>
+        <Modal isOpen={this.state.modalOpen} className="modal-xl">
           <ModalBody>{photographyDetail}</ModalBody>
           <ModalFooter>
             <FaWindowClose

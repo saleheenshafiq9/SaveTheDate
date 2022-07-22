@@ -1,16 +1,16 @@
  import axios from 'axios';
+import { tokenUrl } from '../constants/constants';
 
- export default  function  PostReq(baseURL,key,data) {
+ export default  function  PostReq(key,data,headerToken) {
 
-  
-  const fetchedData=async()=> await axios.post(baseURL+key,data,{
-        headers:{
-        Accept: "application/json",
-          'Content-Type':'application/json;charset=UTF-8'
-      }  
-    }).then(res=>res.data);
-   
-    
-    return fetchedData   
+  const baseURL=tokenUrl;
+  let thirdArg={
+    headers:{
+      "Authorization":headerToken
+    }
+  }
+  const fetchedData=async()=>headerToken? await axios.post(baseURL+key,data,thirdArg): await axios.post(baseURL+key,data).then(res=>res.data);
+  console.log(fetchedData);
+    return fetchedData()   
 }
 

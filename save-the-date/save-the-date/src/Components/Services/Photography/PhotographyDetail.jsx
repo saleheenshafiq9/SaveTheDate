@@ -1,32 +1,90 @@
-import React from "react";
-import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import React, { useState, useContext } from "react";
+import { CartContext } from "../../../contexts/cart-context";
+import { Card, CardImg, CardBody, CardTitle, CardText, Button } from "reactstrap";
+import {FaPhotoVideo} from "react-icons/fa";
+import {MdContactPage, MdLocationPin, MdSettingsPhone} from "react-icons/md";
+import {RiAuctionFill} from "react-icons/ri";
+import { IoPricetags } from "react-icons/io5";
+import ScheduleCard from "../ScheduleCard";
+import GalleryAll from "../../../pages/Profiles/GalleryAll";
+
 
 const PhotographyDetail = (props) => {
+  
+  const [scheduleCard, setscheduleCard] = useState(false);
+  const [timeTable, setTimeTable] = useState(false);
+  const { addToCartItems } = useContext(CartContext);
+  const { cartPhotoAdded } = useContext(CartContext);
+
+  const addServiceToCart = () => {
+    addToCartItems(props.photography);
+    cartPhotoAdded(props.photography);
+  }
+
+  const cartAdded = () => {
+    props.onPhotographySelect;
+    addServiceToCart();
+    setscheduleCard(true);
+  }
+
+  const scheduleAdded = () => {
+    setTimeTable(!timeTable);
+  }
+
   return (
-    <div>
-      <Card style={{ marginTop: "10px" }}>
-        <CardImg top src={props.photography.image} alt={props.photography.name} />
+    <div className="bg-light">
+      <Card style={{ marginTop: "10px" }} className="w-100">
+      <div className="row">
+        <div className="col-6">
+        <CardImg top src={props.photography.images[0].image} alt={props.photography.title} height="400px"/>
+        </div>
+        <div className="col-6">
+        <CardImg top src={props.photography.images[1].image} alt={props.photography.title} height="400px"/>
+        </div>
+        </div>
         <CardBody style={{ textAlign: "left" }}>
           <CardTitle>
-            <h5>
-              {props.photography.name}
+            <h4>
+              {props.photography.title}
               <span className="badge badge-warning text-dark">
-                {props.photography.label}
+                Regular
               </span>
-            </h5>
+            </h4>
           </CardTitle>
-          <button className="btn btn-dark" onClick={props.onPhotographySelect}>
-            Contact
-          </button>
-          <button className="btn btn-success" onClick={props.onPhotographySelect}>
-            Book Now
-          </button>
-          <br />
-          <br />
           <div className="card-footer">
-            <b>Food Menu: </b>
-            {props.photography.menuItem}
+            <div className="row">
+              <div className="col-6">
+              <p className="text-secondary">
+                    <MdLocationPin /> {props.photography.location}
+                    <br/>
+                    <FaPhotoVideo /> Wedding, Birthday Photography &  HD Cinematography Service.
+                    <br />
+                    <IoPricetags /> {props.photography.price} BDT </p>
+              </div>
+              <div className="col-6 justify-right">
+                <button className="btn btn-dark" onClick={props.onPhotographySelect}>
+                 <a href="mailto:photography@std.com" id="mailto"><MdContactPage className="mr-2"/>Contact</a>
+                </button>
+                <button className="btn btn-success" onClick={cartAdded}>
+                 <RiAuctionFill className="mr-2"/>Book Now
+                </button>
+                <button className="btn btn-danger" onClick={scheduleAdded}>
+                  <MdSettingsPhone className="mr-2"/>Set Appointment
+                </button>
+              </div>
+            </div>
           </div>
+          { scheduleCard? <ScheduleCard /> : null }
+          <div className="text-center mt-5">
+            { timeTable? <ReactCalender /> : null}
+            { timeTable? <button className="btn btn-success">Confirm</button> : null}
+          </div>
+          <br />
+          <br />
+          <h4 className="text-center my-4 mb-5">Gallery</h4>
+          <GalleryAll id={props.photography}/>
+          <h4 className="text-center mt-5">About Photographers</h4>
+          <CardText className="p-4">{props.photography.description}</CardText>
         </CardBody>
       </Card>
     </div>

@@ -13,8 +13,19 @@
   font-weight: 500;
   text-decoration: none;
   padding-right: 50px;
+  padding-top: 13px;
 }
-
 #NavLink:hover {
   color: #ce6c47;
+}
+
+.header-nav {
+  top: 0;
+  z-index: 1;
+}
+
+#proficon {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
 }

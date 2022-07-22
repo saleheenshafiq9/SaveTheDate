@@ -35,7 +35,7 @@ class Contact extends Component {
 
   render() {
     return (
-      <div className="container m-5">
+      <div className="container m-3">
         <div
           className="row row-content"
           style={{ paddingLeft: "20px", textAlign: "left" }}

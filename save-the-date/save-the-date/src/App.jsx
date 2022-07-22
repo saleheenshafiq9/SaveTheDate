@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Footer from "./Components/Footer/Footer";
 import {UserProvider} from "./contexts/user-context";
-import {CartsProvider} from "./contexts/cart";
+import {CartsProvider} from "./contexts/cart-context";
 
 function App() {
   return (
@@ -13,7 +13,6 @@ function App() {
       <UserProvider>
         <CartsProvider>
           <Main />
-          <Footer />
         </CartsProvider>
       </UserProvider>
       </BrowserRouter>

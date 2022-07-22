@@ -9,12 +9,10 @@ const tokenurl="http://127.0.0.1:8000";
 
 
 export const PrivateRoute = ({children}) => {
-  const {currentUser,updateToken} = useContext(UserContext);
+  const {currentUser} = useContext(UserContext);
   
-  
-    
   const auth=currentUser?true:false;
-;
+
   return(
     <>
     {auth?children:<Navigate to='/login'/>   }

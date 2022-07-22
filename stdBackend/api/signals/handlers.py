@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from api.models import PartyVenueSlot,Customer,Venue, Catering, Decorator, ContentMaker, Entertainer, Party, FoodCart
+from api.models import PartyVenueSlot,Customer,Venue, Catering, Decorator, ContentMaker, Entertainer, Party
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_customer_for_new_user(sender, **kwargs):
@@ -21,8 +21,3 @@ def create_customer_for_new_user(sender, **kwargs):
             Entertainer.objects.create(user=kwargs['instance'])
 
 
-@receiver(post_save, sender=Party)
-def create_party_foodcart(sender, **kwargs):
-    if kwargs['created']:
-        FoodCart.objects.create(party=kwargs['instance'])
-        PartyVenueSlot.objects.create(party=kwargs['instance'])
