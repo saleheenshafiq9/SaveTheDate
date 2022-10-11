@@ -66,8 +66,8 @@ function Register() {
         alert("Passwords do not match");
         return;
       }
-
-      const userData=await axios.post(tokenurl+reg_key,data,{
+      try {
+        const userData=await axios.post(tokenurl+reg_key,data,{
           headers:{
             Accept:"application/json;",
             'Content-Type':'application/json;charset=UTF-8'
@@ -75,6 +75,9 @@ function Register() {
         }).then(s=>s.data);
         console.log(userData);
       setCurrentUser(userData)
+      } catch (error) {
+        alert("Registration Failed")
+      }
   }
   
   return (
