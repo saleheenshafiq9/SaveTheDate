@@ -19,6 +19,9 @@ Welcome to the **Save The Date** GitHub repository! This project was developed a
 
 **Save The Date** is a web-based party planning application designed to connect service providers with customers looking to organize events. The application streamlines the process of booking venues, catering, decorations, and other services, making it easier for users to plan and manage events.
 
+![image](https://github.com/user-attachments/assets/5d651e4b-cc00-4dce-9968-3dea6501dfd8)
+
+
 ## Motivation
 
 Planning events such as weddings or birthdays can be overwhelming, especially with the need to coordinate multiple services and manage budgets. **Save The Date** was developed to reduce this burden by providing an integrated platform where users can easily book services and manage their event details.
@@ -41,9 +44,18 @@ Planning events such as weddings or birthdays can be overwhelming, especially wi
 
 - **User Authentication:** Secure login and signup system with token-based authentication.
 - **Profile Management:** Different views for customers and service providers, each with unique functionalities.
+
+![image](https://github.com/user-attachments/assets/aa4c0c12-0e32-4c87-86ae-b36890b1ef90)
+
 - **Party Booking System:** Users can browse and book services, with a cart feature to manage selected services.
+
+![image](https://github.com/user-attachments/assets/9092c4ef-823f-46e0-880d-004dbf2ff321)
+ 
 - **Appointment Scheduling:** Customers can request and schedule appointments with service providers.
 - **Recommendation System:** Implements the K-Nearest Neighbor algorithm to suggest services based on user preferences.
+
+![image](https://github.com/user-attachments/assets/8ca0fcdf-39f2-4374-8575-1ae0f1abfefd)
+  
 - **Responsive UI:** Designed using ReactJS and styled with Bootstrap for an intuitive user experience.
 
 ## Implementation
